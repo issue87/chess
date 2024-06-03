@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import copy
 import random
 from collections import Counter
