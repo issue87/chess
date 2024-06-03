@@ -3,6 +3,10 @@ import copy
 import random
 from collections import Counter
 
+#main object of application. It is used by Gunicorn
+app = Flask(__name__)
+
+
 #figure colors' constants 
 WHITE_FIGURE_COLOR = 0
 BLACK_FIGURE_COLOR = 1
@@ -743,5 +747,8 @@ def game():
     player2 = Player(BLACK_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)                            
     ex = ChessBoard(player1, player2)
     game_recursive(player1, player2, ex)
-game()
+
+@app.route('/', methods = ["GET","POST"])
+def index():
+    pass
 
