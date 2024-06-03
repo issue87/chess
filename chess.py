@@ -750,5 +750,5 @@ def game():
 
 @app.route('/', methods = ["GET","POST"])
 def index():
-    pass
+    return render_template("chess.html")
 
