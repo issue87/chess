@@ -5,7 +5,8 @@ const figurePositionsOnSourceImage = [
 
 ];
 function game(){
-  ctx.drawImage(chessBoardImage, 0, 0, 200, 200, 10, 10, 50, 50);
+  //drawing the chess board
+  ctx.drawImage(chessBoardImage, 160, 360, 1180, 1180, 10, 10, 50, 50);
 }
 const ctx = document.getElementById("gameCanvas").getContext("2d");
 const chessBoardImage = document.createElement("img");
