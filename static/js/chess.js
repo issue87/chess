@@ -7,8 +7,8 @@ const figurePositionsOnSourceImage = [
 function game(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
-  ctx.scale(canvasWidth/imageWidthInPixels); 
-  ctx.drawImage(chessBoardImage, 160, 360, imageWidthInPixels, imageWidthInPixels, 0, 0, imageWidthInPixels, imageWidthInPixels);
+  ctx.scale(canvasWidth/chessBoardWidthInPixels); 
+  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
 }
 const canvasEl = document.getElementById("gameCanvas");
 const ctx = canvasEl.getContext("2d");
