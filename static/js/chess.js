@@ -8,8 +8,8 @@ function game(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
   const scaleRatio = canvasWidth/chessBoardWidthInPixels;
-  ctx.scale(scaleRatio, scaleRatio);
-  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels/3, chessBoardWidthInPixels/6);
+  //ctx.scale(scaleRatio, scaleRatio);
+  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, canvasWidth, canvasWidth/2);
 }
 const canvasEl = document.getElementById("gameCanvas");
 const ctx = canvasEl.getContext("2d");
