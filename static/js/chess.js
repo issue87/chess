@@ -21,7 +21,7 @@ function resize(){
   const devicePixelRatio = window.devicePixelRatio;
   //adjusting width and height of the canvas with user device's scale of the page
   canvasWidth /= window.visualViewport.scale;
-  const canvasScaleRatio = const scaleRatio = canvasWidth/chessBoardWidthInPixels;
+  const canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
   ctx.scale(canvasScaleRatio,canvasScaleRatio);
   canvasAnimation();
 }
