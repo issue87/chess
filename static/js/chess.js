@@ -9,7 +9,7 @@ function canvasAnimation(){
   const canvasWidth = parseInt(canvasEl.offsetWidth);
   //ctx.scale(scaleRatio, scaleRatio);
   console.log(ctx);
-  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels/2);
+  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
 }
 function resize(){
   let canvasWidth;
