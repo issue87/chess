@@ -107,6 +107,6 @@ const canvasEl = document.getElementById("gameCanvas");
 const ctx = canvasEl.getContext("2d");
 let canvasScaleRatio;
 const chessBoardImage = document.createElement("img");
-chessBoardImage.src = "../static/images/chessBoard.jpg";
+chessBoardImage.src = "../static/images/chessBoard.png";
 const chessBoardWidthInPixels = 1180;
 chessBoardImage.onload = resize;
