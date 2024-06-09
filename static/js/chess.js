@@ -11,7 +11,7 @@ function game(){
   //ctx.scale(scaleRatio, scaleRatio);
   console.log(chessBoardImage.width);
   console.log(chessBoardImage.height);
-  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels/2);
+  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels/4, chessBoardWidthInPixels/8);
 }
 const canvasEl = document.getElementById("gameCanvas");
 const ctx = canvasEl.getContext("2d");
