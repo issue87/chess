@@ -14,7 +14,7 @@ function canvasAnimation(){
 function resize(){
   let canvasWidth;
   if (screen.availWidth > screen.availHeight){
-    canvasWidth = screen.availHeight * 0.9;
+    canvasWidth = screen.availHeight * 0.8;
   }else{
     //canvasHeight = window.innerHeight;
     canvasWidth = screen.availWidth * 0.8;
@@ -22,13 +22,14 @@ function resize(){
   const devicePixelRatio = window.devicePixelRatio;
   //adjusting width and height of the canvas with user device's scale of the page
   canvasWidth /= window.visualViewport.scale;
-  const canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
+  canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
   console.log(canvasScaleRatio);
   ctx.scale(canvasScaleRatio,canvasScaleRatio);
   canvasAnimation();
 }
 const canvasEl = document.getElementById("gameCanvas");
 const ctx = canvasEl.getContext("2d");
+let canvasScaleRatio;
 const chessBoardImage = document.createElement("img");
 chessBoardImage.src = "../static/images/chessBoard.jpg";
 const chessBoardWidthInPixels = 1180;
