@@ -16,7 +16,6 @@ function resize(){
   if (screen.availWidth > screen.availHeight){
     canvasWidth = screen.availHeight * 0.8;
   }else{
-    //canvasHeight = window.innerHeight;
     canvasWidth = screen.availWidth * 0.8;
   };
   const devicePixelRatio = window.devicePixelRatio;
@@ -24,6 +23,8 @@ function resize(){
   canvasWidth /= window.visualViewport.scale;
   canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
   console.log(canvasScaleRatio);
+  canvasEl.setAttribute("width",`${canvasWidth}`);
+  canvasEl.setAttribute("height",`${canvasWidth}`);
   ctx.scale(canvasScaleRatio,canvasScaleRatio);
   canvasAnimation();
 }
