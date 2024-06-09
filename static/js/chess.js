@@ -9,7 +9,7 @@ function game(){
   const canvasWidth = parseInt(canvasEl.offsetWidth);
   const scaleRatio = canvasWidth/chessBoardWidthInPixels;
   ctx.scale(scaleRatio, scaleRatio); 
-  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
+  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels * 2, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
 }
 const canvasEl = document.getElementById("gameCanvas");
 const ctx = canvasEl.getContext("2d");
