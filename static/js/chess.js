@@ -14,7 +14,7 @@ function canvasAnimation(){
 function resize(){
   let canvasWidth;
   if (screen.availWidth > screen.availHeight){
-    canvasWidth = screen.availHeight * 0.9;;
+    canvasWidth = screen.availHeight * 0.9;
   }else{
     //canvasHeight = window.innerHeight;
     canvasWidth = screen.availWidth * 0.8;
