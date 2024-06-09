@@ -8,6 +8,7 @@ function canvasAnimation(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
   //ctx.scale(scaleRatio, scaleRatio);
+  console.log(ctx);
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels/2);
 }
 function resize(){
@@ -22,6 +23,7 @@ function resize(){
   //adjusting width and height of the canvas with user device's scale of the page
   canvasWidth /= window.visualViewport.scale;
   const canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
+  console.log(canvasScaleRatio);
   ctx.scale(canvasScaleRatio,canvasScaleRatio);
   canvasAnimation();
 }
