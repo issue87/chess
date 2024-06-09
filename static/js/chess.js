@@ -7,11 +7,11 @@ const figurePositionsOnSourceImage = [
 function game(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
-  const scaleRatio = canvasWidth/chessBoardWidthInHTML;
-  ctx.scale(scaleRatio, scaleRatio);
+  const scaleRatio = canvasWidth/chessBoardWidthInPixels;
+  //ctx.scale(scaleRatio, scaleRatio);
   console.log(chessBoardImage.width);
   console.log(chessBoardImage.height);
-  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInHTML, chessBoardWidthInHTML/2);
+  ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardImage.width/3, chessBoardImage.width/6);
 }
 const canvasEl = document.getElementById("gameCanvas");
 const ctx = canvasEl.getContext("2d");
