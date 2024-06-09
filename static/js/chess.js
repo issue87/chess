@@ -17,5 +17,5 @@ const ctx = canvasEl.getContext("2d");
 const chessBoardImage = document.createElement("img");
 chessBoardImage.src = "../static/images/chessBoard.jpg";
 const chessBoardWidthInPixels = 1180;
-const chessBoardWidthInHTML = 1180;
+const chessBoardWidthInHTML = 3000;
 chessBoardImage.onload = game;
