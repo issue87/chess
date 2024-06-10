@@ -62,31 +62,6 @@ function canvasAnimation(){
   //ctx.scale(scaleRatio, scaleRatio);
   console.log(ctx);
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["black"]["king"]["x"], 
-                                  figurePositionsOnSourceImage["black"]["king"]["y"], widthOfTile, widthOfTile, 0, 0, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["black"]["queen"]["x"], 
-                                  figurePositionsOnSourceImage["black"]["queen"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 1, 0, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["black"]["rook"]["x"], 
-                                  figurePositionsOnSourceImage["black"]["rook"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 2, 0, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["black"]["bishop"]["x"], 
-                                  figurePositionsOnSourceImage["black"]["bishop"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 3, 0, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["black"]["knight"]["x"], 
-                                  figurePositionsOnSourceImage["black"]["knight"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 4, 0, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["black"]["pawn"]["x"], 
-                                  figurePositionsOnSourceImage["black"]["pawn"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 5, 0, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["white"]["king"]["x"], 
-                                  figurePositionsOnSourceImage["white"]["king"]["y"], widthOfTile, widthOfTile, 0, 600, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["white"]["queen"]["x"], 
-                                  figurePositionsOnSourceImage["white"]["queen"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 1, 600, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["white"]["rook"]["x"], 
-                                  figurePositionsOnSourceImage["white"]["rook"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 2, 600, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["white"]["bishop"]["x"], 
-                                  figurePositionsOnSourceImage["white"]["bishop"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 3, 600, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["white"]["knight"]["x"], 
-                                  figurePositionsOnSourceImage["white"]["knight"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 4, 600, widthOfTile, widthOfTile);
-  ctx.drawImage(chessBoardImage, figurePositionsOnSourceImage["white"]["pawn"]["x"], 
-                                  figurePositionsOnSourceImage["white"]["pawn"]["y"], widthOfTile, widthOfTile, (chessBoardWidthInPixels/8) * 5, 600, widthOfTile, widthOfTile);
-}
 function resize(){
   let canvasWidth;
   if (screen.availWidth > screen.availHeight){
