@@ -62,6 +62,7 @@ function canvasAnimation(){
   //ctx.scale(scaleRatio, scaleRatio);
   console.log(ctx);
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
+};
 function resize(){
   let canvasWidth;
   if (screen.availWidth > screen.availHeight){
