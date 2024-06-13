@@ -7,3 +7,8 @@ canvas{
     margin-left: auto;
     margin-right: auto;
 }
+.hiddenRadioButton{
+    position: absolute;
+    left:-1000;
+    top:-1000;
+}
