@@ -19,6 +19,7 @@ canvas{
     cursor:pointer;
 }
 [type=radio]:checked + img {
-    opacity:0.3;
-    background-color: #2d47a1;
+    border-color: #00ffff;
+    border-width: 2px;
+    border-style: solid;
 }
