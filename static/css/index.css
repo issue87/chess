@@ -20,5 +20,5 @@ canvas{
 }
 [type=radio]:checked + img {
     opacity:0.3;
-    background-color: #ffffff;
+    background-color: #2d47a1;
 }
