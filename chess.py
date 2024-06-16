@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import copy
 import random
 from collections import Counter
@@ -742,7 +742,7 @@ def human_choice(board, legal_moves, request_for_draw):
     return (figure_to_move, to_move, figure_index)
 
 strategies = {"random":random_strategy}
-   
+
 def game():
     player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
     player2 = Player(BLACK_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)                            
