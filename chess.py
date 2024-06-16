@@ -264,7 +264,7 @@ class ChessBoard:
         for row in self.board:
             for square in row:
                 if square != None:
-                    copied_figures.append(square.tranlslate_to_JSON);
+                    copied_figures.append(square.tranlslate_to_JSON());
         return copied_figures
 
     def make_move(self, figure, position):
