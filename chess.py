@@ -40,7 +40,6 @@ text_representation_draw_resons = {0: "by agreement of the playes",
 
 colors_representations = {0:"white", 1:"black"}
 figures_representation = {0:"K", 1: "Q", 2: "R", 3: "B", 4: "Kn", 5: "P"}
-strategies = {"random":random_strategy}
 figures_directions = {0: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       1: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       2: {(0, 1), (0, -1), (1, 0), (-1, 0)},
@@ -741,7 +740,9 @@ def human_choice(board, legal_moves, request_for_draw):
         figure_index = int(input("choose figure to be promoted in by typing a number: 1 - Queen, 2 - Rook, 3 - Bishop, 4 - Knight"))
         assert 5 > figure_index > 0
     return (figure_to_move, to_move, figure_index)
-    
+
+strategies = {"random":random_strategy}
+   
 def game():
     player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
     player2 = Player(BLACK_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)                            
