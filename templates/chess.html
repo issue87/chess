@@ -10,6 +10,12 @@
     <body>
         <div id="initialPage">
             <section id="gameSettings">
+                <label for="userVSCPU">play against CPU</label>
+                <input type="radio" id="userVSCPU" name="typeOfGame" value="userVSCPU" class="radioTypeOfGame">
+                <label for="CPUVSCPU">CPU against CPU</label>
+                <input type="radio" id="CPUVSCPU" name="typeOfGame" value="CPUVSCPU" class="radioTypeOfGame">
+                <label for="HotSeat">Hot seat</label>
+                <input type="radio" id="HotSeat" name="typeOfGame" value="HotSeat" class="radioTypeOfGame">
                 <label>
                     <input type="radio" id="black" name="color" value="black" class="hiddenRadioButton">
                     <img class="radioImage" src="../static/images/blackKing.jpg">
@@ -25,9 +31,11 @@
                 <div>
                     <label for="choose1Computer">CPU Player</label>
                     <select id="choose1Computer">
+                        <option value="random">Random</option>
                     </select>
                     <label for="choose2Computer">CPU Player</label>
                     <select id="choose2Computer">
+                        <option value="random">Random</option>
                     </select>
                 </div>
             </section>
