@@ -88,13 +88,13 @@ const chessBoardWidthInPixels = 1180;
 chessBoardImage.onload = resize;
 const radioButtons = document.getElementsByClassName("radioTypeOfGame");
 let typeOfGame = "userVSCPU";
-chessBoard = []
+const chessBoard = [];
 for (let i; i < 8; i++){
-  row = []
+  row = [];
   for (let j; j < 8; j++){
     row.push(null);
-  }
-  chessBoard.push(row)
+  };
+  chessBoard.push(row);
 }
 for(let button of radioButtons){
   button.addEventListener("change",selectTypeOfGame);
