@@ -789,7 +789,7 @@ def start_game():
     elif type_of_game == "userVSCPU":
         player1 = Player(color, HUMAN_PLAYER)
         computer1_strategy = strategies[request.form["CPU1"]]
-        player2 = Player(opponent_color, COMPUTER_PLAYER, cpu_strategy)   
+        player2 = Player(opponent_color, COMPUTER_PLAYER, computer1_strategy)   
     elif type_of_game == "HotSeat":
         player1 = Player(WHITE_FIGURE_COLOR, HUMAN_PLAYER)
         player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)
