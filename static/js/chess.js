@@ -88,6 +88,14 @@ const chessBoardWidthInPixels = 1180;
 chessBoardImage.onload = resize;
 const radioButtons = document.getElementsByClassName("radioTypeOfGame");
 let typeOfGame = "userVSCPU";
+chessBoard = []
+for (let i; i < 8; i++){
+  row = []
+  for (let j; j < 8; j++){
+    row.push(null);
+  }
+  chessBoard.push(row)
+}
 for(let button of radioButtons){
   button.addEventListener("change",selectTypeOfGame);
 }
@@ -144,5 +152,10 @@ function startGame(){
 
 function gameLoad(response){
   result_obj = JSON.parse(response.responseText);
-  console.log(result_obj);
+  for (let figure in result_obj){
+    chessBoard[figure.row_pos][figure.col_pos] = figure;
+  };
+  for (row in chessBoard){
+    console.log(row);
+  }
 };
