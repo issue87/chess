@@ -88,7 +88,7 @@ const chessBoardWidthInPixels = 1180;
 chessBoardImage.onload = resize;
 const radioButtons = document.getElementsByClassName("radioTypeOfGame");
 for(let button of radioButtons){
-  button.addEventListener("change","selectTypeOfGame");
+  button.addEventListener("change",selectTypeOfGame);
 }
 
 function selectTypeOfGame(){
