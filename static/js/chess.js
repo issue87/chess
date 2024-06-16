@@ -93,14 +93,14 @@ for(let button of radioButtons){
 
 function selectTypeOfGame(){
   if(this.value == "CPUVSCPU"){
-    getElementById("choose1Computer").style.visibility = "visible";
-    getElementById("choose2Computer").style.visibility = "visible";
+    document.getElementById("choose1Computer").style.visibility = "visible";
+    document.getElementById("choose2Computer").style.visibility = "visible";
   }else if(this.value == "HotSeat")
   {
-    getElementById("choose1Computer").style.visibility = "hidden";;
-    getElementById("choose2Computer").style.visibility = "hidden";;
+    document.getElementById("choose1Computer").style.visibility = "hidden";;
+    document.getElementById("choose2Computer").style.visibility = "hidden";;
   }else if(this.value == "userVSCPU"){
-    getElementById("choose1Computer").style.visibility = "visible";;
-    getElementById("choose2Computer").style.visibility = "hidden";;
+    document.getElementById("choose1Computer").style.visibility = "visible";;
+    document.getElementById("choose2Computer").style.visibility = "hidden";;
   };
 };
