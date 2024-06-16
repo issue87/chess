@@ -122,12 +122,21 @@ function startGame(){
   dataForRequest = new Object();
   dataForRequest.typeOfRequest = "formData";
   dataForRequest.typeOfGame = typeOfGame;
+  const radioButtons = document.getElementsByClassName("hiddenRadioButton");
+  let chosenColor;
+  for(let button of radioButtons){
+    if (button.checked){
+      chosenColor = button.value;
+    };
+  };
+  dataForRequest.color = chosenColor
   if (typeOfGame == "CPUVSCPU"){
     const CPU1 = document.getElementById("choose1Computer").value;
     const CPU2 = document.getElementById("choose2Computer").value;
     dataForRequest.CPU1 = CPU1;
     dataForRequest.CPU2 = CPU2;
-    console.log(dataForRequest.CPU1);
-    console.log(dataForRequest.CPU2);
+  }else if (typeOfGame == "userVSCPU"){
+    const CPU1 = document.getElementById("choose1Computer").value;
+    dataForRequest.CPU1 = CPU1;
   }
 }
