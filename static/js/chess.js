@@ -92,5 +92,15 @@ for(let button of radioButtons){
 }
 
 function selectTypeOfGame(){
-  console.log(this.value);
+  if(this.value == "CPUVSCPU"){
+    getElementById("choose1Computer").style.visibility = "visible";
+    getElementById("choose2Computer").style.visibility = "visible";
+  }else if(this.value == "HotSeat")
+  {
+    getElementById("choose1Computer").style.visibility = "hidden";;
+    getElementById("choose2Computer").style.visibility = "hidden";;
+  }else if(this.value == "userVSCPU"){
+    getElementById("choose1Computer").style.visibility = "visible";;
+    getElementById("choose2Computer").style.visibility = "hidden";;
+  };
 };
