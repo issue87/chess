@@ -142,6 +142,7 @@ function startGame(){
   $ajaxUtils.sendGetRequest('/start_game',gameLoad,dataForRequest);
 }
 
-function gameLoad(){
-
+function gameLoad(response){
+  result_obj = JSON.parse(res.responseText);
+  console.log(result_obj);
 };

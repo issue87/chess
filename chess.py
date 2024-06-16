@@ -39,7 +39,7 @@ text_representation_draw_resons = {0: "by agreement of the playes",
 
 
 colors_representations = {0:"white", 1:"black"}
-figures_representation = {0:"K", 1: "Q", 2: "R", 3: "B", 4: "Kn", 5: "P"}
+figures_representation = {0:"king", 1: "queen", 2: "rook", 3: "bishop", 4: "knight", 5: "pawn"}
 figures_directions = {0: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       1: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       2: {(0, 1), (0, -1), (1, 0), (-1, 0)},
@@ -118,6 +118,13 @@ class Figure:
     
     def change_pos(self, pos):
         self.pos = pos
+
+    def tranlslate_to_JSON(self):
+        return {"color": colors_representations[self.color],
+                "kind": figures_representation[self.kind],
+                "row_pos": self.pos[0],
+                "col_pos": self.pos[1]
+               }
         
 class ChessBoard:
     """
@@ -252,6 +259,14 @@ class ChessBoard:
         assert 0 <= column <= 7
         return self.board[row][column]
     
+    def translate_board_figures_to_JSON(self):
+        copied_figures = []
+        for row in self.board:
+            for square in row:
+                if square != None:
+                    copied_figures.append(square.tranlslate_to_JSON);
+        return copied_figures
+
     def make_move(self, figure, position):
         '''
         Changes position of the figure to the given position. If grid contains 
@@ -763,14 +778,22 @@ def start_game():
         color = 0
     elif chosen_color == "black":
         color = 1
+    #get the other color 
+    opponent_color = (color + 1) % 2
+    #creating players
     if type_of_game == "CPUVSCPU":
-        pass
+        computer1_strategy = strategies[request.form["CPU1"]]
+        computer2_strategy = strategies[request.form["CPU2"]]
+        player1 = Player(color, COMPUTER_PLAYER, computer1_strategy)
+        player2 = Player(opponent_color, COMPUTER_PLAYER, computer1_strategy)
     elif type_of_game == "userVSCPU":
         player1 = Player(color, HUMAN_PLAYER)
-        cpu_strategy = strategies["random"]
-        flash(str(cpu_strategy))
-        player2 = Player(BLACK_FIGURE_COLOR, COMPUTER_PLAYER)   
+        computer1_strategy = strategies[request.form["CPU1"]]
+        player2 = Player(opponent_color, COMPUTER_PLAYER, cpu_strategy)   
     elif type_of_game == "HotSeat":
         player1 = Player(WHITE_FIGURE_COLOR, HUMAN_PLAYER)
-        player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)    
+        player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)
+    chessboard = ChessBoard(player1, player2)
+    return jsonify(chessboard.translate_board_figures_to_JSON())
+  
 
