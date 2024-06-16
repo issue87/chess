@@ -153,6 +153,11 @@ function startGame(){
 function gameLoad(response){
   result_obj = JSON.parse(response.responseText);
   for (let i in result_obj){
+    console.log(i);
+    console.log(result_obj[i].row_pos);
+    console.log(result_obj[i].col_pos);
+    console.log(chessBoard[result_obj[i].row_pos][result_obj[i].col_pos]);
+    console.log(result_obj[i]);
     chessBoard[result_obj[i].row_pos][result_obj[i].col_pos] = result_obj[i];
   };
   for (row in chessBoard){
