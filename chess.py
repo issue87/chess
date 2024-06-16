@@ -40,6 +40,7 @@ text_representation_draw_resons = {0: "by agreement of the playes",
 
 colors_representations = {0:"white", 1:"black"}
 figures_representation = {0:"K", 1: "Q", 2: "R", 3: "B", 4: "Kn", 5: "P"}
+strategies = {"random":random_strategy}
 figures_directions = {0: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       1: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       2: {(0, 1), (0, -1), (1, 0), (-1, 0)},
@@ -58,7 +59,7 @@ class Player:
     All computer players have different strategies to represent opponents of 
     different levels. Strategy must be passed as an argument.
     """
-    def __init__(self, color, type_of_player, strategy):
+    def __init__(self, color, type_of_player, strategy = None):
         self.color = color
         self.type_of_player = type_of_player
         self.long_castling_possible = True
@@ -739,7 +740,6 @@ def human_choice(board, legal_moves, request_for_draw):
         and to_move[0] == initianal_king_pos[board.get_opponent_player().get_color()][0]):
         figure_index = int(input("choose figure to be promoted in by typing a number: 1 - Queen, 2 - Rook, 3 - Bishop, 4 - Knight"))
         assert 5 > figure_index > 0
-        assert "lol"
     return (figure_to_move, to_move, figure_index)
     
 def game():
@@ -751,4 +751,25 @@ def game():
 @app.route('/', methods = ["GET","POST"])
 def index():
     return render_template("chess.html")
+
+@app.route('/start_game', methods = ["POST"])
+def start_game():
+    type_of_game = request.form["typeOfGame"]
+    chosen_color = request.form["color"]
+    if chosen_color == "random":
+        color = random.randrange(0, 2)
+    elif chosen_color == "white":
+        color = 0
+    elif chosen_color == "black":
+        color = 1
+    if type_of_game == "CPUVSCPU":
+        pass
+    elif type_of_game == "userVSCPU":
+        player1 = Player(color, HUMAN_PLAYER)
+        cpu_strategy = strategies["random"]
+        flash(str(cpu_strategy))
+        player2 = Player(BLACK_FIGURE_COLOR, COMPUTER_PLAYER)   
+    elif type_of_game == "HotSeat":
+        player1 = Player(WHITE_FIGURE_COLOR, HUMAN_PLAYER)
+        player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)    
 

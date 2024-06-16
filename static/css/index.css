@@ -24,6 +24,6 @@ canvas{
     border-width: 2px;
     border-style: solid;
 }
-#choose2Computer, label[for='choose1Computer']{
+#choose2Computer, label[for='choose2Computer']{
     visibility: hidden;
 }
