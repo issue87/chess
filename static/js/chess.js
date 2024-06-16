@@ -89,9 +89,9 @@ chessBoardImage.onload = resize;
 const radioButtons = document.getElementsByClassName("radioTypeOfGame");
 let typeOfGame = "userVSCPU";
 const chessBoard = [];
-for (let i; i < 8; i++){
-  row = [];
-  for (let j; j < 8; j++){
+for (let i = 0; i < 8; i++){
+  const row = [];
+  for (let j = 0; j < 8; j++){
     row.push(null);
   };
   chessBoard.push(row);
