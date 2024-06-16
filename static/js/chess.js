@@ -155,8 +155,7 @@ function gameLoad(response){
   for (let i in result_obj){
     const rowPos = result_obj[i].row_pos;
     const colPos = result_obj[i].col_pos;
-    console.log(chessBoard[rowPos][colPos]);
-    console.log(result_obj[i]);
+    console.log(chessBoard);
     chessBoard[rowPos][colPos] = result_obj[i];
   };
   for (row in chessBoard){
