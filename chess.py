@@ -795,7 +795,6 @@ def start_game():
         player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)
     chessboard = ChessBoard(player1, player2)
     chessboard_figures_JSON = chessboard.translate_board_figures_to_JSON()
-    print(chessboard_figures_JSON)
     return jsonify(chessboard_figures_JSON)
   
 

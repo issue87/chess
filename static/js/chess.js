@@ -143,6 +143,6 @@ function startGame(){
 }
 
 function gameLoad(response){
-  result_obj = JSON.parse(res.responseText);
+  result_obj = JSON.parse(response.responseText);
   console.log(result_obj);
 };
