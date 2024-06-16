@@ -95,18 +95,18 @@ function selectTypeOfGame(){
   if(this.value == "CPUVSCPU"){
     document.getElementById("choose1Computer").style.visibility = "visible";
     document.getElementById("choose2Computer").style.visibility = "visible";
-    document.querySelector("label[for='choose1Computer']") = "visible";
-    document.querySelector("label[for='choose2Computer']") = "visible";
+    document.querySelector("label[for='choose1Computer']").style.visibility  = "visible";
+    document.querySelector("label[for='choose2Computer']").style.visibility  = "visible";
   }else if(this.value == "HotSeat")
   {
     document.getElementById("choose1Computer").style.visibility = "hidden";
     document.getElementById("choose2Computer").style.visibility = "hidden";
-    document.querySelector("label[for='choose1Computer']") = "hidden";
-    document.querySelector("label[for='choose2Computer']") = "hidden";
+    document.querySelector("label[for='choose1Computer']").style.visibility  = "hidden";
+    document.querySelector("label[for='choose2Computer']").style.visibility  = "hidden";
   }else if(this.value == "userVSCPU"){
     document.getElementById("choose1Computer").style.visibility = "visible";
     document.getElementById("choose2Computer").style.visibility = "hidden";
-    document.querySelector("label[for='choose1Computer']") = "visible";
-    document.querySelector("label[for='choose2Computer']") = "hidden";
+    document.querySelector("label[for='choose1Computer']").style.visibility  = "visible";
+    document.querySelector("label[for='choose2Computer']").style.visibility  = "hidden";
   };
 };
