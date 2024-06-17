@@ -56,6 +56,7 @@ const figurePositionsOnSourceImage = {
 const widthOfTile = 125;
 // x 246 старт black pawn x 240 y 223 black rook x 242 y 96 black night x 371 y 100 black bishop x 497 y 97 black queen x - 623 y - 96 black king - x 751 y 96
 //white pawn x - 237 y - 1569 white rook x - 243, y - 1691, white knight x - 371, y - 1695, white bishop x - 496, y - 1694, white queen x - 620, y - 1699 white king x - 749 y 1698
+const chessBoard = [];
 function canvasAnimation(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
@@ -63,9 +64,8 @@ function canvasAnimation(){
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
   for (figureIndex in chessBoard){
     if (chessBoard[figureIndex] != null){
-      chessBoard[figureIndex];
-      x_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["x"];
-      y_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["y"];
+      const x_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["x"];
+      const y_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["y"];
       ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
                     90 + chessBoard[figureIndex].row_pos * 125, 
                     90 + chessBoard[figureIndex].col_pos * 125, widthOfTile, widthOfTile);
@@ -97,7 +97,6 @@ const chessBoardWidthInPixels = 1180;
 chessBoardImage.onload = resize;
 const radioButtons = document.getElementsByClassName("radioTypeOfGame");
 let typeOfGame = "userVSCPU";
-const chessBoard = [];
 for (let i = 0; i < 8; i++){
   const row = [];
   for (let j = 0; j < 8; j++){
