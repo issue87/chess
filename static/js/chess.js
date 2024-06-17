@@ -62,18 +62,17 @@ function canvasAnimation(){
   const canvasWidth = parseInt(canvasEl.offsetWidth);
   //ctx.scale(scaleRatio, scaleRatio);
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
-  for (figureIndex in chessBoard){
-    if (chessBoard[figureIndex] != null){
-      console.log(chessBoard);
-      console.log(chessBoard[figureIndex]);
-      console.log(chessBoard[figureIndex]["color"]);
-      console.log(chessBoard[figureIndex].color);
-      console.log(chessBoard[figureIndex].kind);
-      const x_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["x"];
-      const y_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["y"];
-      ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
-                    90 + chessBoard[figureIndex].row_pos * 125, 
-                    90 + chessBoard[figureIndex].col_pos * 125, widthOfTile, widthOfTile);
+  for (let i in chessBoard){
+    const row = chessBoard[i];
+    for (let j in row){
+      const square = row[j]; 
+      if (square != null){
+        const x_crop = figurePositionsOnSourceImage[square.color][square.kind]["x"];
+        const y_crop = figurePositionsOnSourceImage[square.color][square.kind]["y"];
+        ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
+                      90 + square.row_pos * 125, 
+                      90 + square.col_pos * 125, widthOfTile, widthOfTile);
+      };
     };
   };
 };
