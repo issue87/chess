@@ -60,8 +60,17 @@ function canvasAnimation(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
   //ctx.scale(scaleRatio, scaleRatio);
-  console.log(ctx);
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
+  for (figureIndex in chessBoard){
+    if (chessBoard[figureIndex] != null){
+      chessBoard[figureIndex];
+      x_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["x"];
+      y_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["y"];
+      ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
+                    90 + chessBoard[figureIndex].row_pos * 125, 
+                    90 + chessBoard[figureIndex].col_pos * 125, widthOfTile, widthOfTile);
+    };
+  };
 };
 function resize(){
   let canvasWidth;
@@ -157,7 +166,5 @@ function gameLoad(response){
     const colPos = result_obj[i].col_pos;
     chessBoard[rowPos][colPos] = result_obj[i];
   };
-  for (let i in chessBoard){
-    console.log(chessBoard[i]);
-  }
+  canvasAnimation();
 };
