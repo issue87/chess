@@ -167,4 +167,8 @@ function gameLoad(response){
     chessBoard[rowPos][colPos] = result_obj[i];
   };
   canvasAnimation();
+  const canvas = document.getElementById("gameCanvas");
+  const initialPage = document.getElementById("initialPage");
+  canvas.style.visibility = visible;
+  initialPage.style.visibility = hidden;
 };
