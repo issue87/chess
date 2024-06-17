@@ -64,7 +64,8 @@ function canvasAnimation(){
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
   for (figureIndex in chessBoard){
     if (chessBoard[figureIndex] != null){
-      console.log(figurePositionsOnSourceImage);
+      console.log(chessBoard);
+      console.log(chessBoard[figureIndex][color]);
       console.log(chessBoard[figureIndex].color);
       console.log(chessBoard[figureIndex].kind);
       const x_crop = figurePositionsOnSourceImage[chessBoard[figureIndex].color][chessBoard[figureIndex].kind]["x"];
