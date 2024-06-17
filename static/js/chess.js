@@ -172,6 +172,6 @@ function gameLoad(response){
   canvasAnimation();
   const canvas = document.getElementById("gameCanvas");
   const initialPage = document.getElementById("initialPage");
-  canvas.style.visibility = visible;
-  initialPage.style.visibility = hidden;
+  canvas.style.visibility = "visible";
+  initialPage.style.visibility = "hidden";
 };
