@@ -70,8 +70,8 @@ function canvasAnimation(){
         const x_crop = figurePositionsOnSourceImage[square.color][square.kind]["x"];
         const y_crop = figurePositionsOnSourceImage[square.color][square.kind]["y"];
         ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
-                      90 + square.row_pos * 125, 
-                      90 + square.col_pos * 125, widthOfTile, widthOfTile);
+                      90 + square.col_pos * 125, 
+                      90 + square.row_pos * 125, widthOfTile, widthOfTile);
       };
     };
   };
