@@ -65,6 +65,7 @@ function canvasAnimation(){
   for (figureIndex in chessBoard){
     if (chessBoard[figureIndex] != null){
       console.log(chessBoard);
+      console.log(chessBoard[figureIndex]);
       console.log(chessBoard[figureIndex]["color"]);
       console.log(chessBoard[figureIndex].color);
       console.log(chessBoard[figureIndex].kind);
