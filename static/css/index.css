@@ -27,3 +27,12 @@ canvas{
 #choose2Computer, label[for='choose2Computer']{
     visibility: hidden;
 }
+
+#labelTypeOfGame{
+    background-color: #d3d3d3;
+    border: #ffffff;
+}
+
+.inputTypeOfGame:checked + label{
+    background-color: #00ffff;
+}

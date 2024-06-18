@@ -12,13 +12,13 @@
     <body>
         <div id="initialPage">
             <section id="gameSettings">
-                <div>
-                    <label for="userVSCPU">play against CPU</label>
-                    <input type="radio" id="userVSCPU" name="typeOfGame" value="userVSCPU" class="radioTypeOfGame" checked>
-                    <label for="CPUVSCPU">CPU against CPU</label>
-                    <input type="radio" id="CPUVSCPU" name="typeOfGame" value="CPUVSCPU" class="radioTypeOfGame">
-                    <label for="HotSeat">Hot seat</label>
-                    <input type="radio" id="HotSeat" name="typeOfGame" value="HotSeat" class="radioTypeOfGame">
+                <div class="radioContainer">
+                    <input type="radio" id="userVSCPU" name="typeOfGame" value="userVSCPU" class="hiddenRadioButton inputTypeOfGame" checked>
+                    <label for="userVSCPU" class="labelTypeOfGame">play against CPU</label>
+                    <input type="radio" id="CPUVSCPU" name="typeOfGame" value="CPUVSCPU" class="hiddenRadioButton inputTypeOfGame">
+                    <label for="CPUVSCPU" class="labelTypeOfGame">CPU against CPU</label>
+                    <input type="radio" id="HotSeat" name="typeOfGame" value="HotSeat" class="hiddenRadioButton inputTypeOfGame">
+                    <label for="HotSeat" class="labelTypeOfGame">Hot seat</label>
                 </div>
                 <label>
                     <input type="radio" id="black" name="color" value="black" class="hiddenRadioButton" checked>
