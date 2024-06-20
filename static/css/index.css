@@ -28,7 +28,7 @@ canvas{
     visibility: hidden;
 }
 
-#labelTypeOfGame{
+.labelTypeOfGame{
     background-color: #a5a1a1;
     border: #ffffff;
 }
