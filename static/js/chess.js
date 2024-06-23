@@ -107,9 +107,9 @@ function touchSquare(event){
   const startOfCanvasY = canvasEl.offsetTop + canvasEl.clientTop;
   const endOfCanvasX = startOfCanvasX + canvasEl.offsetWidth;
   const endOfCanvasY = startOfCanvasY + canvasEl.offsetHeight;
-  const chessAsideWidth = (canvasEl.offsetWidth/chessBoardWidthInPixels) * 90;
-  const chessAsideHeight = (canvasEl.offsetHeight/chessBoardWidthInPixels) * 90;
-  const chessTileWidth = (canvasEl.offsetWidth/chessBoardWidthInPixels) * widthOfTile;
+  const chessAsideWidth = (canvasEl.offsetWidth/chessBoardWidthInPixels) * 87;
+  const chessAsideHeight = (canvasEl.offsetHeight/chessBoardWidthInPixels) * 88.5;
+  const chessTileWidth = (canvasEl.offsetWidth/chessBoardWidthInPixels) * 125.7;
   const startOfBoardX = chessAsideWidth + startOfCanvasX;
   const startOfBoardY = chessAsideHeight + startOfCanvasY;
   const endOfBoardX = endOfCanvasX - chessAsideWidth;
