@@ -101,7 +101,7 @@ function touchSquare(event){
 };
 
 const canvasEl = document.getElementById("gameCanvas");
-canvasEl.addEventListener("click",)
+canvasEl.addEventListener("click",touchSquare);
 const ctx = canvasEl.getContext("2d");
 let canvasScaleRatio;
 const chessBoardImage = document.createElement("img");
