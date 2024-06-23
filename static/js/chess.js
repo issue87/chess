@@ -100,9 +100,11 @@ function touchSquare(event){
   console.log(event.pageX);
   console.log(event.pageY);
   console.log(canvasEl.offsetLeft + canvasEl.clientLeft);
-  console.log(canvasEl.offsetHeight + canvasEl.clientHeight);
+  console.log(canvasEl.offsetTop + canvasEl.clientTop);
   console.log(canvasEl.offsetLeft + canvasEl.clientLeft + canvasEl.offsetWidth);
-  console.log(canvasEl.offsetHeight + canvasEl.clientHeight + canvasEl.offsetHeight);
+  console.log(canvasEl.offsetTop + canvasEl.clientTop + canvasEl.offsetHeight);
+  console.log(canvasEl.offsetLeft + canvasEl.clientLeft + parseInt(canvasEl.style.width));
+  console.log(canvasEl.offsetTop + canvasEl.clientTop + parseInt(canvasEl.style.height));
 };
 
 const canvasEl = document.getElementById("gameCanvas");
