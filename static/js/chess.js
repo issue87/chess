@@ -118,7 +118,7 @@ function touchSquare(event){
   {
       const clickedCol = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
       const clickedRow = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
-      const selectedSqare = [clickedRow, clickedCol];
+      selectedSqare = [clickedRow, clickedCol];
       canvasAnimation();
   };
 };
