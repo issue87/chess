@@ -101,6 +101,9 @@ function resize(){
 };
 
 function touchSquare(event){
+  /*handles user's click event on canvas. 
+  If there weren't selected any figures before and an user clicked on the square where figure is located, it selects figure.
+   When there is a selected figure, it moves that figure to the square is being clicking on.*/
   const canvasEl = document.getElementById("gameCanvas");
   const ctx = canvasEl.getContext("2d");
   const startOfCanvasX = canvasEl.offsetLeft + canvasEl.clientLeft;
@@ -118,8 +121,14 @@ function touchSquare(event){
   {
       const clickedCol = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
       const clickedRow = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
-      selectedSqare = [clickedRow, clickedCol];
-      canvasAnimation();
+      if(selectedSqare != null){
+        console.log("move from ", selectedSqare, " to ", [clickedCol, clickedRow]);
+        return;
+      };
+      if (chessBoard[clickedRow][clickedCol] != null){
+        selectedSqare = [clickedRow, clickedCol];
+        canvasAnimation();
+      };
   };
 };
 
