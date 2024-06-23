@@ -58,12 +58,16 @@ const chessBoardWidthInPixels = 1180;
 // x 246 старт black pawn x 240 y 223 black rook x 242 y 96 black night x 371 y 100 black bishop x 497 y 97 black queen x - 623 y - 96 black king - x 751 y 96
 //white pawn x - 237 y - 1569 white rook x - 243, y - 1691, white knight x - 371, y - 1695, white bishop x - 496, y - 1694, white queen x - 620, y - 1699 white king x - 749 y 1698
 const chessBoard = [];
-
+let selectedSqare = null;
 function canvasAnimation(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
   //ctx.scale(scaleRatio, scaleRatio);
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
+  if (selectedSqare != null){
+    ctx.fillStyle = "#7FFFD4";
+    ctx.fillRect(90 + selectedSqare[1] * widthOfTile,90 + (7 - selectedSqare[0]) * widthOfTile, widthOfTile, widthOfTile);
+  };
   for (let i in chessBoard){
     const row = chessBoard[i];
     for (let j in row){
@@ -98,6 +102,7 @@ function resize(){
 
 function touchSquare(event){
   const canvasEl = document.getElementById("gameCanvas");
+  const ctx = canvasEl.getContext("2d");
   const startOfCanvasX = canvasEl.offsetLeft + canvasEl.clientLeft;
   const startOfCanvasY = canvasEl.offsetTop + canvasEl.clientTop;
   const endOfCanvasX = startOfCanvasX + canvasEl.offsetWidth;
@@ -111,14 +116,11 @@ function touchSquare(event){
   const endOfBoardY = endOfCanvasY - chessAsideHeight;
   if (event.pageX > startOfBoardX && event.pageX < endOfBoardX && event.pageY > startOfBoardY && event.pageY < endOfBoardY)
   {
-      const clickedRow = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
-      const clickedCol = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
-      console.log("rowcol", clickedRow, clickedCol);
-  }else{
-    console.log("you touched the chessboard aside");
+      const clickedCol = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
+      const clickedRow = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
+      selectedSqare = #[clickedRow, clickedCol];
+      canvasAnimation();
   };
-  console.log("click", event.pageX, event.pageY, "offset", canvasEl.offsetWidth, canvasEl.offsetHeight);
-  console.log("start of a board", startOfBoardX, startOfBoardY);
 };
 
 const canvasEl = document.getElementById("gameCanvas");
