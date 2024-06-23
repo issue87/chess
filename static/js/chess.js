@@ -57,6 +57,7 @@ const widthOfTile = 125;
 // x 246 старт black pawn x 240 y 223 black rook x 242 y 96 black night x 371 y 100 black bishop x 497 y 97 black queen x - 623 y - 96 black king - x 751 y 96
 //white pawn x - 237 y - 1569 white rook x - 243, y - 1691, white knight x - 371, y - 1695, white bishop x - 496, y - 1694, white queen x - 620, y - 1699 white king x - 749 y 1698
 const chessBoard = [];
+
 function canvasAnimation(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
@@ -76,6 +77,7 @@ function canvasAnimation(){
     };
   };
 };
+
 function resize(){
   let canvasWidth;
   if (screen.availWidth > screen.availHeight){
@@ -92,7 +94,14 @@ function resize(){
   ctx.scale(canvasScaleRatio,canvasScaleRatio);
   canvasAnimation();
 };
+
+function touchSquare(event){
+  console.log(event.pageX);
+  console.log(event.pageX);
+};
+
 const canvasEl = document.getElementById("gameCanvas");
+canvasEl.addEventListener("click",)
 const ctx = canvasEl.getContext("2d");
 let canvasScaleRatio;
 const chessBoardImage = document.createElement("img");
