@@ -123,7 +123,7 @@ function touchSquare(event){
       const clickedRow = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
       if(selectedSqare != null){
         if(chessBoard[clickedRow][clickedCol] != null){
-          if(selectedSqare.color == chessBoard[clickedRow][clickedCol].color){
+          if(chessBoard[selectedSqare[0]][selectedSqare[1]].color == chessBoard[clickedRow][clickedCol].color){
             selectedSqare = [clickedRow, clickedCol];
             canvasAnimation();
             return;
