@@ -66,7 +66,7 @@ function canvasAnimation(){
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
   if (selectedSqare != null){
     ctx.fillStyle = "#7FFFD4";
-    ctx.fillRect(87 + selectedSqare[1] * 125.5, 88.5 + (7 - selectedSqare[0]) * 125.5, widthOfTile, widthOfTile);
+    ctx.fillRect(87 + selectedSqare[1] * 125.7, 88.5 + (7 - selectedSqare[0]) * 125.7, widthOfTile, widthOfTile);
   };
   for (let i in chessBoard){
     const row = chessBoard[i];
@@ -76,8 +76,8 @@ function canvasAnimation(){
         const x_crop = figurePositionsOnSourceImage[square.color][square.kind]["x"];
         const y_crop = figurePositionsOnSourceImage[square.color][square.kind]["y"];
         ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
-                      87 + square.col_pos * 125.5, 
-                      88.5 + (7 - square.row_pos) * 125.5, widthOfTile, widthOfTile);
+                      87 + square.col_pos * 125.7, 
+                      88.5 + (7 - square.row_pos) * 125.7, widthOfTile, widthOfTile);
       };
     };
   };
