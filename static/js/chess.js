@@ -54,6 +54,7 @@ const figurePositionsOnSourceImage = {
   }
 };
 const widthOfTile = 125;
+const chessBoardWidthInPixels = 1180;
 // x 246 старт black pawn x 240 y 223 black rook x 242 y 96 black night x 371 y 100 black bishop x 497 y 97 black queen x - 623 y - 96 black king - x 751 y 96
 //white pawn x - 237 y - 1569 white rook x - 243, y - 1691, white knight x - 371, y - 1695, white bishop x - 496, y - 1694, white queen x - 620, y - 1699 white king x - 749 y 1698
 const chessBoard = [];
@@ -97,14 +98,28 @@ function resize(){
 
 function touchSquare(event){
   const canvasEl = document.getElementById("gameCanvas");
-  console.log(event.pageX);
-  console.log(event.pageY);
-  console.log(canvasEl.offsetLeft + canvasEl.clientLeft);
-  console.log(canvasEl.offsetTop + canvasEl.clientTop);
-  console.log(canvasEl.offsetLeft + canvasEl.clientLeft + canvasEl.offsetWidth);
-  console.log(canvasEl.offsetTop + canvasEl.clientTop + canvasEl.offsetHeight);
-  console.log(canvasEl.offsetLeft + canvasEl.clientLeft + parseInt(canvasEl.style.width));
-  console.log(canvasEl.offsetTop + canvasEl.clientTop + parseInt(canvasEl.style.height));
+  const startOfCanvasX = canvasEl.offsetLeft + canvasEl.clientLeft;
+  const startOfCanvasY = canvasEl.offsetTop + canvasEl.clientTop;
+  const endOfCanvasX = startOfCanvasX + canvasEl.offsetWidth;
+  const endOfCanvasY = startOfCanvasY + canvasEl.offsetHeight;
+  const chessAsideWidth = (canvasEl.offsetWidth/chessBoardWidthInPixels) * 90;
+  const chessAsideHeight = (canvasEl.offsetHeight/chessBoardWidthInPixels) * 90;
+  const chessTileWidth = (canvasEl.offsetWidth/chessBoardWidthInPixels) * widthOfTile;
+  const startOfBoardX = chessAsideWidth + startOfCanvasX;
+  const startOfBoardY = chessAsideHeight + startOfCanvasY;
+  const endOfBoardX = endOfCanvasX - chessAsideWidth;
+  const endOfBoardY = endOfCanvasY - chessAsideHeight;
+  if (event.pageX > startOfBoardX and event.pageX < endOfBoardX and 
+      event.pageY > startOfBoardY and event.pageY < endOfBoardY)
+  {
+      const clickedRow = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
+      const clickedCol = Math.floor(((event.pageY - startOfBoardY)/chessTileWidth));
+      console.log("rowcol", clickedRow, clickedCol);
+  }else{
+    console.log("you touched the chessboard aside");
+  };
+  console.log("click", event.pageX, event.pageY, "offset", canvasEl.offsetWidth, canvasEl.offsetHeight);
+  console.log("start of a board", startOfBoardX, startOfBoardY);
 };
 
 const canvasEl = document.getElementById("gameCanvas");
@@ -113,7 +128,6 @@ const ctx = canvasEl.getContext("2d");
 let canvasScaleRatio;
 const chessBoardImage = document.createElement("img");
 chessBoardImage.src = "../static/images/chessBoard.png";
-const chessBoardWidthInPixels = 1180;
 chessBoardImage.onload = resize;
 const radioButtons = document.getElementsByClassName("inputTypeOfGame");
 let typeOfGame = "userVSCPU";
