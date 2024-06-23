@@ -53,12 +53,47 @@ const figurePositionsOnSourceImage = {
     }
   }
 };
+//number constants 
+const humanPlayer = 0;
+const computerPlayer = 1;
+const whiteChessColor = 0;
+const blackChessColor = 1;
+
 const widthOfTile = 125;
 const chessBoardWidthInPixels = 1180;
 // x 246 старт black pawn x 240 y 223 black rook x 242 y 96 black night x 371 y 100 black bishop x 497 y 97 black queen x - 623 y - 96 black king - x 751 y 96
 //white pawn x - 237 y - 1569 white rook x - 243, y - 1691, white knight x - 371, y - 1695, white bishop x - 496, y - 1694, white queen x - 620, y - 1699 white king x - 749 y 1698
 const chessBoard = [];
 let selectedSqare = null;
+
+class Player{
+  constructor(typeOfPlayer, strategy = null, color){
+    this.typeOfPlayer = typeOfPlayer;
+    this.strategy = strategy;
+    this.color = color;
+  }
+
+  get typeOfPlayer(){
+    return this.typeOfPlayer;
+  }
+  get strategy(){
+    return this.strategy;
+  }
+  get color(){
+    return this.color;
+  }
+}
+
+class Game{
+  constructor(whitePlayer, blackPlayer){
+    this.currentPlayer = whitePlayer;
+    this.otherPlayer = blackPlayer;
+  }
+
+  get currentPlayer(){
+    return this.currentPlayer;
+  }
+}
 function canvasAnimation(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
