@@ -96,8 +96,13 @@ function resize(){
 };
 
 function touchSquare(event){
+  const canvasEl = document.getElementById("gameCanvas");
   console.log(event.pageX);
-  console.log(event.pageX);
+  console.log(event.pageY);
+  console.log(canvasEl.offsetLeft + canvasEl.clientLeft);
+  console.log(canvasEl.offsetHeight + canvasEl.clientHeight);
+  console.log(canvasEl.offsetLeft + canvasEl.clientLeft + canvasEl.style.width);
+  console.log(canvasEl.offsetHeight + canvasEl.clientHeight + canvasEl.style.height);
 };
 
 const canvasEl = document.getElementById("gameCanvas");
