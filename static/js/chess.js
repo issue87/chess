@@ -122,7 +122,7 @@ function touchSquare(event){
       const clickedCol = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
       const clickedRow = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
       if(selectedSqare != null){
-        console.log("move from ", selectedSqare, " to ", [clickedCol, clickedRow]);
+        console.log("move from ", selectedSqare, " to ", [clickedRow, clickedCol]);
         return;
       };
       if (chessBoard[clickedRow][clickedCol] != null){
