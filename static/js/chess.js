@@ -109,7 +109,7 @@ function touchSquare(event){
   const startOfBoardY = chessAsideHeight + startOfCanvasY;
   const endOfBoardX = endOfCanvasX - chessAsideWidth;
   const endOfBoardY = endOfCanvasY - chessAsideHeight;
-  if (event.pageX > startOfBoardX and event.pageX < endOfBoardX and event.pageY > startOfBoardY and event.pageY < endOfBoardY)
+  if (event.pageX > startOfBoardX && event.pageX < endOfBoardX && event.pageY > startOfBoardY && event.pageY < endOfBoardY)
   {
       const clickedRow = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
       const clickedCol = Math.floor(((event.pageY - startOfBoardY)/chessTileWidth));
