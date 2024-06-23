@@ -112,7 +112,7 @@ function touchSquare(event){
   if (event.pageX > startOfBoardX && event.pageX < endOfBoardX && event.pageY > startOfBoardY && event.pageY < endOfBoardY)
   {
       const clickedRow = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
-      const clickedCol = Math.floor(((event.pageY - startOfBoardY)/chessTileWidth));
+      const clickedCol = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
       console.log("rowcol", clickedRow, clickedCol);
   }else{
     console.log("you touched the chessboard aside");
