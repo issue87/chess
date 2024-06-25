@@ -87,6 +87,11 @@ class Player:
         move = self.strategy(board, legal_moves, request_for_draw)
         return move
     
+    def translate_to_JSON(self):
+        return {
+            "color": self.color,
+            "playerType": self.type_of_player
+        }
     
     
 class Figure:
@@ -785,7 +790,7 @@ def start_game():
         computer1_strategy = strategies[request.form["CPU1"]]
         computer2_strategy = strategies[request.form["CPU2"]]
         player1 = Player(color, COMPUTER_PLAYER, computer1_strategy)
-        player2 = Player(opponent_color, COMPUTER_PLAYER, computer1_strategy)
+        player2 = Player(opponent_color, COMPUTER_PLAYER, computer2_strategy)
     elif type_of_game == "userVSCPU":
         player1 = Player(color, HUMAN_PLAYER)
         computer1_strategy = strategies[request.form["CPU1"]]
@@ -795,6 +800,12 @@ def start_game():
         player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)
     chessboard = ChessBoard(player1, player2)
     chessboard_figures_JSON = chessboard.translate_board_figures_to_JSON()
-    return jsonify(chessboard_figures_JSON)
+    player1JSON = player1.tranlslate_to_JSON();
+    player1JSON["cpu"] = request.form["CPU1"];
+    player2JSON = player2.tranlslate_to_JSON();
+    player2JSON["cpu"] = request.form["CPU2"];
+    game_JSON = {"players": [player1JSON, player2JSON],
+                  "board": chessboard_figures_JSON}
+    return jsonify(game_JSON)
   
 

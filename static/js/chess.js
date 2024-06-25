@@ -68,32 +68,54 @@ let selectedSqare = null;
 
 class Player{
   constructor(typeOfPlayer, strategy = null, color){
-    this.typeOfPlayer = typeOfPlayer;
-    this.strategy = strategy;
-    this.color = color;
+    this._typeOfPlayer = typeOfPlayer;
+    this._strategy = strategy;
+    this._color = color;
   }
 
   get typeOfPlayer(){
-    return this.typeOfPlayer;
+    return this._typeOfPlayer;
   }
   get strategy(){
-    return this.strategy;
+    return this._strategy;
   }
   get color(){
-    return this.color;
+    return this._color;
   }
-}
+};
 
 class Game{
   constructor(whitePlayer, blackPlayer){
-    this.currentPlayer = whitePlayer;
-    this.otherPlayer = blackPlayer;
+    this._currentPlayer = whitePlayer;
+    this._otherPlayer = blackPlayer;
+    this._chessBoard = [];
   }
 
   get currentPlayer(){
-    return this.currentPlayer;
+    return this._currentPlayer;
   }
-}
+
+  get otherPlayer(){
+    return this._otherPlayer;
+  }
+
+  set currentPlayer(player){
+    this._currentPlayer = player;
+  }
+
+  set otherPlayer(player){
+    this._otherPlayer = player;
+  }
+
+  switchPlayer(){
+    [this.currentPlayer, this.otherPlayer] = [this.otherPlayer, this.currentPlayer];
+  }
+
+  getSquare(row, col){
+    return this._chessBoard[row][col];
+  }
+};
+
 function canvasAnimation(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
@@ -232,7 +254,7 @@ function startGame(){
       chosenColor = button.value;
     };
   };
-  dataForRequest.color = chosenColor
+  dataForRequest.color = chosenColor;
   if (typeOfGame == "CPUVSCPU"){
     const CPU1 = document.getElementById("choose1Computer").value;
     const CPU2 = document.getElementById("choose2Computer").value;
@@ -246,10 +268,12 @@ function startGame(){
 }
 
 function gameLoad(response){
-  result_obj = JSON.parse(response.responseText);
-  for (let i in result_obj){
-    const rowPos = result_obj[i].row_pos;
-    const colPos = result_obj[i].col_pos;
+  const result_obj = JSON.parse(response.responseText);
+  console.log();
+  const board = result_obj.board;
+  for (let i in board){
+    const rowPos = board[i].row_pos;
+    const colPos = board[i].col_pos;
     chessBoard[rowPos][colPos] = result_obj[i];
   };
   canvasAnimation();
