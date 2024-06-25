@@ -264,7 +264,8 @@ function startGame(){
     const CPU1 = document.getElementById("choose1Computer").value;
     dataForRequest.CPU1 = CPU1;
   }
-  $ajaxUtils.sendGetRequest('/start_game',gameLoad,dataForRequest);
+  console.log(dataForRequest);
+  $ajaxUtils.sendGetRequest('/start_game', gameLoad, dataForRequest);
 }
 
 function gameLoad(response){
