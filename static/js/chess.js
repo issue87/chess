@@ -274,7 +274,7 @@ function gameLoad(response){
   for (let i in board){
     const rowPos = board[i].row_pos;
     const colPos = board[i].col_pos;
-    chessBoard[rowPos][colPos] = result_obj[i];
+    chessBoard[rowPos][colPos] = board[i];
   };
   canvasAnimation();
   const canvas = document.getElementById("gameCanvas");
