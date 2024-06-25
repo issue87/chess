@@ -269,7 +269,7 @@ function startGame(){
 
 function gameLoad(response){
   const result_obj = JSON.parse(response.responseText);
-  console.log();
+  console.log(result_obj);
   const board = result_obj.board;
   for (let i in board){
     const rowPos = board[i].row_pos;
