@@ -53,6 +53,9 @@ const figurePositionsOnSourceImage = {
     }
   }
 };
+
+const colorNumberSign = {"white": 0, "black"}
+
 //number constants 
 const humanPlayer = 0;
 const computerPlayer = 1;
@@ -194,8 +197,12 @@ function touchSquare(event){
         return;
       };
       if (chessBoard[clickedRow][clickedCol] != null){
-        selectedSqare = [clickedRow, clickedCol];
-        canvasAnimation();
+        /*checking figure was touched belongs to player who must move now, because figure color is a string and player color is a number it uses colorNumberSign to translate string 
+        into its number representation*/
+        if (colorNumberSign[chessBoard[clickedRow][clickedCol].color] == gameObject.currentPlayer.color){
+          selectedSqare = [clickedRow, clickedCol];
+          canvasAnimation();
+        };
       };
   };
 };
