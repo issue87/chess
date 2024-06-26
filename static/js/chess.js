@@ -65,7 +65,7 @@ const chessBoardWidthInPixels = 1180;
 //white pawn x - 237 y - 1569 white rook x - 243, y - 1691, white knight x - 371, y - 1695, white bishop x - 496, y - 1694, white queen x - 620, y - 1699 white king x - 749 y 1698
 
 let selectedSqare = null;
-let gameObject;
+let gameObject = null;
 
 class Player{
   constructor(typeOfPlayer, color){
@@ -142,20 +142,22 @@ function canvasAnimation(){
 };
 
 function resize(){
-  let canvasWidth;
-  if (screen.availWidth > screen.availHeight){
-    canvasWidth = screen.availHeight * 0.8;
-  }else{
-    canvasWidth = screen.availWidth * 0.8;
-  };
-  const devicePixelRatio = window.devicePixelRatio;
-  //adjusting width and height of the canvas with user device's scale of the page
-  canvasWidth /= window.visualViewport.scale;
-  canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
-  canvasEl.setAttribute("width",`${canvasWidth}`);
-  canvasEl.setAttribute("height",`${canvasWidth}`);
-  ctx.scale(canvasScaleRatio,canvasScaleRatio);
-  canvasAnimation();
+  if (gameObject != null){
+    let canvasWidth;
+    if (screen.availWidth > screen.availHeight){
+      canvasWidth = screen.availHeight * 0.8;
+    }else{
+      canvasWidth = screen.availWidth * 0.8;
+    };
+    const devicePixelRatio = window.devicePixelRatio;
+    //adjusting width and height of the canvas with user device's scale of the page
+    canvasWidth /= window.visualViewport.scale;
+    canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
+    canvasEl.setAttribute("width",`${canvasWidth}`);
+    canvasEl.setAttribute("height",`${canvasWidth}`);
+    ctx.scale(canvasScaleRatio,canvasScaleRatio);
+    canvasAnimation();
+  }
 };
 
 function touchSquare(event){
