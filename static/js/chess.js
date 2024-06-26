@@ -54,7 +54,7 @@ const figurePositionsOnSourceImage = {
   }
 };
 
-const colorNumberSign = {"white": 0, "black"};
+const colorNumberSign = {"white": 0, "black": 1};
 
 //number constants 
 const humanPlayer = 0;
