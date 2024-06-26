@@ -63,8 +63,9 @@ const widthOfTile = 125;
 const chessBoardWidthInPixels = 1180;
 // x 246 старт black pawn x 240 y 223 black rook x 242 y 96 black night x 371 y 100 black bishop x 497 y 97 black queen x - 623 y - 96 black king - x 751 y 96
 //white pawn x - 237 y - 1569 white rook x - 243, y - 1691, white knight x - 371, y - 1695, white bishop x - 496, y - 1694, white queen x - 620, y - 1699 white king x - 749 y 1698
-const chessBoard = [];
+
 let selectedSqare = null;
+let gameObject;
 
 class Player{
   constructor(typeOfPlayer, color){
@@ -82,10 +83,14 @@ class Player{
 };
 
 class Game{
-  constructor(whitePlayer, blackPlayer){
+  /*keeps the game track. 
+  Canvas animation class uses its board for rendering figures on the canvas. 
+  There is a similar class on the server side*/
+  
+  constructor(whitePlayer, blackPlayer, chessboard){
     this._currentPlayer = whitePlayer;
     this._otherPlayer = blackPlayer;
-    this._chessBoard = [];
+    this._chessBoard = chessboard;
   }
 
   get currentPlayer(){
@@ -122,10 +127,9 @@ function canvasAnimation(){
     ctx.fillStyle = "#7FFFD4";
     ctx.fillRect(87 + selectedSqare[1] * 125.7, 88.5 + (7 - selectedSqare[0]) * 125.7, widthOfTile, widthOfTile);
   };
-  for (let i in chessBoard){
-    const row = chessBoard[i];
-    for (let j in row){
-      const square = row[j]; 
+  for (let i = 0; i <= 7; i++){
+    for (let j = 0; j <= 7; j++){
+      const square = gameObject.getSquare(i, j);
       if (square != null){
         const x_crop = figurePositionsOnSourceImage[square.color][square.kind]["x"];
         const y_crop = figurePositionsOnSourceImage[square.color][square.kind]["y"];
@@ -261,19 +265,26 @@ function startGame(){
     const CPU1 = document.getElementById("choose1Computer").value;
     dataForRequest.CPU1 = CPU1;
   }
-  console.log(dataForRequest);
   $ajaxUtils.sendGetRequest('/start_game', gameLoad, dataForRequest);
 }
 
 function gameLoad(response){
+  /*This function gets initial data from server, where game class has been iniated.
+   After that the function iniates game class object in js.
+   At the end it starts canvas animation, hides setting game section*/
   const result_obj = JSON.parse(response.responseText);
-  console.log(result_obj);
   const board = result_obj.board;
+  const chessBoard = []
   for (let i in board){
     const rowPos = board[i].row_pos;
     const colPos = board[i].col_pos;
     chessBoard[rowPos][colPos] = board[i];
   };
+  const player1JSON = result_obj.players[0];
+  const player2JSON = result_obj.players[1];
+  const player1 = new Player(player1JSON.playerType, player1JSON.color);
+  const player2 = new Player(player2JSON.playerType, player2JSON.color);
+  gameObject = new Game(player1, player2, chessBoard);
   canvasAnimation();
   const canvas = document.getElementById("gameCanvas");
   const initialPage = document.getElementById("initialPage");
