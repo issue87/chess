@@ -185,8 +185,8 @@ function touchSquare(event){
       const clickedCol = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
       const clickedRow = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
       if(selectedSqare != null){
-        if(chessBoard[clickedRow][clickedCol] != null){
-          if(chessBoard[selectedSqare[0]][selectedSqare[1]].color == chessBoard[clickedRow][clickedCol].color){
+        if(gameObject.getSquare(clickedRow, clickedCol) != null){
+          if(gameObject.getSquare(selectedSqare[0], selectedSqare[1]).color == gameObject.getSquare(clickedRow, clickedCol).color){
             selectedSqare = [clickedRow, clickedCol];
             canvasAnimation();
             return;
@@ -196,10 +196,10 @@ function touchSquare(event){
         console.log("move from ", selectedSqare, " to ", [clickedRow, clickedCol]);
         return;
       };
-      if (chessBoard[clickedRow][clickedCol] != null){
+      if (gameObject.getSquare(clickedRow, clickedCol) != null){
         /*checking figure was touched belongs to player who must move now, because figure color is a string and player color is a number it uses colorNumberSign to translate string 
         into its number representation*/
-        if (colorNumberSign[chessBoard[clickedRow][clickedCol].color] == gameObject.currentPlayer.color){
+        if (colorNumberSign[gameObject.getSquare(clickedRow, clickedCol).color] == gameObject.currentPlayer.color){
           selectedSqare = [clickedRow, clickedCol];
           canvasAnimation();
         };
