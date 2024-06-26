@@ -86,7 +86,7 @@ class Game{
   /*keeps the game track. 
   Canvas animation class uses its board for rendering figures on the canvas. 
   There is a similar class on the server side*/
-  
+
   constructor(whitePlayer, blackPlayer, chessboard){
     this._currentPlayer = whitePlayer;
     this._otherPlayer = blackPlayer;
@@ -207,13 +207,7 @@ chessBoardImage.src = "../static/images/chessBoard.png";
 chessBoardImage.onload = resize;
 const radioButtons = document.getElementsByClassName("inputTypeOfGame");
 let typeOfGame = "userVSCPU";
-for (let i = 0; i < 8; i++){
-  const row = [];
-  for (let j = 0; j < 8; j++){
-    row.push(null);
-  };
-  chessBoard.push(row);
-}
+
 for(let button of radioButtons){
   button.addEventListener("change",selectTypeOfGame);
 }
@@ -275,6 +269,13 @@ function gameLoad(response){
   const result_obj = JSON.parse(response.responseText);
   const board = result_obj.board;
   const chessBoard = []
+  for (let i = 0; i < 8; i++){
+    const row = [];
+    for (let j = 0; j < 8; j++){
+      row.push(null);
+    };
+    chessBoard.push(row);
+  };
   for (let i in board){
     const rowPos = board[i].row_pos;
     const colPos = board[i].col_pos;
