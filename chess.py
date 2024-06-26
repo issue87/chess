@@ -125,7 +125,7 @@ class Figure:
         self.pos = pos
 
     def tranlslate_to_JSON(self):
-        return {"color": self.color,
+        return {"color": colors_representations[self.color],
                 "kind": figures_representation[self.kind],
                 "row_pos": self.pos[0],
                 "col_pos": self.pos[1]
