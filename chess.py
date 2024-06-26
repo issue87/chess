@@ -801,9 +801,7 @@ def start_game():
     chessboard = ChessBoard(player1, player2)
     chessboard_figures_JSON = chessboard.translate_board_figures_to_JSON()
     player1JSON = player1.translate_to_JSON();
-    player1JSON["cpu"] = request.form["CPU1"];
     player2JSON = player2.translate_to_JSON();
-    player2JSON["cpu"] = request.form["CPU2"];
     game_JSON = {"players": [player1JSON, player2JSON],
                   "board": chessboard_figures_JSON}
     return jsonify(game_JSON)

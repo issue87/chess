@@ -67,18 +67,15 @@ const chessBoard = [];
 let selectedSqare = null;
 
 class Player{
-  constructor(typeOfPlayer, strategy = null, color){
+  constructor(typeOfPlayer, color){
     this._typeOfPlayer = typeOfPlayer;
-    this._strategy = strategy;
     this._color = color;
   }
 
   get typeOfPlayer(){
     return this._typeOfPlayer;
   }
-  get strategy(){
-    return this._strategy;
-  }
+
   get color(){
     return this._color;
   }
