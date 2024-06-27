@@ -145,6 +145,7 @@ function canvasAnimation(){
 };
 
 function resize(){
+  console.log("resize");
   if (gameObject != null){
     let canvasWidth;
     if (screen.availWidth > screen.availHeight){
@@ -154,12 +155,8 @@ function resize(){
     };
     const devicePixelRatio = window.devicePixelRatio;
     //adjusting width and height of the canvas with user device's scale of the page
-    console.log("screen.availHeight", screen.availWidth, "screen.availHeight", screen.availHeight);
-    console.log("canvasWidth", canvasWidth);
-    console.log("visualViewport", window.visualViewport.scale);
     canvasWidth /= window.visualViewport.scale;
     canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
-    console.log("canvasScaleRatio", canvasScaleRatio);
     canvasEl.setAttribute("width",`${canvasWidth}`);
     canvasEl.setAttribute("height",`${canvasWidth}`);
     ctx.scale(canvasScaleRatio,canvasScaleRatio);
