@@ -147,6 +147,7 @@ function canvasAnimation(){
 function resize(){
   console.log("resize");
   if (gameObject != null){
+    console.log("gameObject", gameObject);
     let canvasWidth;
     if (screen.availWidth > screen.availHeight){
       canvasWidth = screen.availHeight * 0.8;
