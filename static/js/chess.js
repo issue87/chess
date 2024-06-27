@@ -292,8 +292,8 @@ function gameLoad(response){
   };
   const player1JSON = result_obj.players[0];
   const player2JSON = result_obj.players[1];
-  const player1 = new Player(player1JSON.playerType, player1JSON.color);
-  const player2 = new Player(player2JSON.playerType, player2JSON.color);
+  let player1 = new Player(player1JSON.playerType, player1JSON.color);
+  let player2 = new Player(player2JSON.playerType, player2JSON.color);
   //Guaranteeing that first player's color is white 
   if (player1.color == blackChessColor){
     [player1, player2] = [player2, player1];
