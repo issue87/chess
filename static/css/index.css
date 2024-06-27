@@ -8,6 +8,7 @@ canvas{
     margin-left: auto;
     margin-right: auto;
     visibility: hidden;
+    image-rendering: crisp-edges;
 }
 
 .hiddenRadioButton{
