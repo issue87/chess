@@ -192,12 +192,13 @@ function touchSquare(event){
 
         };
         console.log("move from ", selectedSqare, " to ", [clickedRow, clickedCol]);
+        selectedSqare = null;
         return;
       };
       if (gameObject.getSquare(clickedRow, clickedCol) != null){
         /*checking figure was touched belongs to player who must move now, because figure color is a string and player color is a number it uses colorNumberSign to translate string 
         into its number representation*/
-        if (colorNumberSign[gameObject.getSquare(clickedRow, clickedCol).color] == gameObject.currentPlayer.color){
+        if (colorNumberSign[gameObject.getSquare(clickedRow, clickedCol).color] == gameObject.currentPlayer.color && gameObject.currentPlayer.typeOfPlayer == humanPlayer){
           selectedSqare = [clickedRow, clickedCol];
           canvasAnimation();
         };
