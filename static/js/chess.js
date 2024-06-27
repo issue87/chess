@@ -145,32 +145,28 @@ function canvasAnimation(){
 };
 
 function resize(){
-  console.log("resize");
+  let canvasWidth;
+  if (screen.availWidth > screen.availHeight){
+    canvasWidth = screen.availHeight * 0.8;
+  }else{
+    canvasWidth = screen.availWidth * 0.8;
+  };
+  const devicePixelRatio = window.devicePixelRatio;
+  //adjusting width and height of the canvas with user device's scale of the page
+  canvasWidth /= window.visualViewport.scale;
+  canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
+  canvasEl.setAttribute("width",`${canvasWidth}`);
+  canvasEl.setAttribute("height",`${canvasWidth}`);
+  ctx.scale(canvasScaleRatio,canvasScaleRatio);
   if (gameObject != null){
-    console.log("gameObject", gameObject);
-    let canvasWidth;
-    if (screen.availWidth > screen.availHeight){
-      canvasWidth = screen.availHeight * 0.8;
-    }else{
-      canvasWidth = screen.availWidth * 0.8;
-    };
-    const devicePixelRatio = window.devicePixelRatio;
-    //adjusting width and height of the canvas with user device's scale of the page
-    canvasWidth /= window.visualViewport.scale;
-    canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
-    canvasEl.setAttribute("width",`${canvasWidth}`);
-    canvasEl.setAttribute("height",`${canvasWidth}`);
-    ctx.scale(canvasScaleRatio,canvasScaleRatio);
     canvasAnimation();
-  }
+  };
 };
 
 function touchSquare(event){
   /*handles user's click event on canvas. 
   If there weren't selected any figures before and an user clicked on the square where figure is located, it selects figure.
    When there is a selected figure, it moves that figure to the square is being clicking on.*/
-  const canvasEl = document.getElementById("gameCanvas");
-  const ctx = canvasEl.getContext("2d");
   const startOfCanvasX = canvasEl.offsetLeft + canvasEl.clientLeft;
   const startOfCanvasY = canvasEl.offsetTop + canvasEl.clientTop;
   const endOfCanvasX = startOfCanvasX + canvasEl.offsetWidth;
