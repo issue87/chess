@@ -209,6 +209,11 @@ function touchSquare(event){
 const canvasEl = document.getElementById("gameCanvas");
 canvasEl.addEventListener("click",touchSquare);
 const ctx = canvasEl.getContext("2d");
+ctx.imageSmoothingEnabled = false;
+// For Gecko (Firefox)
+ctx.mozImageSmoothingEnabled = false;
+// For Webkit (Chrome, Safari)
+ctx.webkitImageSmoothingEnabled = false;
 let canvasScaleRatio;
 const chessBoardImage = document.createElement("img");
 chessBoardImage.src = "../static/images/chessBoard.png";
