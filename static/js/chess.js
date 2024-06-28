@@ -155,7 +155,7 @@ function resize(){
   //adjusting width and height of the canvas with user device's scale of the page
   canvasWidth /= window.visualViewport.scale;
   canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
-  ctx.scale(canvasScaleRatio,canvasScaleRatio);
+  //ctx.scale(canvasScaleRatio,canvasScaleRatio);
   if (gameObject != null){
     canvasAnimation();
   };
