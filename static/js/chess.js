@@ -155,8 +155,6 @@ function resize(){
   //adjusting width and height of the canvas with user device's scale of the page
   canvasWidth /= window.visualViewport.scale;
   canvasScaleRatio = canvasWidth/chessBoardWidthInPixels;
-  canvasEl.setAttribute("width",`${canvasWidth}`);
-  canvasEl.setAttribute("height",`${canvasWidth}`);
   ctx.scale(canvasScaleRatio,canvasScaleRatio);
   if (gameObject != null){
     canvasAnimation();
@@ -209,6 +207,8 @@ function touchSquare(event){
 const canvasEl = document.getElementById("gameCanvas");
 canvasEl.addEventListener("click",touchSquare);
 const ctx = canvasEl.getContext("2d");
+canvasEl.setAttribute("width", chessBoardWidthInPixels);
+canvasEl.setAttribute("height", chessBoardWidthInPixels);
 //ctx.imageSmoothingEnabled = false;
 // For Gecko (Firefox)
 //ctx.mozImageSmoothingEnabled = false;
