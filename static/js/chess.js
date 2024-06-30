@@ -144,6 +144,7 @@ function canvasAnimation(){
   //drawing the chess board
   const canvasWidth = parseInt(canvasEl.offsetWidth);
   //ctx.scale(scaleRatio, scaleRatio);
+  ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
   ctx.drawImage(chessBoardImage, 160, 360, chessBoardWidthInPixels, chessBoardWidthInPixels, 0, 0, chessBoardWidthInPixels, chessBoardWidthInPixels);
   if (selectedSqare != null){
     ctx.fillStyle = "#7FFFD4";
