@@ -105,6 +105,10 @@ class Game{
   get otherPlayer(){
     return this._otherPlayer;
   }
+  
+  get chessBoard(){
+    return this._chessBoard;
+  }
 
   set currentPlayer(player){
     this._currentPlayer = player;
@@ -130,8 +134,8 @@ class Game{
         this.eatenBlackFigures.push(this.getSquare(toRow, toCol));
       }
     }
-    this.getSquare(toRow, toCol) = this.getSquare(fromRow, fromCol);
-    this.getSquare(fromRow, fromCol) = null;
+    this.chessBoard[toRow][toCol] = this.getSquare(fromRow, fromCol);
+    this.chessBoard[fromRow][fromCol] = null;
   }
 };
 
