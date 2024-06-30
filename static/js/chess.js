@@ -312,4 +312,5 @@ function gameLoad(response){
   const initialPage = document.getElementById("initialPage");
   gsmeCont.style.visibility = "visible";
   initialPage.style.visibility = "hidden";
+  initialPage.style.height = 0;
 };
