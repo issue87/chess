@@ -270,7 +270,7 @@ function startGame(){
     dataForRequest.CPU1 = cpuStrategy1;
     dataForRequest.CPU2 = cpuStrategy2;
   }else if (typeOfGame == "userVSCPU"){
-    const CPU1 = document.getElementById("choose1Computer").value;
+    cpuStrategy1 = document.getElementById("choose1Computer").value;
     dataForRequest.CPU1 = cpuStrategy1;
   }
   $ajaxUtils.sendGetRequest('/start_game', gameLoad, dataForRequest);
