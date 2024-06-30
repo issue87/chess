@@ -311,12 +311,13 @@ function gameLoad(response){
     playerWhiteHeader.innerText = "Player 1";
     playerBlackHeader.innerText = "Player 2";
   };
-  if (player1.typeOfPlayer == humanPlayer && player2.typeOfPlayer == computerPlayer){
+  if (player1.typeOfPlayer == computerPlayer && player2.typeOfPlayer == computerPlayer){
     playerWhiteHeader.innerText = "CPU: " + cpuStrategy1;
     playerBlackHeader.innerText = "CPU: " + cpuStrategy2;
   };
   if (player1.typeOfPlayer == computerPlayer){
     playerWhiteHeader.innerText = "CPU: " + cpuStrategy1;
+    console.log(cpuStrategy1);
   }else{
     playerWhiteHeader.innerText = "Player";
   };
