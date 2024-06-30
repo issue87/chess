@@ -94,6 +94,8 @@ class Game{
     this._currentPlayer = whitePlayer;
     this._otherPlayer = blackPlayer;
     this._chessBoard = chessboard;
+    this._eatenWhiteFigures = []
+    this._eatenBlackFigures = []
   }
 
   get currentPlayer(){
@@ -118,6 +120,18 @@ class Game{
 
   getSquare(row, col){
     return this._chessBoard[row][col];
+  }
+
+  moveFigure(fromRow, fromCol, toRow, toCol){
+    if (this.getSquare(toRow, toCol) != null){
+      if(colorNumberSign[this.getSquare(toRow, toCol).color] == whiteChessColor){
+        this.eatenWhiteFigures.push(this.getSquare(toRow, toCol));
+      }else{
+        this.eatenBlackFigures.push(this.getSquare(toRow, toCol));
+      }
+    }
+    this.getSquare(toRow, toCol) = this.getSquare(fromRow, fromCol);
+    this.getSquare(fromRow, fromCol) = null;
   }
 };
 
@@ -258,7 +272,8 @@ function requestforCPUMove(){
 
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
-  console.log(result_obj);
+  gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
+  canvasAnimation();
 }
 
 const buttonStartGame = document.getElementById("startGame");
