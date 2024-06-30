@@ -315,21 +315,15 @@ function gameLoad(response){
   if (player1.typeOfPlayer == humanPlayer && player2.typeOfPlayer == humanPlayer){
     playerWhiteHeader.innerText = "Player 1";
     playerBlackHeader.innerText = "Player 2";
-  };
-  if (player1.typeOfPlayer == computerPlayer && player2.typeOfPlayer == computerPlayer){
+  } else if(player1.typeOfPlayer == computerPlayer && player2.typeOfPlayer == computerPlayer){
     playerWhiteHeader.innerText = "CPU: " + cpuStrategy1;
     playerBlackHeader.innerText = "CPU: " + cpuStrategy2;
-  };
-  if (player1.typeOfPlayer == computerPlayer){
+  }else if (player1.typeOfPlayer == computerPlayer){
     playerWhiteHeader.innerText = "CPU: " + cpuStrategy1;
-    console.log(cpuStrategy1);
-  }else{
-    playerWhiteHeader.innerText = "Player";
-  };
-  if (player2.typeOfPlayer == computerPlayer){
-    playerBlackHeader.innerText = "CPU: " + cpuStrategy1;
-  }else{
     playerBlackHeader.innerText = "Player";
+  } else {
+    playerBlackHeader.innerText = "CPU: " + cpuStrategy1;
+    playerWhiteHeader.innerText = "Player";
   };
   gameObject = new Game(player1, player2, chessBoard);
   canvasAnimation();
