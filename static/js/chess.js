@@ -304,8 +304,8 @@ function gameLoad(response){
   };
   gameObject = new Game(player1, player2, chessBoard);
   canvasAnimation();
-  const canvas = document.getElementById("gameCanvas");
+  const gsmeCont = document.getElementById("gameContainer");
   const initialPage = document.getElementById("initialPage");
-  canvas.style.visibility = "visible";
+  gsmeCont.style.visibility = "visible";
   initialPage.style.visibility = "hidden";
 };
