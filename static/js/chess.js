@@ -252,6 +252,7 @@ function selectTypeOfGame(){
 function requestforCPUMove(){
   dataForRequest = new Object();
   dataForRequest.typeOfRequest = "GET";
+  console.log("requestforCPUMove");
   $ajaxUtils.sendGetRequest('/cpu_move', handleCPUMove, dataForRequest);
 }
 
@@ -347,5 +348,6 @@ function gameLoad(response){
   initialPage.style.height = 0;
   if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
     requestforCPUMove;
+    console.log("gameLoad");
   }
 };

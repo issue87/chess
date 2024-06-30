@@ -834,4 +834,5 @@ def cpu_move():
     move_JSON = {"moveFrom": move_from, "moveTo": to_move}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
+    print (move_JSON)
     return jsonify(move_JSON)
