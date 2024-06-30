@@ -302,6 +302,23 @@ function gameLoad(response){
   if (player1.color == blackChessColor){
     [player1, player2] = [player2, player1];
   };
+  //
+  const playerWhiteHeader = document.getElementById("whitePlayerName");
+  const playerBlackHeader = document.getElementById("blackPlayerName");
+  if (player1.typeOfPlayer == humanPlayer && player2.typeOfPlayer == humanPlayer){
+    playerWhiteHeader.innerText = "Player 1";
+    playerBlackHeader.innerText = "Player 2";
+  };
+  if (player1.typeOfPlayer == computerPlayer){
+    playerWhiteHeader.innerText = "CPU: ";
+  }else{
+    playerWhiteHeader.innerText = "Player";
+  };
+  if (player2.typeOfPlayer == computerPlayer){
+    playerBlackHeader.innerText = "CPU: ";
+  }else{
+    playerBlackHeader.innerText = "Player";
+  };
   gameObject = new Game(player1, player2, chessBoard);
   canvasAnimation();
   document.getElementById("choose1Computer").style.visibility = "hidden";
