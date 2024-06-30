@@ -800,7 +800,10 @@ def start_game():
     elif type_of_game == "HotSeat":
         player1 = Player(WHITE_FIGURE_COLOR, HUMAN_PLAYER)
         player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)
-    chessboard = ChessBoard(player1, player2)
+    if player1.get_color() == WHITE_FIGURE_COLOR:
+        chessboard = ChessBoard(player1, player2)
+    else:
+        chessboard = ChessBoard(player2, player1)
     chessboard_figures_JSON = chessboard.translate_board_figures_to_JSON()
     player1JSON = player1.translate_to_JSON();
     player2JSON = player2.translate_to_JSON();
