@@ -305,8 +305,9 @@ function gameLoad(response){
   if (player1.color == blackChessColor){
     [player1, player2] = [player2, player1];
     console.log(cpuStrategy1, cpuStrategy2);
-    [cpuStrategy1, cpuStrategy2] = [cpuStrategy2, cpuStrategy1];
-    console.log(cpuStrategy1, cpuStrategy2);
+    if (player1.typeOfPlayer == computerPlayer && player2.typeOfPlayer == computerPlayer){
+      [cpuStrategy1, cpuStrategy2] = [cpuStrategy2, cpuStrategy1];
+    }
   };
   //
   const playerWhiteHeader = document.getElementById("whitePlayerName");
@@ -326,7 +327,7 @@ function gameLoad(response){
     playerWhiteHeader.innerText = "Player";
   };
   if (player2.typeOfPlayer == computerPlayer){
-    playerBlackHeader.innerText = "CPU: " + cpuStrategy2;
+    playerBlackHeader.innerText = "CPU: " + cpuStrategy1;
   }else{
     playerBlackHeader.innerText = "Player";
   };
