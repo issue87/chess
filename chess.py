@@ -807,8 +807,8 @@ def start_game():
                   "board": chessboard_figures_JSON}
     return jsonify(game_JSON)
   
-  @app.route('/cpu_move', methods = ["GET"])
-  def cpu_move():
+@app.route('/cpu_move', methods = ["GET"])
+def cpu_move():
     color = chessboard.get_current_player().get_color()
     moves = chessboard.get_possible_moves(color)
     legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
