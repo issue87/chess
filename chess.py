@@ -776,6 +776,7 @@ def index():
 
 @app.route('/start_game', methods = ["POST"])
 def start_game():
+    global chessboard
     type_of_game = request.form["typeOfGame"]
     chosen_color = request.form["color"]
     if chosen_color == "random":
