@@ -133,9 +133,10 @@ class Game{
       }else{
         this.eatenBlackFigures.push(this.getSquare(toRow, toCol));
       }
-    }
+    };
     this.chessBoard[toRow][toCol] = this.getSquare(fromRow, fromCol);
     this.chessBoard[fromRow][fromCol] = null;
+    console.log(this.chessBoard);
   }
 };
 
