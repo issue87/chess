@@ -220,7 +220,8 @@ chessBoardImage.src = "../static/images/chessBoard.png";
 chessBoardImage.onload = resize;
 const radioButtons = document.getElementsByClassName("inputTypeOfGame");
 let typeOfGame = "userVSCPU";
-
+let cpuStrategy1 = null;
+let cpuStrategy2 = null;
 for(let button of radioButtons){
   button.addEventListener("change",selectTypeOfGame);
 }
@@ -264,13 +265,13 @@ function startGame(){
   };
   dataForRequest.color = chosenColor;
   if (typeOfGame == "CPUVSCPU"){
-    const CPU1 = document.getElementById("choose1Computer").value;
-    const CPU2 = document.getElementById("choose2Computer").value;
-    dataForRequest.CPU1 = CPU1;
-    dataForRequest.CPU2 = CPU2;
+    cpuStrategy1 = document.getElementById("choose1Computer").value;
+    cpuStrategy2 = document.getElementById("choose2Computer").value;
+    dataForRequest.CPU1 = cpuStrategy1;
+    dataForRequest.CPU2 = cpuStrategy2;
   }else if (typeOfGame == "userVSCPU"){
     const CPU1 = document.getElementById("choose1Computer").value;
-    dataForRequest.CPU1 = CPU1;
+    dataForRequest.CPU1 = cpuStrategy1;
   }
   $ajaxUtils.sendGetRequest('/start_game', gameLoad, dataForRequest);
 }
@@ -301,6 +302,7 @@ function gameLoad(response){
   //Guaranteeing that first player's color is white 
   if (player1.color == blackChessColor){
     [player1, player2] = [player2, player1];
+    [cpuStrategy1, cpuStrategy2] = [cpuStrategy2, cpuStrategy1];
   };
   //
   const playerWhiteHeader = document.getElementById("whitePlayerName");
@@ -309,13 +311,17 @@ function gameLoad(response){
     playerWhiteHeader.innerText = "Player 1";
     playerBlackHeader.innerText = "Player 2";
   };
+  if (player1.typeOfPlayer == humanPlayer && player2.typeOfPlayer == computerPlayer){
+    playerWhiteHeader.innerText = "CPU: " + cpuStrategy1;
+    playerBlackHeader.innerText = "CPU: " + cpuStrategy2;
+  };
   if (player1.typeOfPlayer == computerPlayer){
-    playerWhiteHeader.innerText = "CPU: ";
+    playerWhiteHeader.innerText = "CPU: " + cpuStrategy1;
   }else{
     playerWhiteHeader.innerText = "Player";
   };
   if (player2.typeOfPlayer == computerPlayer){
-    playerBlackHeader.innerText = "CPU: ";
+    playerBlackHeader.innerText = "CPU: " + cpuStrategy2;
   }else{
     playerBlackHeader.innerText = "Player";
   };
