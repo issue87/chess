@@ -347,7 +347,6 @@ function gameLoad(response){
   initialPage.style.visibility = "hidden";
   initialPage.style.height = 0;
   if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
-    requestforCPUMove;
-    console.log("gameLoad");
+    requestforCPUMove();
   }
 };
