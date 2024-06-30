@@ -151,6 +151,7 @@ function canvasAnimation(){
   };
   for (let i = 0; i <= 7; i++){
     for (let j = 0; j <= 7; j++){
+      console.log("in cycle");
       const square = gameObject.getSquare(i, j);
       if (square != null){
         const x_crop = figurePositionsOnSourceImage[square.color][square.kind]["x"];
