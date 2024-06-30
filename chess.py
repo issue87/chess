@@ -50,7 +50,7 @@ pawns_direction = {0: 1, 1: -1}
 initianal_pawn_raw = {0: 1, 1: 6}
 initianal_king_pos = {0: (0, 4), 1: (7, 4)}
 column_chess_notation = "ABCDEFGH"
-chessboard
+chessboard = None
 
 class Player:
     """
