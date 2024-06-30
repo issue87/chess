@@ -304,7 +304,9 @@ function gameLoad(response){
   //Guaranteeing that first player's color is white 
   if (player1.color == blackChessColor){
     [player1, player2] = [player2, player1];
+    console.log(cpuStrategy1, cpuStrategy2);
     [cpuStrategy1, cpuStrategy2] = [cpuStrategy2, cpuStrategy1];
+    console.log(cpuStrategy1, cpuStrategy2);
   };
   //
   const playerWhiteHeader = document.getElementById("whitePlayerName");
