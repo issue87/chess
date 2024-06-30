@@ -829,9 +829,9 @@ def cpu_move():
         chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
         promotion = True
         promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
-    ex.dismiss_check()
-    ex.set_if_check()
-    ex.set_if_mate_stalemate()
+    chessboard.dismiss_check()
+    chessboard.set_if_check()
+    chessboard.set_if_mate_stalemate()
     move_JSON = {"moveFrom": move_from, "moveTo": to_move}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
