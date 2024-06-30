@@ -345,4 +345,7 @@ function gameLoad(response){
   gsmeCont.style.visibility = "visible";
   initialPage.style.visibility = "hidden";
   initialPage.style.height = 0;
+  if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
+    requestforCPUMove;
+  }
 };
