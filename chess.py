@@ -50,6 +50,8 @@ pawns_direction = {0: 1, 1: -1}
 initianal_pawn_raw = {0: 1, 1: 6}
 initianal_king_pos = {0: (0, 4), 1: (7, 4)}
 column_chess_notation = "ABCDEFGH"
+chessboard
+
 class Player:
     """
     Figure class. It has properties color: white or black,
@@ -597,7 +599,6 @@ def game_recursive(player1, player2, ex):
     the game. it is alike a loop: 
     it recursively calles itself at the end of a function with the same arguments
     """
-    print (ex)
     color = ex.get_current_player().get_color()
     color_str = colors_representations[color]
     if ex.is_mate():
@@ -806,4 +807,31 @@ def start_game():
                   "board": chessboard_figures_JSON}
     return jsonify(game_JSON)
   
-
+  @app.route('/cpu_move', methods = ["GET"])
+  def cpu_move():
+    color = chessboard.get_current_player().get_color()
+    moves = chessboard.get_possible_moves(color)
+    legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
+    chosen_move = chessboard.get_current_player().implement_strategy(chessboard, legal_moves)
+    if chosen_move == "resign":
+        pass
+    if chosen_move == "request_for_draw":
+        pass
+    figure_to_move, to_move, promotion_figure_index = chosen_move
+    move_from = figure_to_move.get_pos()
+    chessboard.make_move(figure_to_move, (to_move[0], to_move[1]))
+    chessboard.count_turn()
+    promotion = False
+    promoted_figure = None
+    if (figure_to_move.get_kind() == PAWN_FIGURE
+        and to_move[0] == initianal_king_pos[chessboard.get_current_player().get_color()][0]):
+        chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
+        promotion = True
+        promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
+    ex.dismiss_check()
+    ex.set_if_check()
+    ex.set_if_mate_stalemate()
+    move_JSON = {"moveFrom": move_from, "moveTo": to_move}
+    if promotion:
+        move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
+    return jsonify(move_JSON)

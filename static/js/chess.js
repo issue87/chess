@@ -249,6 +249,17 @@ function selectTypeOfGame(){
   };
 };
 
+function requestforCPUMove(){
+  dataForRequest = new Object();
+  dataForRequest.typeOfRequest = "GET";
+  $ajaxUtils.sendGetRequest('/cpu_move', handleCPUMove, dataForRequest);
+}
+
+function handleCPUMove(response){
+  const result_obj = JSON.parse(response.responseText);
+  console.log(result_obj);
+}
+
 const buttonStartGame = document.getElementById("startGame");
 buttonStartGame.addEventListener("click",startGame);
 
@@ -271,8 +282,6 @@ function startGame(){
     dataForRequest.CPU2 = cpuStrategy2;
   }else if (typeOfGame == "userVSCPU"){
     cpuStrategy1 = document.getElementById("choose1Computer").value;
-    console.log("in start game", cpuStrategy1);
-    console.log("element otion value", document.getElementById("choose1Computer").value);
     dataForRequest.CPU1 = cpuStrategy1;
   }
   $ajaxUtils.sendGetRequest('/start_game', gameLoad, dataForRequest);
