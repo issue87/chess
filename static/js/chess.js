@@ -153,12 +153,11 @@ function canvasAnimation(){
     for (let j = 0; j <= 7; j++){
       const square = gameObject.getSquare(i, j);
       if (square != null){
-        console.log(square);
         const x_crop = figurePositionsOnSourceImage[square.color][square.kind]["x"];
         const y_crop = figurePositionsOnSourceImage[square.color][square.kind]["y"];
         ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
-                      87 + square.col_pos * 125.7, 
-                      88.5 + (7 - square.row_pos) * 125.7, widthOfTile, widthOfTile);
+                      87 + j * 125.7, 
+                      88.5 + (7 - i) * 125.7, widthOfTile, widthOfTile);
       };
     };
   };
