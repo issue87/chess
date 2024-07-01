@@ -129,14 +129,13 @@ class Game{
   moveFigure(fromRow, fromCol, toRow, toCol){
     if (this.getSquare(toRow, toCol) != null){
       if(colorNumberSign[this.getSquare(toRow, toCol).color] == whiteChessColor){
-        this.eatenWhiteFigures.push(this.getSquare(toRow, toCol));
+        this._eatenWhiteFigures.push(this.getSquare(toRow, toCol));
       }else{
-        this.eatenBlackFigures.push(this.getSquare(toRow, toCol));
+        this._eatenBlackFigures.push(this.getSquare(toRow, toCol));
       }
     };
-    this.chessBoard[toRow][toCol] = this.getSquare(fromRow, fromCol);
-    this.chessBoard[fromRow][fromCol] = null;
-    console.log(this.chessBoard);
+    this._chessBoard[toRow][toCol] = this.getSquare(fromRow, fromCol);
+    this._chessBoard[fromRow][fromCol] = null;
   }
 };
 
