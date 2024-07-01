@@ -271,15 +271,17 @@ function selectTypeOfGame(){
 function requestforCPUMove(){
   dataForRequest = new Object();
   dataForRequest.typeOfRequest = "GET";
-  console.log("requestforCPUMove");
   $ajaxUtils.sendGetRequest('/cpu_move', handleCPUMove, dataForRequest);
 }
 
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
-  console.log(gameObject.chessBoard);
+  gameObject.switchPlayer();
   canvasAnimation();
+  if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
+    requestforCPUMove();
+  }
 }
 
 const buttonStartGame = document.getElementById("startGame");
