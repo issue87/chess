@@ -151,9 +151,9 @@ function canvasAnimation(){
   };
   for (let i = 0; i <= 7; i++){
     for (let j = 0; j <= 7; j++){
-      console.log("in cycle");
       const square = gameObject.getSquare(i, j);
       if (square != null){
+        console.log(square);
         const x_crop = figurePositionsOnSourceImage[square.color][square.kind]["x"];
         const y_crop = figurePositionsOnSourceImage[square.color][square.kind]["y"];
         ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
