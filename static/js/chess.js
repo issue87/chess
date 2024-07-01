@@ -279,6 +279,7 @@ function requestforCPUMove(){
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
+  console.log(gameObject.chessBoard);
   canvasAnimation();
 }
 
