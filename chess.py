@@ -770,6 +770,32 @@ def game():
     ex = ChessBoard(player1, player2)
     game_recursive(player1, player2, ex)
 
+def handle_move(chosen_move):
+    if chosen_move == "resign":
+        pass
+    if chosen_move == "request_for_draw":
+        pass
+    figure_to_move, to_move, promotion_figure_index = chosen_move
+    move_from = figure_to_move.get_pos()
+    chessboard.make_move(figure_to_move, (to_move[0], to_move[1]))
+    chessboard.count_turn()
+    promotion = False
+    promoted_figure = None
+    if (figure_to_move.get_kind() == PAWN_FIGURE
+        and to_move[0] == initianal_king_pos[chessboard.get_current_player().get_color()][0]):
+        chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
+        promotion = True
+        promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
+    chessboard.dismiss_check()
+    chessboard.set_if_check()
+    chessboard.set_if_mate_stalemate()
+    move_JSON = {"Approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion}
+    if promotion:
+        move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
+    print (move_JSON)
+    return jsonify(move_JSON)
+
+
 @app.route('/', methods = ["GET","POST"])
 def index():
     return render_template("chess.html")
@@ -817,26 +843,10 @@ def cpu_move():
     moves = chessboard.get_possible_moves(color)
     legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
     chosen_move = chessboard.get_current_player().implement_strategy(chessboard, legal_moves)
-    if chosen_move == "resign":
-        pass
-    if chosen_move == "request_for_draw":
-        pass
-    figure_to_move, to_move, promotion_figure_index = chosen_move
-    move_from = figure_to_move.get_pos()
-    chessboard.make_move(figure_to_move, (to_move[0], to_move[1]))
-    chessboard.count_turn()
-    promotion = False
-    promoted_figure = None
-    if (figure_to_move.get_kind() == PAWN_FIGURE
-        and to_move[0] == initianal_king_pos[chessboard.get_current_player().get_color()][0]):
-        chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
-        promotion = True
-        promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
-    chessboard.dismiss_check()
-    chessboard.set_if_check()
-    chessboard.set_if_mate_stalemate()
-    move_JSON = {"moveFrom": move_from, "moveTo": to_move}
-    if promotion:
-        move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
-    print (move_JSON)
-    return jsonify(move_JSON)
+    return handle_move(chosen_move)
+
+@app.route('/player_move', methods = ["POST"])
+def player_move():
+    color = chessboard.get_current_player().get_color()
+    moves = chessboard.get_possible_moves(color)
+    legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
