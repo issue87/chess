@@ -216,7 +216,9 @@ function touchSquare(event){
         dataForRequest.typeOfRequest = "POST";
         dataForRequest.fromSquare = selectedSqare; 
         dataForRequest.toSquare = [clickedRow, clickedCol];
+        console.log("before request");
         $ajaxUtils.sendGetRequest('/player_move', handlePlayerMove, dataForRequest);
+        console.log("after request");
         selectedSqare = null;
         return;
       };
