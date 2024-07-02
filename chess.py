@@ -850,6 +850,7 @@ def cpu_move():
 
 @app.route('/player_move', methods = ["POST"])
 def player_move():
+    print ("in function")
     square = request.form["fromSquare"]
     print (square)
     color = chessboard.get_current_player().get_color()
