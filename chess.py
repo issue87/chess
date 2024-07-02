@@ -781,15 +781,18 @@ def handle_move(chosen_move):
     chessboard.count_turn()
     promotion = False
     promoted_figure = None
+    castling = False
     if (figure_to_move.get_kind() == PAWN_FIGURE
         and to_move[0] == initianal_king_pos[chessboard.get_current_player().get_color()][0]):
         chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
         promotion = True
         promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
+    if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
+        castling = True
     chessboard.dismiss_check()
     chessboard.set_if_check()
     chessboard.set_if_mate_stalemate()
-    move_JSON = {"Approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion}
+    move_JSON = {"Approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
     print (move_JSON)
@@ -847,6 +850,22 @@ def cpu_move():
 
 @app.route('/player_move', methods = ["POST"])
 def player_move():
+    square = request.form["fromSquare"]
+    print (square)
     color = chessboard.get_current_player().get_color()
     moves = chessboard.get_possible_moves(color)
     legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
+    figure_to_move = board.get_board_square(from_move[0], from_move[1])
+    if figure_to_move is None:
+            print("you must enter a position of your figure, but you entered an empty position")
+            continue
+        if figure_to_move.get_color() != board.get_current_player().get_color():
+            print("you must enter the position of your figure, not the opponent's one")
+            continue
+        if figure_to_move not in legal_moves:
+            print("The figure ",figure_to_move, move[0] , " position of which you entered has no legal moves")
+            continue
+        if to_move not in legal_moves[figure_to_move]:
+            print("The figure ", figure_to_move, move[0], " can't move to", move[1])
+            continue
+        break

@@ -212,7 +212,11 @@ function touchSquare(event){
           }
 
         };
-        console.log("move from ", selectedSqare, " to ", [clickedRow, clickedCol]);
+        dataForRequest = new Object();
+        dataForRequest.typeOfRequest = "POST";
+        dataForRequest.fromSquare = selectedSqare; 
+        dataForRequest.toSquare = [clickedRow, clickedCol];
+        $ajaxUtils.sendGetRequest('/player_move', handlePlayerMove, dataForRequest);
         selectedSqare = null;
         return;
       };
@@ -278,11 +282,22 @@ function requestforCPUMove(){
   $ajaxUtils.sendGetRequest('/cpu_move', handleCPUMove, dataForRequest);
 }
 
+function handlePlayerMove(response){
+
+}
+
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
   if (result_obj.promotion){
     gameObject.promote(result_obj.promotedFigure);  
+  }else if(result_obj.castling){
+    if(result_obj.moveFrom[1] > result_obj.moveTo[1]){
+      gameObject.moveFigure(result_obj.moveFrom[0], 0, result_obj.moveTo[0], 3);
+    }else{
+      gameObject.moveFigure(result_obj.moveFrom[0], 7, result_obj.moveTo[0], 5)
+    }
+
   }
   gameObject.switchPlayer();
   canvasAnimation();
@@ -344,7 +359,6 @@ function gameLoad(response){
   //Guaranteeing that first player's color is white 
   if (player1.color == blackChessColor){
     [player1, player2] = [player2, player1];
-    console.log(cpuStrategy1, cpuStrategy2);
     if (player1.typeOfPlayer == computerPlayer && player2.typeOfPlayer == computerPlayer){
       [cpuStrategy1, cpuStrategy2] = [cpuStrategy2, cpuStrategy1];
     }
