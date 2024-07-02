@@ -852,16 +852,17 @@ def cpu_move():
 def player_move():
     print ("in function")
     square = request.form["fromSquare"]
-    print (square)
+    from_move = (request.form["fromRow"], request.form["fromCol"])
+    to_move = (request.form["toRow"], request.form["toCol"])
     color = chessboard.get_current_player().get_color()
     moves = chessboard.get_possible_moves(color)
     legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
-    figure_to_move = board.get_board_square(from_move[0], from_move[1])
+    figure_to_move = chessboard.get_board_square(from_move[0], from_move[1])
     if figure_to_move is None:
         print("you must enter a position of your figure, but you entered an empty position")
-    if figure_to_move.get_color() != board.get_current_player().get_color():
+    if figure_to_move.get_color() != chessboard.get_current_player().get_color():
         print("you must enter the position of your figure, not the opponent's one")
     if figure_to_move not in legal_moves:
-        print("The figure ",figure_to_move, move[0] , " position of which you entered has no legal moves")
+        print("The figure ",figure_to_move, from_move , " position of which you entered has no legal moves")
     if to_move not in legal_moves[figure_to_move]:
-        print("The figure ", figure_to_move, move[0], " can't move to", move[1])
+        print("The figure ", figure_to_move, from_move, " can't move to", to_move)

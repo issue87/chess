@@ -214,11 +214,11 @@ function touchSquare(event){
         };
         dataForRequest = new Object();
         dataForRequest.typeOfRequest = "POST";
-        dataForRequest.fromSquare = selectedSqare; 
-        dataForRequest.toSquare = [clickedRow, clickedCol];
-        console.log("before request");
+        dataForRequest.fromRow = selectedSqare[0];
+        dataForRequest.fromCol = selectedSqare[1];
+        dataForRequest.toRow = clickedRow;
+        dataForRequest.toCol = clickedCol;
         $ajaxUtils.sendGetRequest('/player_move', handlePlayerMove, dataForRequest);
-        console.log("after request");
         selectedSqare = null;
         return;
       };
