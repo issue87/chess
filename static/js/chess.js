@@ -213,7 +213,7 @@ function touchSquare(event){
 
         };
         dataForRequest = new Object();
-        dataForRequest.typeOfRequest = "POST";
+        dataForRequest.typeOfRequest = "formData";
         dataForRequest.fromRow = selectedSqare[0];
         dataForRequest.fromCol = selectedSqare[1];
         dataForRequest.toRow = clickedRow;
