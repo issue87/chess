@@ -857,15 +857,10 @@ def player_move():
     legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
     figure_to_move = board.get_board_square(from_move[0], from_move[1])
     if figure_to_move is None:
-            print("you must enter a position of your figure, but you entered an empty position")
-            continue
-        if figure_to_move.get_color() != board.get_current_player().get_color():
-            print("you must enter the position of your figure, not the opponent's one")
-            continue
-        if figure_to_move not in legal_moves:
-            print("The figure ",figure_to_move, move[0] , " position of which you entered has no legal moves")
-            continue
-        if to_move not in legal_moves[figure_to_move]:
-            print("The figure ", figure_to_move, move[0], " can't move to", move[1])
-            continue
-        break
+        print("you must enter a position of your figure, but you entered an empty position")
+    if figure_to_move.get_color() != board.get_current_player().get_color():
+        print("you must enter the position of your figure, not the opponent's one")
+    if figure_to_move not in legal_moves:
+        print("The figure ",figure_to_move, move[0] , " position of which you entered has no legal moves")
+    if to_move not in legal_moves[figure_to_move]:
+        print("The figure ", figure_to_move, move[0], " can't move to", move[1])
