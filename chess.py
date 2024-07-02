@@ -858,11 +858,14 @@ def player_move():
     moves = chessboard.get_possible_moves(color)
     legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
     figure_to_move = chessboard.get_board_square(from_move[0], from_move[1])
+    message = ""
     if figure_to_move is None:
-        print("you must enter a position of your figure, but you entered an empty position")
+        message = "you must enter a position of your figure, but you entered an empty position"
     if figure_to_move.get_color() != chessboard.get_current_player().get_color():
-        print("you must enter the position of your figure, not the opponent's one")
+        message = "you must enter the position of your figure, not the opponent's one"
     if figure_to_move not in legal_moves:
-        print("The figure ",figure_to_move, from_move , " position of which you entered has no legal moves")
+        message = "The figure " + str(figure_to_move) + " " + str(from_move) + " position of which you entered has no legal moves"
     if to_move not in legal_moves[figure_to_move]:
-        print("The figure ", figure_to_move, from_move, " can't move to", to_move)
+        message = "The figure " + str(figure_to_move) + " " + str(from_move) + " can't move to " + str(to_move)
+    move_JSON = {"message":message}
+    return jsonify(move_JSON)

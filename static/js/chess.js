@@ -285,7 +285,8 @@ function requestforCPUMove(){
 }
 
 function handlePlayerMove(response){
-
+  const result_obj = JSON.parse(response.responseText);
+  console.log(result_obj);
 }
 
 function handleCPUMove(response){
