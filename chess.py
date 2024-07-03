@@ -776,9 +776,8 @@ def handle_move(chosen_move):
     if chosen_move == "request_for_draw":
         pass
     figure_to_move, to_move, promotion_figure_index = chosen_move
-    print ("chosen_move", chosen_move)
-    print ("to move", to_move)
     move_from = figure_to_move.get_pos()
+    en_passant_square = chessboard.get_en_passant()
     chessboard.make_move(figure_to_move, (to_move[0], to_move[1]))
     chessboard.count_turn()
     promotion = False
@@ -790,22 +789,17 @@ def handle_move(chosen_move):
         chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
         promotion = True
         promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
-    print ("to move", to_move)
-    print ("chessboard.get_en_passant()", chessboard.get_en_passant())
     if (figure_to_move.get_kind() == PAWN_FIGURE
-        and to_move == chessboard.get_en_passant()):
-        print ("condition en passant")
+        and to_move == en_passant_square):
         en_passant = True
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
     chessboard.dismiss_check()
     chessboard.set_if_check()
     chessboard.set_if_mate_stalemate()
-    print (en_passant)
     move_JSON = {"approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling, "enPassant": en_passant}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
-    print (move_JSON)
     return jsonify(move_JSON)
 
 
@@ -876,6 +870,5 @@ def player_move():
         return jsonify(move_JSON)
     else:
         chosen_move = (figure_to_move, to_move, None)
-        print (chosen_move)
     return handle_move(chosen_move)
 
