@@ -850,14 +850,15 @@ def cpu_move():
 
 @app.route('/player_move', methods = ["POST"])
 def player_move():
-    print ("in function")
-    square = request.form["fromSquare"]
     from_move = (request.form["fromRow"], request.form["fromCol"])
+    print("from_move", from_move)
     to_move = (request.form["toRow"], request.form["toCol"])
+    print("to_move", to_move)
     color = chessboard.get_current_player().get_color()
     moves = chessboard.get_possible_moves(color)
     legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
     figure_to_move = chessboard.get_board_square(from_move[0], from_move[1])
+    print("figure_to_move", figure_to_move)
     message = ""
     if figure_to_move is None:
         message = "you must enter a position of your figure, but you entered an empty position"
@@ -867,5 +868,6 @@ def player_move():
         message = "The figure " + str(figure_to_move) + " " + str(from_move) + " position of which you entered has no legal moves"
     if to_move not in legal_moves[figure_to_move]:
         message = "The figure " + str(figure_to_move) + " " + str(from_move) + " can't move to " + str(to_move)
+    print("message", message)
     move_JSON = {"message":message}
     return jsonify(move_JSON)
