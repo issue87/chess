@@ -138,6 +138,11 @@ class Game{
     this._chessBoard[fromRow][fromCol] = null;
   }
 
+  eatFigureEnPassant(fromRow, toCol){
+    this._eatenBlackFigures.push(this.getSquare(fromRow, toCol));
+    this._chessBoard[fromRow][toCol] = null;
+  }
+
   promote(figure){
     this._chessBoard[figure.row_pos][figure.col_pos] = figure;
   }
@@ -306,6 +311,8 @@ function handleCPUMove(response){
       gameObject.moveFigure(result_obj.moveFrom[0], 7, result_obj.moveTo[0], 5)
     }
 
+  }else if(result_obj.enPassant){
+    gameObject.eatFigureEnPassant(result_obj.moveFrom[0], result_obj.moveTo[1]);
   }
   gameObject.switchPlayer();
   canvasAnimation();

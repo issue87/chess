@@ -782,17 +782,21 @@ def handle_move(chosen_move):
     promotion = False
     promoted_figure = None
     castling = False
+    en_passant = False
     if (figure_to_move.get_kind() == PAWN_FIGURE
         and to_move[0] == initianal_king_pos[chessboard.get_current_player().get_color()][0]):
         chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
         promotion = True
         promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
+    if (figure_to_move.get_kind() == PAWN_FIGURE
+        and to_move == chessboard.get_en_passant()):
+        en_passant = True
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
     chessboard.dismiss_check()
     chessboard.set_if_check()
     chessboard.set_if_mate_stalemate()
-    move_JSON = {"approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling}
+    move_JSON = {"approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling, "enPassant": en_passant}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
     print (move_JSON)
