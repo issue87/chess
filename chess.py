@@ -850,9 +850,9 @@ def cpu_move():
 
 @app.route('/player_move', methods = ["POST"])
 def player_move():
-    from_move = (request.form["fromRow"], request.form["fromCol"])
+    from_move = (int(request.form["fromRow"]), int(request.form["fromCol"]))
     print("from_move", from_move)
-    to_move = (request.form["toRow"], request.form["toCol"])
+    to_move = (int(request.form["toRow"]), int(request.form["toCol"]))
     print("to_move", to_move)
     color = chessboard.get_current_player().get_color()
     moves = chessboard.get_possible_moves(color)
