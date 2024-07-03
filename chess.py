@@ -788,6 +788,8 @@ def handle_move(chosen_move):
         chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
         promotion = True
         promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
+    print ("to move", to_move)
+    print ("to move", chessboard.get_en_passant())
     if (figure_to_move.get_kind() == PAWN_FIGURE
         and to_move == chessboard.get_en_passant()):
         print ("condition en passant")
