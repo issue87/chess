@@ -140,7 +140,9 @@ class Game{
 
   eatFigureEnPassant(fromRow, toCol){
     this._eatenBlackFigures.push(this.getSquare(fromRow, toCol));
+    console.log(this.getSquare(fromRow, toCol));
     this._chessBoard[fromRow][toCol] = null;
+    console.log(this.getSquare(fromRow, toCol));
   }
 
   promote(figure){
@@ -312,6 +314,7 @@ function handleCPUMove(response){
     }
 
   }else if(result_obj.enPassant){
+    console.log(result_obj.enPassant);
     gameObject.eatFigureEnPassant(result_obj.moveFrom[0], result_obj.moveTo[1]);
   }
   gameObject.switchPlayer();
