@@ -304,6 +304,7 @@ function handlePlayerMove(response){
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
+  console.log(result_obj.enPassant);
   if (result_obj.promotion){
     gameObject.promote(result_obj.promotedFigure);  
   }else if(result_obj.castling){
@@ -314,7 +315,6 @@ function handleCPUMove(response){
     }
 
   }else if(result_obj.enPassant){
-    console.log(result_obj.enPassant);
     gameObject.eatFigureEnPassant(result_obj.moveFrom[0], result_obj.moveTo[1]);
   }
   gameObject.switchPlayer();
