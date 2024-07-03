@@ -792,7 +792,7 @@ def handle_move(chosen_move):
     chessboard.dismiss_check()
     chessboard.set_if_check()
     chessboard.set_if_mate_stalemate()
-    move_JSON = {"Approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling}
+    move_JSON = {"approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
     print (move_JSON)
@@ -851,23 +851,20 @@ def cpu_move():
 @app.route('/player_move', methods = ["POST"])
 def player_move():
     from_move = (int(request.form["fromRow"]), int(request.form["fromCol"]))
-    print("from_move", from_move)
     to_move = (int(request.form["toRow"]), int(request.form["toCol"]))
-    print("to_move", to_move)
     color = chessboard.get_current_player().get_color()
     moves = chessboard.get_possible_moves(color)
     legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
     figure_to_move = chessboard.get_board_square(from_move[0], from_move[1])
-    print("figure_to_move", figure_to_move)
     message = ""
-    if figure_to_move is None:
-        message = "you must enter a position of your figure, but you entered an empty position"
-    if figure_to_move.get_color() != chessboard.get_current_player().get_color():
-        message = "you must enter the position of your figure, not the opponent's one"
     if figure_to_move not in legal_moves:
         message = "The figure " + str(figure_to_move) + " " + str(from_move) + " position of which you entered has no legal moves"
-    if to_move not in legal_moves[figure_to_move]:
+    elif to_move not in legal_moves[figure_to_move]:
         message = "The figure " + str(figure_to_move) + " " + str(from_move) + " can't move to " + str(to_move)
-    print("message", message)
-    move_JSON = {"message":message}
-    return jsonify(move_JSON)
+    if message:
+        move_JSON = {"approved":False, "message":message}
+        return jsonify(move_JSON)
+    else:
+        chosen_move = (figure_to_move, to_move, None)
+    return handle_move(chosen_move)
+

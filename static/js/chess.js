@@ -286,7 +286,12 @@ function requestforCPUMove(){
 
 function handlePlayerMove(response){
   const result_obj = JSON.parse(response.responseText);
-  console.log(result_obj);
+  if (!result_obj.approved){
+    const gameMessage = document.getElementById("gameMessage");
+    gameMessage.innerText = result_obj.message;
+  }else{
+    handleCPUMove(response);
+  };
 }
 
 function handleCPUMove(response){
