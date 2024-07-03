@@ -776,6 +776,8 @@ def handle_move(chosen_move):
     if chosen_move == "request_for_draw":
         pass
     figure_to_move, to_move, promotion_figure_index = chosen_move
+    print ("chosen_move", chosen_move)
+    print ("to move", to_move)
     move_from = figure_to_move.get_pos()
     chessboard.make_move(figure_to_move, (to_move[0], to_move[1]))
     chessboard.count_turn()
@@ -789,7 +791,7 @@ def handle_move(chosen_move):
         promotion = True
         promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
     print ("to move", to_move)
-    print ("to move", chessboard.get_en_passant())
+    print ("chessboard.get_en_passant()", chessboard.get_en_passant())
     if (figure_to_move.get_kind() == PAWN_FIGURE
         and to_move == chessboard.get_en_passant()):
         print ("condition en passant")
@@ -873,6 +875,7 @@ def player_move():
         move_JSON = {"approved":False, "message":message}
         return jsonify(move_JSON)
     else:
+        print (chosen_move)
         chosen_move = (figure_to_move, to_move, None)
     return handle_move(chosen_move)
 
