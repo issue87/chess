@@ -875,7 +875,7 @@ def player_move():
         move_JSON = {"approved":False, "message":message}
         return jsonify(move_JSON)
     else:
-        print (chosen_move)
         chosen_move = (figure_to_move, to_move, None)
+        print (chosen_move)
     return handle_move(chosen_move)
 
