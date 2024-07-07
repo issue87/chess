@@ -71,6 +71,7 @@ const chessBoardWidthInPixels = 1180;
 
 let selectedSqare = null;
 let promotedSquare = null;
+let moveFrom = null;
 let gameObject = null;
 
 class Player{
@@ -237,7 +238,20 @@ function touchSquare(event){
   {
       const clickedCol = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
       const clickedRow = Math.floor(((endOfBoardY - event.pageY)/chessTileWidth));
-      if(selectedSqare != null){
+      if(promotedSquare){
+        //check if user clicked on the figures that were drawn for choosing
+        if (Math.abs(promotedSquare[0] - clickedRow) < 5 && promotedSquare[1] == clickedCol){
+          const chosenFigureIndex = Math.abs(promotedSquare[0] - clickedRow);
+          dataForRequest = new Object();
+          dataForRequest.typeOfRequest = "formData";
+          dataForRequest.moveFrom = moveFrom;
+          dataForRequest.moveTo = promotedSquare;
+          dataForRequest.chosenFigureIndex = chosenFigureIndex;
+          $ajaxUtils.sendGetRequest('/register_promotion', handleChooseFigureForPromotion, dataForRequest);
+        }
+      
+      }
+      if(selectedSqare){
         if(gameObject.getSquare(clickedRow, clickedCol) != null){
           if(gameObject.getSquare(selectedSqare[0], selectedSqare[1]).color == gameObject.getSquare(clickedRow, clickedCol).color){
             selectedSqare = [clickedRow, clickedCol];
@@ -327,11 +341,17 @@ function handlePlayerMove(response){
     gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
     canvasAnimation();
     promotedSquare = result_obj.moveTo;
+    moveFrom = result_obj.moveFrom;
     canvasAnimation();
   }
   else{
     handleCPUMove(response);
   };
+}
+
+function handleChooseFigureForPromotion(response){
+  const result_obj = JSON.parse(response.responseText);
+  console.log(result_obj);
 }
 
 function handleCPUMove(response){
