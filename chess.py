@@ -879,8 +879,9 @@ def player_move():
 
 @app.route('/register_promotion', methods = ["POST"])
 def register_promotion():
-    print(type(request.form["moveFrom"]))
-    print(type(request.form["moveTo"]))
-    print(type(request.form["chosenFigureIndex"]))
-    return jsonify({"something":0})
+    from_move = (int(request.form["fromRow"]), int(request.form["fromCol"]))
+    to_move = (int(request.form["toRow"]), int(request.form["toCol"]))
+    figure_to_move = chessboard.get_board_square(from_move[0], from_move[1])
+    chosen_move = (figure_to_move, to_move, int(request.form["chosenFigureIndex"]))
+    return handle_move(chosen_move)
 

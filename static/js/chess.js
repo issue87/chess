@@ -244,10 +244,14 @@ function touchSquare(event){
           const chosenFigureIndex = Math.abs(promotedSquare[0] - clickedRow);
           dataForRequest = new Object();
           dataForRequest.typeOfRequest = "formData";
-          dataForRequest.moveFrom = moveFrom;
-          dataForRequest.moveTo = promotedSquare;
-          dataForRequest.chosenFigureIndex = chosenFigureIndex;
+          dataForRequest.fromRow = moveFrom[0];
+          dataForRequest.fromCol = moveFrom[1];
+          dataForRequest.toRow = promotedSquare[0];
+          dataForRequest.toCol = promotedSquare[1];
+          dataForRequest.chosenFigureIndex = chosenFigureIndex; 
           $ajaxUtils.sendGetRequest('/register_promotion', handleChooseFigureForPromotion, dataForRequest);
+          promotedSquare = null;
+          moveFrom = null;
         }
       
       }
@@ -351,7 +355,12 @@ function handlePlayerMove(response){
 
 function handleChooseFigureForPromotion(response){
   const result_obj = JSON.parse(response.responseText);
-  console.log(result_obj);
+  gameObject.promote(result_obj.promotedFigure); 
+  gameObject.switchPlayer();
+  canvasAnimation();
+  if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
+    requestforCPUMove();
+  }
 }
 
 function handleCPUMove(response){
