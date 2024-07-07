@@ -868,8 +868,9 @@ def player_move():
     if message:
         move_JSON = {"approved":False, "message":message}
         return jsonify(move_JSON)
-    elif if (figure_to_move.get_kind() == PAWN_FIGURE
-        and to_move[0] == initianal_king_pos[chessboard.get_opponent_player().get_color()][0]):
+    elif (figure_to_move.get_kind() == PAWN_FIGURE
+        and to_move[0] == initianal_king_pos[chessboard.get_opponent_player().get_color()][0]
+        and chessboard.get_current_player() == HUMAN_PLAYER):
         choose_promoted_figure_JSON = {"approved":True, "choosePromotedFigure":True, "moveFrom": from_move, "moveTo":to_move}
         return jsonify(choose_promoted_figure_JSON)
     else:

@@ -302,6 +302,8 @@ function handlePlayerMove(response){
     const gameMessage = document.getElementById("gameMessage");
     gameMessage.innerText = result_obj.message;
   }else if (result_obj.choosePromotedFigure){
+    gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
+    canvasAnimation();
     promotedSquare = result_obj.moveTo;
     canvasAnimation();
   }
