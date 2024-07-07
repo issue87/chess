@@ -174,16 +174,27 @@ function canvasAnimation(){
     };
   };
   if (promotedSquare){
+    const color = chessBoard.getSquare(promotedSquare[0], promotedSquare[1]).color;
     if (promotedSquare[0] == 0){
       for(let i = 1; i < 5; i++){
         ctx.fillStyle = "#8A2BE2";
         ctx.fillRect(87 + promotedSquare[1] * 125.7, 88.5 + (7 - i) * 125.7, widthOfTile, widthOfTile);
+        const x_crop = figurePositionsOnSourceImage[color][figures_representation[i]]["x"];
+        const y_crop = figurePositionsOnSourceImage[color][figures_representation[i]]["y"];
+        ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
+                      87 + promotedSquare[1] * 125.7, 
+                      88.5 + (7 - i) * 125.7, widthOfTile, widthOfTile);
       }
     }
     else{
       for(let i = 6; i > 2; i--){
         ctx.fillStyle = "#8A2BE2";
         ctx.fillRect(87 + promotedSquare[1] * 125.7, 88.5 + (7 - i) * 125.7, widthOfTile, widthOfTile);
+        const x_crop = figurePositionsOnSourceImage[color][figures_representation[7%i]]["x"];
+        const y_crop = figurePositionsOnSourceImage[color][figures_representation[7%i]]["y"];
+        ctx.drawImage(chessBoardImage, x_crop, y_crop, widthOfTile, widthOfTile, 
+                      87 + promotedSquare[1] * 125.7, 
+                      88.5 + (7 - i) * 125.7, widthOfTile, widthOfTile);
       }
     }
   };
