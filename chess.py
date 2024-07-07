@@ -865,6 +865,9 @@ def player_move():
         message = "The figure " + str(figure_to_move) + " " + str(from_move) + " position of which you entered has no legal moves"
     elif to_move not in legal_moves[figure_to_move]:
         message = "The figure " + str(figure_to_move) + " " + str(from_move) + " can't move to " + str(to_move)
+    print (figure_to_move.get_kind() == PAWN_FIGURE)
+    print (to_move[0] == initianal_king_pos[chessboard.get_opponent_player().get_color()][0])
+    print (chessboard.get_current_player() == HUMAN_PLAYER)
     if message:
         move_JSON = {"approved":False, "message":message}
         return jsonify(move_JSON)
