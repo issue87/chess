@@ -55,6 +55,7 @@ const figurePositionsOnSourceImage = {
 };
 
 const colorNumberSign = {"white": 0, "black": 1};
+const figures_representation = ["king", "queen", "rook", "bishop", "knight", "pawn"]
 
 //number constants 
 const humanPlayer = 0;
@@ -64,10 +65,12 @@ const blackChessColor = 1;
 
 const widthOfTile = 125;
 const chessBoardWidthInPixels = 1180;
+
 // x 246 старт black pawn x 240 y 223 black rook x 242 y 96 black night x 371 y 100 black bishop x 497 y 97 black queen x - 623 y - 96 black king - x 751 y 96
 //white pawn x - 237 y - 1569 white rook x - 243, y - 1691, white knight x - 371, y - 1695, white bishop x - 496, y - 1694, white queen x - 620, y - 1699 white king x - 749 y 1698
 
 let selectedSqare = null;
+let promotedSquare = null;
 let gameObject = null;
 
 class Player{
@@ -140,9 +143,7 @@ class Game{
 
   eatFigureEnPassant(fromRow, toCol){
     this._eatenBlackFigures.push(this.getSquare(fromRow, toCol));
-    console.log(this.getSquare(fromRow, toCol));
     this._chessBoard[fromRow][toCol] = null;
-    console.log(this.getSquare(fromRow, toCol));
   }
 
   promote(figure){
@@ -172,7 +173,11 @@ function canvasAnimation(){
       };
     };
   };
+  if (promotedSquare){
+    console.log(promotedSquare);
+  }
 };
+
 
 function resize(){
   let canvasWidth;
@@ -296,7 +301,11 @@ function handlePlayerMove(response){
   if (!result_obj.approved){
     const gameMessage = document.getElementById("gameMessage");
     gameMessage.innerText = result_obj.message;
-  }else{
+  }else if (result_obj.choosePromotedFigure){
+    promotedSquare = result_obj.moveTo;
+    canvasAnimation();
+  }
+  else{
     handleCPUMove(response);
   };
 }
@@ -304,7 +313,6 @@ function handlePlayerMove(response){
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
-  console.log(result_obj.enPassant);
   if (result_obj.promotion){
     gameObject.promote(result_obj.promotedFigure);  
   }else if(result_obj.castling){

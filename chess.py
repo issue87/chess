@@ -797,7 +797,7 @@ def handle_move(chosen_move):
     chessboard.dismiss_check()
     chessboard.set_if_check()
     chessboard.set_if_mate_stalemate()
-    move_JSON = {"approved":True, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling, "enPassant": en_passant}
+    move_JSON = {"approved":True, "choosePromotedFigure":False, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling, "enPassant": en_passant}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
     return jsonify(move_JSON)
@@ -868,6 +868,10 @@ def player_move():
     if message:
         move_JSON = {"approved":False, "message":message}
         return jsonify(move_JSON)
+    elif if (figure_to_move.get_kind() == PAWN_FIGURE
+        and to_move[0] == initianal_king_pos[chessboard.get_opponent_player().get_color()][0]):
+        choose_promoted_figure_JSON = {"approved":True, "choosePromotedFigure":True, "moveFrom": from_move, "moveTo":to_move}
+        return jsonify(choose_promoted_figure_JSON)
     else:
         chosen_move = (figure_to_move, to_move, None)
     return handle_move(chosen_move)
