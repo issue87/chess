@@ -174,8 +174,19 @@ function canvasAnimation(){
     };
   };
   if (promotedSquare){
-    console.log(promotedSquare);
-  }
+    if (promotedSquare[0] == 0){
+      for(let i = 1; i < 5; i++){
+        ctx.fillStyle = "#8A2BE2";
+        ctx.fillRect(87 + promotedSquare[1] * 125.7, 88.5 + (7 - i) * 125.7, widthOfTile, widthOfTile);
+      }
+    }
+    else{
+      for(let i = 6; i > 2; i--){
+        ctx.fillStyle = "#8A2BE2";
+        ctx.fillRect(87 + promotedSquare[1] * 125.7, 88.5 + (7 - i) * 125.7, widthOfTile, widthOfTile);
+      }
+    }
+  };
 };
 
 
