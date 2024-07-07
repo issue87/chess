@@ -417,6 +417,15 @@ function handleCPUMove(response){
     if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
       requestforCPUMove();
     }
+  }else{
+    let message;
+    if (result_obj.mate){
+      message = colors[gameObject.otherPlayer.color] + "is checkmated";
+    }else{
+      message = "draw: " + result_obj.drawReason;
+    }
+    const gameMessage = document.getElementById("gameMessage");
+    gameMessage.innerText = message;
   }
 }
 
