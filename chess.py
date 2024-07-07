@@ -879,7 +879,8 @@ def player_move():
 
 @app.route('/register_promotion', methods = ["POST"])
 def register_promotion():
-    print(request.form["moveFrom"])
-    print(request.form["moveTo"])
+    print(type(request.form["moveFrom"]))
+    print(type(request.form["moveTo"]))
+    print(type(request.form["chosenFigureIndex"]))
     return jsonify({"something":0})
 
