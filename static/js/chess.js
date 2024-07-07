@@ -53,7 +53,7 @@ const figurePositionsOnSourceImage = {
     }
   }
 };
-
+const colors = ["white", "black"]
 const colorNumberSign = {"white": 0, "black": 1};
 const figures_representation = ["king", "queen", "rook", "bishop", "knight", "pawn"]
 
@@ -100,6 +100,8 @@ class Game{
     this._chessBoard = chessboard;
     this._eatenWhiteFigures = []
     this._eatenBlackFigures = []
+    this._draw = false
+    this._mate = false
   }
 
   get currentPlayer(){
@@ -120,6 +122,22 @@ class Game{
 
   set otherPlayer(player){
     this._otherPlayer = player;
+  }
+
+  isDraw(){
+    return this._draw;
+  }
+
+  isMate(){
+    return this._mate;;
+  }
+
+  setDraw(){
+    this._draw = true;
+  }
+
+  setMate(){
+    this._mate = true;
   }
 
   switchPlayer(){
@@ -234,6 +252,10 @@ function touchSquare(event){
   const startOfBoardY = chessAsideHeight + startOfCanvasY;
   const endOfBoardX = endOfCanvasX - chessAsideWidth;
   const endOfBoardY = endOfCanvasY - chessAsideHeight;
+  //checking if game is finished
+  if (gameObject.isDraw()||gameObject.isMate()){
+    return;
+  }
   if (event.pageX > startOfBoardX && event.pageX < endOfBoardX && event.pageY > startOfBoardY && event.pageY < endOfBoardY)
   {
       const clickedCol = Math.floor(((event.pageX - startOfBoardX)/chessTileWidth));
@@ -356,10 +378,21 @@ function handlePlayerMove(response){
 function handleChooseFigureForPromotion(response){
   const result_obj = JSON.parse(response.responseText);
   gameObject.promote(result_obj.promotedFigure); 
-  gameObject.switchPlayer();
   canvasAnimation();
-  if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
-    requestforCPUMove();
+  if (!result_obj.mate && !result_obj.draw){
+    gameObject.switchPlayer();
+    if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
+      requestforCPUMove();
+    }
+  }else{
+    let message;
+    if (result_obj.mate){
+      message = colors[gameObject.otherPlayer.color] "is checkmated";
+    }else{
+      message = "draw: " + result_obj.drawReason;
+    }
+    const gameMessage = document.getElementById("gameMessage");
+    gameMessage.innerText = message;
   }
 }
 
@@ -378,10 +411,12 @@ function handleCPUMove(response){
   }else if(result_obj.enPassant){
     gameObject.eatFigureEnPassant(result_obj.moveFrom[0], result_obj.moveTo[1]);
   }
-  gameObject.switchPlayer();
   canvasAnimation();
-  if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
-    requestforCPUMove();
+  if (!result_obj.mate && !result_obj.draw){
+    gameObject.switchPlayer();
+    if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
+      requestforCPUMove();
+    }
   }
 }
 

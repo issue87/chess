@@ -797,9 +797,19 @@ def handle_move(chosen_move):
     chessboard.dismiss_check()
     chessboard.set_if_check()
     chessboard.set_if_mate_stalemate()
-    move_JSON = {"approved":True, "choosePromotedFigure":False, "moveFrom": move_from, "moveTo": to_move, "promotion": promotion, "castling": castling, "enPassant": en_passant}
+    move_JSON = {"approved":True,
+                 "choosePromotedFigure":False, 
+                 "moveFrom": move_from, 
+                 "moveTo": to_move,
+                 "promotion": promotion,
+                 "castling": castling,
+                 "enPassant": en_passant,
+                 "mate": chessboard.is_mate(),
+                 "draw": chessboard.is_draw()}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
+    if chessboard.is_draw():
+        move_JSON["drawReason"] = chessboard.get_draw_reason()
     return jsonify(move_JSON)
 
 
