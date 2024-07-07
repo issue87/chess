@@ -174,7 +174,7 @@ function canvasAnimation(){
     };
   };
   if (promotedSquare){
-    const color = chessBoard.getSquare(promotedSquare[0], promotedSquare[1]).color;
+    const color = gameObject.getSquare(promotedSquare[0], promotedSquare[1]).color;
     if (promotedSquare[0] == 0){
       for(let i = 1; i < 5; i++){
         ctx.fillStyle = "#8A2BE2";
