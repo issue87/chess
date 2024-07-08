@@ -384,7 +384,35 @@ class ChessBoard:
         returns true if game result is draw
         '''
         return self.draw
-    
+    def is_dead_position(self):
+        remained_figures = self.get_remained_figures()
+        if len(remained_figures[0]) < 3 and len(remained_figures[1]) < 3:
+        #sets draw due to dead position in case either
+        # of this conditions is true for both players:
+        # 1. A player has only one piece: a king
+        # 2. A player has a king and a bishop
+        # 3. A player has a king and a knight 
+            if (len(remained_figures[0]) == 1
+                or 3 in remained_figures[0] 
+                or 4 in remained_figures[0]
+                ) and (
+                len(remained_figures[1]) == 1
+                or 3 in remained_figures[1] 
+                or 4 in remained_figures[1]
+                ): return True
+        # Sets draw due to dead position if one of the players has 
+        # a king and two knights and the other player has only a king
+        if (
+            (len(remained_figures[0]) == 3 and len(remained_figures[1]) == 1)
+            or 
+            (len(remained_figures[1]) == 3 and len(remained_figures[0]) == 1)
+            ):
+            figure_counter_w = Counter(remained_figures[0])
+            figure_counter_b = Counter(remained_figures[1])
+            if figure_counter_w[4] == 2 or figure_counter_b[4] == 2:
+                return True
+        return False
+
     def set_draw_by_agreement(self):
         """
         sets draw by agreement of the parties
@@ -597,7 +625,8 @@ def clean_empty_sets_from_dict(dict_to_clean):
 def game_recursive(player1, player2, ex):
     """
     the game. it is alike a loop: 
-    it recursively calles itself at the end of a function with the same arguments
+    it recursively calles itself at the end of a function with the same arguments.
+    This function is for testing.
     """
     color = ex.get_current_player().get_color()
     color_str = colors_representations[color]
@@ -611,31 +640,8 @@ def game_recursive(player1, player2, ex):
             result = input("Do you want to implement rule 50, if it is so type 'yes'")
             if result == 'yes':
                 ex.set_draw_by_50_moves
-    remained_figures = ex.get_remained_figures()
-    if len(remained_figures[0]) < 3 and len(remained_figures[1]) < 3:
-        #sets draw due to dead position in case either
-        # of this conditions is true for both players:
-        # 1. A player has only one piece: a king
-        # 2. A player has a king and a bishop
-        # 3. A player has a king and a knight 
-        if (len(remained_figures[0]) == 1
-               or 3 in remained_figures[0] 
-               or 4 in remained_figures[0]
-            ) and (
-               len(remained_figures[1]) == 1
-               or 3 in remained_figures[1] 
-               or 4 in remained_figures[1]
-            ): ex.set_draw_due_to_dead_position()
-    # Sets draw due to dead position if one of the players has 
-    # a king and two knights and the other player has only a king
-    if len(remained_figures[0]) == 3 and len(remained_figures[1]) == 1:
-        figure_counter = Counter(remained_figures[0])
-        if figure_counter[4] == 2:
-            ex.set_draw_due_to_dead_position()
-    if len(remained_figures[1]) == 3 and len(remained_figures[0]) == 1:
-        figure_counter = Counter(remained_figures[1])
-        if figure_counter[4] == 2:
-            ex.set_draw_due_to_dead_position()         
+    if ex.is_dead_position():
+        ex.set_draw_due_to_dead_position()         
     if ex.is_draw():
         print ("draw ", ex.get_draw_reason())
         return 
@@ -797,6 +803,9 @@ def handle_move(chosen_move):
     chessboard.dismiss_check()
     chessboard.set_if_check()
     chessboard.set_if_mate_stalemate()
+    if not chessboard.is_mate() and not chessboard.is_draw():
+        if chessboard.is_dead_position():
+            chessboard.set_draw_due_to_dead_position()
     move_JSON = {"approved":True,
                  "choosePromotedFigure":False, 
                  "moveFrom": move_from, 

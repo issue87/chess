@@ -387,7 +387,7 @@ function handleChooseFigureForPromotion(response){
   }else{
     let message;
     if (result_obj.mate){
-      message = colors[gameObject.otherPlayer.color] + "is checkmated";
+      message = colors[gameObject.otherPlayer.color] + " is checkmated";
     }else{
       message = "draw: " + result_obj.drawReason;
     }
@@ -420,7 +420,7 @@ function handleCPUMove(response){
   }else{
     let message;
     if (result_obj.mate){
-      message = colors[gameObject.otherPlayer.color] + "is checkmated";
+      message = colors[gameObject.otherPlayer.color] + " is checkmated";
     }else{
       message = "draw: " + result_obj.drawReason;
     }
