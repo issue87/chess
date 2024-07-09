@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, flash, jsonify, session
+from flask.ext.uuid import FlaskUUID
 import copy
 import random
 from collections import Counter
 
 #main object of application. It is used by Gunicorn
 app = Flask(__name__)
+FlaskUUID(app)
 app.secret_key = 'fsrghdfhjdjkf456745dfghdfhd'
 
 #figure colors' constants 
@@ -783,29 +785,29 @@ def handle_move(chosen_move):
         pass
     figure_to_move, to_move, promotion_figure_index = chosen_move
     move_from = figure_to_move.get_pos()
-    en_passant_square = chessboard.get_en_passant()
-    chessboard.make_move(figure_to_move, (to_move[0], to_move[1]))
-    chessboard.count_turn()
+    en_passant_square = games[session['id']].get_en_passant()
+    games[session['id']].make_move(figure_to_move, (to_move[0], to_move[1]))
+    games[session['id']].count_turn()
     promotion = False
     promoted_figure = None
     castling = False
     en_passant = False
     if (figure_to_move.get_kind() == PAWN_FIGURE
-        and to_move[0] == initianal_king_pos[chessboard.get_current_player().get_color()][0]):
-        chessboard.promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
+        and to_move[0] == initianal_king_pos[games[session['id']].get_current_player().get_color()][0]):
+        games[session['id']].promote_pawn((to_move[0], to_move[1]), promotion_figure_index)
         promotion = True
-        promoted_figure = chessboard.get_board_square(to_move[0], to_move[1])
+        promoted_figure = games[session['id']].get_board_square(to_move[0], to_move[1])
     if (figure_to_move.get_kind() == PAWN_FIGURE
         and to_move == en_passant_square):
         en_passant = True
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
-    chessboard.dismiss_check()
-    chessboard.set_if_check()
-    chessboard.set_if_mate_stalemate()
-    if not chessboard.is_mate() and not chessboard.is_draw():
-        if chessboard.is_dead_position():
-            chessboard.set_draw_due_to_dead_position()
+    games[session['id']].dismiss_check()
+    games[session['id']].set_if_check()
+    games[session['id']].set_if_mate_stalemate()
+    if not games[session['id']].is_mate() and not games[session['id']].is_draw():
+        if games[session['id']].is_dead_position():
+            games[session['id']].set_draw_due_to_dead_position()
     move_JSON = {"approved":True,
                  "choosePromotedFigure":False, 
                  "moveFrom": move_from, 
@@ -813,12 +815,12 @@ def handle_move(chosen_move):
                  "promotion": promotion,
                  "castling": castling,
                  "enPassant": en_passant,
-                 "mate": chessboard.is_mate(),
-                 "draw": chessboard.is_draw()}
+                 "mate": games[session['id']].is_mate(),
+                 "draw": games[session['id']].is_draw()}
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
-    if chessboard.is_draw():
-        move_JSON["drawReason"] = chessboard.get_draw_reason()
+    if games[session['id']].is_draw():
+        move_JSON["drawReason"] = games[session['id']].get_draw_reason()
     return jsonify(move_JSON)
 
 
@@ -828,8 +830,8 @@ def index():
 
 @app.route('/start_game', methods = ["POST"])
 def start_game():
-    print(session.cid)
-    print(type(session.cid))
+    random_uuid = uuid.uuid4()
+    session['id'] = random_uuid
     type_of_game = request.form["typeOfGame"]
     chosen_color = request.form["color"]
     if chosen_color == "random":
@@ -854,10 +856,10 @@ def start_game():
         player1 = Player(WHITE_FIGURE_COLOR, HUMAN_PLAYER)
         player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)
     if player1.get_color() == WHITE_FIGURE_COLOR:
-        chessboard = ChessBoard(player1, player2)
+        games[session['id']] = ChessBoard(player1, player2)
     else:
-        chessboard = ChessBoard(player2, player1)
-    chessboard_figures_JSON = chessboard.translate_board_figures_to_JSON()
+        games[session['id']] = ChessBoard(player2, player1)
+    chessboard_figures_JSON = games[session['id']].translate_board_figures_to_JSON()
     player1JSON = player1.translate_to_JSON();
     player2JSON = player2.translate_to_JSON();
     game_JSON = {"players": [player1JSON, player2JSON],
@@ -866,20 +868,20 @@ def start_game():
   
 @app.route('/cpu_move', methods = ["GET"])
 def cpu_move():
-    color = chessboard.get_current_player().get_color()
-    moves = chessboard.get_possible_moves(color)
-    legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
-    chosen_move = chessboard.get_current_player().implement_strategy(chessboard, legal_moves)
+    color = games[session['id']].get_current_player().get_color()
+    moves = games[session['id']].get_possible_moves(color)
+    legal_moves = clean_empty_sets_from_dict(games[session['id']].get_possible_legal_moves(moves, color))
+    chosen_move = games[session['id']].get_current_player().implement_strategy(games[session['id']], legal_moves)
     return handle_move(chosen_move)
 
 @app.route('/player_move', methods = ["POST"])
 def player_move():
     from_move = (int(request.form["fromRow"]), int(request.form["fromCol"]))
     to_move = (int(request.form["toRow"]), int(request.form["toCol"]))
-    color = chessboard.get_current_player().get_color()
-    moves = chessboard.get_possible_moves(color)
-    legal_moves = clean_empty_sets_from_dict(chessboard.get_possible_legal_moves(moves, color))
-    figure_to_move = chessboard.get_board_square(from_move[0], from_move[1])
+    color = games[session['id']].get_current_player().get_color()
+    moves = games[session['id']].get_possible_moves(color)
+    legal_moves = clean_empty_sets_from_dict(games[session['id']].get_possible_legal_moves(moves, color))
+    figure_to_move = games[session['id']].get_board_square(from_move[0], from_move[1])
     message = ""
     if figure_to_move not in legal_moves:
         message = "The figure " + str(figure_to_move) + " " + str(from_move) + " position of which you entered has no legal moves"
@@ -889,8 +891,8 @@ def player_move():
         move_JSON = {"approved":False, "message":message}
         return jsonify(move_JSON)
     elif (figure_to_move.get_kind() == PAWN_FIGURE
-        and to_move[0] == initianal_king_pos[chessboard.get_opponent_player().get_color()][0]
-        and chessboard.get_current_player().get_type_of_player() == HUMAN_PLAYER):
+        and to_move[0] == initianal_king_pos[games[session['id']].get_opponent_player().get_color()][0]
+        and games[session['id']].get_current_player().get_type_of_player() == HUMAN_PLAYER):
         choose_promoted_figure_JSON = {"approved":True, "choosePromotedFigure":True, "moveFrom": from_move, "moveTo":to_move}
         return jsonify(choose_promoted_figure_JSON)
     else:
@@ -901,7 +903,7 @@ def player_move():
 def register_promotion():
     from_move = (int(request.form["fromRow"]), int(request.form["fromCol"]))
     to_move = (int(request.form["toRow"]), int(request.form["toCol"]))
-    figure_to_move = chessboard.get_board_square(from_move[0], from_move[1])
+    figure_to_move = games[session['id']].get_board_square(from_move[0], from_move[1])
     chosen_move = (figure_to_move, to_move, int(request.form["chosenFigureIndex"]))
     return handle_move(chosen_move)
 
