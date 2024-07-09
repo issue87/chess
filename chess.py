@@ -1,13 +1,11 @@
 from flask import Flask, render_template, request, flash, jsonify, session
-from flask_uuid import FlaskUUID
+import uuid
 import copy
 import random
 from collections import Counter
 
 #main object of application. It is used by Gunicorn
 app = Flask(__name__)
-flask_uuid = FlaskUUID()
-flask_uuid.init_app(app)
 app.secret_key = 'fsrghdfhjdjkf456745dfghdfhd'
 
 #figure colors' constants 
@@ -831,7 +829,7 @@ def index():
 
 @app.route('/start_game', methods = ["POST"])
 def start_game():
-    random_uuid = flask_uuid.uuid4()
+    random_uuid = uuid.uuid4()
     session['id'] = random_uuid
     type_of_game = request.form["typeOfGame"]
     chosen_color = request.form["color"]
