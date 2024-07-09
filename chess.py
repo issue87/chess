@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, jsonify
+from flask import Flask, render_template, request, flash, jsonify, session
 import copy
 import random
 from collections import Counter
@@ -50,7 +50,7 @@ pawns_direction = {0: 1, 1: -1}
 initianal_pawn_raw = {0: 1, 1: 6}
 initianal_king_pos = {0: (0, 4), 1: (7, 4)}
 column_chess_notation = "ABCDEFGH"
-chessboard = None
+games = dict()
 
 class Player:
     """
@@ -828,7 +828,8 @@ def index():
 
 @app.route('/start_game', methods = ["POST"])
 def start_game():
-    global chessboard
+    print(session.cid)
+    print(type(session.cid))
     type_of_game = request.form["typeOfGame"]
     chosen_color = request.form["color"]
     if chosen_color == "random":
