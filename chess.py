@@ -5,7 +5,7 @@ from collections import Counter
 
 #main object of application. It is used by Gunicorn
 app = Flask(__name__)
-
+app.secret_key = 'fsrghdfhjdjkf456745dfghdfhd'
 
 #figure colors' constants 
 WHITE_FIGURE_COLOR = 0
