@@ -831,7 +831,7 @@ def index():
 
 @app.route('/start_game', methods = ["POST"])
 def start_game():
-    random_uuid = uuid.uuid4()
+    random_uuid = flask_uuid.uuid4()
     session['id'] = random_uuid
     type_of_game = request.form["typeOfGame"]
     chosen_color = request.form["color"]
