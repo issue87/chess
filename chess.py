@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, jsonify, session
-from flask.ext.uuid import FlaskUUID
+from flask_uuid import FlaskUUID
 import copy
 import random
 from collections import Counter
