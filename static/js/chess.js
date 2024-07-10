@@ -434,11 +434,14 @@ function handleCPUMove(response){
       requestforCPUMove();
     }else{
       if (result_obj.request_for_draw_50_moves){
-        const fiftyMovesBtn =document.getElementById(draw50Moves);
+        const fiftyMovesBtn =document.getElementById("draw50Moves");
         if (fiftyMovesBtn.style.visibility == "hidden"){
           fiftyMovesBtn.style.visibility == "visible";
         }
       }
+    }
+    if (!result_obj.request_for_draw_50_moves && document.getElementById("draw50Moves").style.visibility == "visible"){
+      document.getElementById("draw50Moves").style.visibility = "hidden";
     }
   }else{
     let message;
