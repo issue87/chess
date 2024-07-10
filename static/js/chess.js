@@ -307,6 +307,20 @@ function touchSquare(event){
   };
 };
 
+function acceptDrawFiftyMoves(){
+  dataForRequest = new Object();
+  dataForRequest.typeOfRequest = "GET";
+  $ajaxUtils.sendGetRequest('/cpu_move', handleCPUMove, dataForRequest);
+};
+
+function acceptDrawFiftyMovesFinish(response){
+  const result_obj = JSON.parse(response.responseText);
+  if (result_obj.approved){
+    const gameMessage = document.getElementById("gameMessage");
+    gameMessage.innerText = "Draw by 50 moves rule";
+  }
+}
+
 const canvasEl = document.getElementById("gameCanvas");
 canvasEl.addEventListener("click",touchSquare);
 const ctx = canvasEl.getContext("2d");
@@ -325,6 +339,8 @@ const radioButtons = document.getElementsByClassName("inputTypeOfGame");
 let typeOfGame = "userVSCPU";
 let cpuStrategy1 = null;
 let cpuStrategy2 = null;
+const fiftyMovesBtn =document.getElementById(draw50Moves);
+fiftyMovesBtn.addEventListener("click", acceptDrawFiftyMoves);
 for(let button of radioButtons){
   button.addEventListener("change",selectTypeOfGame);
 }
@@ -416,6 +432,13 @@ function handleCPUMove(response){
     gameObject.switchPlayer();
     if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
       requestforCPUMove();
+    }else{
+      if (result_obj.request_for_draw_50_moves){
+        const fiftyMovesBtn =document.getElementById(draw50Moves);
+        if (fiftyMovesBtn.style.visibility == "hidden"){
+          fiftyMovesBtn.style.visibility == "visible";
+        }
+      }
     }
   }else{
     let message;
@@ -517,3 +540,6 @@ function gameLoad(response){
     requestforCPUMove();
   }
 };
+
+
+

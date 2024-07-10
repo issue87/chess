@@ -36,6 +36,10 @@ canvas{
     background-color: #00ffff;
 }
 
+#draw50Moves{
+    visibility: hidden;
+}
+
 #gameContainer{
     visibility: hidden;
 };

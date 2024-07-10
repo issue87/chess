@@ -804,9 +804,14 @@ def handle_move(chosen_move):
     games[session['id']].dismiss_check()
     games[session['id']].set_if_check()
     games[session['id']].set_if_mate_stalemate()
+    request_for_draw_50_moves = False
     if not games[session['id']].is_mate() and not games[session['id']].is_draw():
         if games[session['id']].is_dead_position():
             games[session['id']].set_draw_due_to_dead_position()
+        elif games[session['id']].get_moves_without_pawn_move_or_eaten() >= 75:
+            games[session['id']].set_draw_by_75_moves()
+        elif games[session['id']].get_moves_without_pawn_move_or_eaten() >= 50:
+            request_for_draw_50_moves = True           
     move_JSON = {"approved":True,
                  "choosePromotedFigure":False, 
                  "moveFrom": move_from, 
@@ -815,7 +820,9 @@ def handle_move(chosen_move):
                  "castling": castling,
                  "enPassant": en_passant,
                  "mate": games[session['id']].is_mate(),
-                 "draw": games[session['id']].is_draw()}
+                 "draw": games[session['id']].is_draw(),
+                 "request_for_draw_50_moves": request_for_draw_50_moves
+                 }
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
     if games[session['id']].is_draw():
@@ -905,4 +912,14 @@ def register_promotion():
     figure_to_move = games[session['id']].get_board_square(from_move[0], from_move[1])
     chosen_move = (figure_to_move, to_move, int(request.form["chosenFigureIndex"]))
     return handle_move(chosen_move)
+
+@app.route('/accept_draw_50_moves', methods = ["GET"])
+def accept_draw_50_moves():
+    if (games[session['id']].get_moves_without_pawn_move_or_eaten() >= 50
+     and games[session['id']].get_current_player().get_type_of_player() == HUMAN_PLAYER):
+        json_response = {"approved":True}
+        games[session['id']].set_draw_by_50_moves()
+    else:
+        json_response = {"approved":False}
+    return jsonify(json_response)
 
