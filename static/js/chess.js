@@ -436,9 +436,7 @@ function handleCPUMove(response){
       if (result_obj.request_for_draw_50_moves){
         const fiftyMovesBtn =document.getElementById("draw50Moves");
         console.log("50moves");
-        if (fiftyMovesBtn.style.visibility == "hidden"){
-          console.log("visibility hidden");
-          fiftyMovesBtn.style.visibility == "visible";
+        fiftyMovesBtn.style.visibility = "visible";
         }
       }
     }
