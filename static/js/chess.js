@@ -310,7 +310,7 @@ function touchSquare(event){
 function acceptDrawFiftyMoves(){
   dataForRequest = new Object();
   dataForRequest.typeOfRequest = "GET";
-  $ajaxUtils.sendGetRequest('/cpu_move', handleCPUMove, dataForRequest);
+  $ajaxUtils.sendGetRequest('/accept_draw_50_moves', acceptDrawFiftyMovesFinish, dataForRequest);
 };
 
 function acceptDrawFiftyMovesFinish(response){
