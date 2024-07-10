@@ -339,7 +339,7 @@ const radioButtons = document.getElementsByClassName("inputTypeOfGame");
 let typeOfGame = "userVSCPU";
 let cpuStrategy1 = null;
 let cpuStrategy2 = null;
-const fiftyMovesBtn =document.getElementById(draw50Moves);
+const fiftyMovesBtn =document.getElementById("draw50Moves");
 fiftyMovesBtn.addEventListener("click", acceptDrawFiftyMoves);
 for(let button of radioButtons){
   button.addEventListener("change",selectTypeOfGame);
