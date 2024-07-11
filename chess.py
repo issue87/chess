@@ -923,3 +923,12 @@ def accept_draw_50_moves():
         json_response = {"approved":False}
     return jsonify(json_response)
 
+@app.route('/resign', methods = ["GET"])
+def resign():
+    if games[session['id']].get_current_player().get_type_of_player() == HUMAN_PLAYER):
+        games[session['id']].set_resign()
+        json_response = {"approved":True}
+    else:
+        json_response = {"approved":False} 
+    return jsonify(json_response)
+

@@ -104,6 +104,7 @@ class Game{
     this._drawReason = null;
     this._mate = false;
     this._gameOngoing = true;
+    this._resigned = false
   }
 
   get currentPlayer(){
@@ -142,11 +143,19 @@ class Game{
     this._drawReason = drawReason;
     this._draw = true;
     this._gameOngoing = false;
+    selectedSqare = null;
   }
 
   setMate(){
     this._mate = true;
     this._gameOngoing = false;
+    selectedSqare = null;
+  }
+
+  setResign(){
+    this._resigned = true;
+    this._gameOngoing = false;
+    selectedSqare = null;
   }
 
   switchPlayer(){
@@ -327,7 +336,24 @@ function acceptDrawFiftyMovesFinish(response){
   if (result_obj.approved){
     gameObject.setDraw(result_obj.drawReason);
     const gameMessage = document.getElementById("gameMessage");
-    gameMessage.innerText = result_obj.drawReason;
+    gameMessage.innerText = "Draw " + result_obj.drawReason;
+  }
+}
+
+function resign(){
+  if (gameObject.currentPlayer.typeOfPlayer == humanPlayer){
+    dataForRequest = new Object();
+    dataForRequest.typeOfRequest = "GET";
+    $ajaxUtils.sendGetRequest('/resign', resignFinish, dataForRequest);
+  }
+}
+
+function resignFinish(response){
+  const result_obj = JSON.parse(response.responseText);
+  if (result_obj.approved){
+    gameObject.setResign();
+    const gameMessage = document.getElementById("gameMessage");
+    gameMessage.innerHTML = colors[gameObject.currentPlayer.color] + " has resigned";
   }
 }
 
@@ -351,6 +377,8 @@ let cpuStrategy1 = null;
 let cpuStrategy2 = null;
 const fiftyMovesBtn =document.getElementById("draw50Moves");
 fiftyMovesBtn.addEventListener("click", acceptDrawFiftyMoves);
+const resignBtn =document.getElementById("resignButton");
+resignBtn.addEventListener("click", resign);
 for(let button of radioButtons){
   button.addEventListener("change",selectTypeOfGame);
 }
