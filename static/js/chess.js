@@ -98,11 +98,12 @@ class Game{
     this._currentPlayer = whitePlayer;
     this._otherPlayer = blackPlayer;
     this._chessBoard = chessboard;
-    this._eatenWhiteFigures = []
-    this._eatenBlackFigures = []
-    this._draw = false
-    this._drawReason = null
-    this._mate = false
+    this._eatenWhiteFigures = [];
+    this._eatenBlackFigures = [];
+    this._draw = false;
+    this._drawReason = null;
+    this._mate = false;
+    this._gameOngoing = true;
   }
 
   get currentPlayer(){
@@ -130,16 +131,23 @@ class Game{
   }
 
   isMate(){
-    return this._mate;;
+    return this._mate;
+  }
+
+  isGameOngoing(){
+    return this._gameOngoing;
   }
 
   setDraw(drawReason){
     this._drawReason = drawReason;
     this._draw = true;
+    this._gameOngoing = false;
   }
 
   setMate(){
     this._mate = true;
+    this._gameOngoing = false;
+  }
   }
 
   switchPlayer(){
@@ -255,7 +263,7 @@ function touchSquare(event){
   const endOfBoardX = endOfCanvasX - chessAsideWidth;
   const endOfBoardY = endOfCanvasY - chessAsideHeight;
   //checking if game is finished
-  if (gameObject.isDraw()||gameObject.isMate()){
+  if (!gameObject.isGameOngoing()){
     return;
   }
   if (event.pageX > startOfBoardX && event.pageX < endOfBoardX && event.pageY > startOfBoardY && event.pageY < endOfBoardY)

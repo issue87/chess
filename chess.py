@@ -917,9 +917,9 @@ def register_promotion():
 def accept_draw_50_moves():
     if (games[session['id']].get_moves_without_pawn_move_or_eaten() >= 50
      and games[session['id']].get_current_player().get_type_of_player() == HUMAN_PLAYER):
-        json_response = {"approved":True}
+        json_response = {"approved":True, "drawReason":games[session['id']].get_draw_reason()}
         games[session['id']].set_draw_by_50_moves()
     else:
-        json_response = {"approved":False, "drawReason":games[session['id']].get_draw_reason()}
+        json_response = {"approved":False}
     return jsonify(json_response)
 
