@@ -920,6 +920,6 @@ def accept_draw_50_moves():
         json_response = {"approved":True}
         games[session['id']].set_draw_by_50_moves()
     else:
-        json_response = {"approved":False}
+        json_response = {"approved":False, "drawReason":games[session['id']].get_draw_reason()}
     return jsonify(json_response)
 

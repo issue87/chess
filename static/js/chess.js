@@ -101,6 +101,7 @@ class Game{
     this._eatenWhiteFigures = []
     this._eatenBlackFigures = []
     this._draw = false
+    this._drawReason = null
     this._mate = false
   }
 
@@ -132,7 +133,8 @@ class Game{
     return this._mate;;
   }
 
-  setDraw(){
+  setDraw(drawReason){
+    this._drawReason = drawReason;
     this._draw = true;
   }
 
@@ -316,8 +318,9 @@ function acceptDrawFiftyMoves(){
 function acceptDrawFiftyMovesFinish(response){
   const result_obj = JSON.parse(response.responseText);
   if (result_obj.approved){
+    gameObject.setDraw(result_obj.drawReason);
     const gameMessage = document.getElementById("gameMessage");
-    gameMessage.innerText = "Draw by 50 moves rule";
+    gameMessage.innerText = result_obj.drawReason;
   }
 }
 
@@ -403,8 +406,10 @@ function handleChooseFigureForPromotion(response){
   }else{
     let message;
     if (result_obj.mate){
+      gameObject.setMate();
       message = colors[gameObject.otherPlayer.color] + " is checkmated";
     }else{
+      gameObject.setDraw(result_obj.drawReason);
       message = "draw: " + result_obj.drawReason;
     }
     const gameMessage = document.getElementById("gameMessage");
@@ -447,8 +452,10 @@ function handleCPUMove(response){
   }else{
     let message;
     if (result_obj.mate){
+      gameObject.setMate();
       message = colors[gameObject.otherPlayer.color] + " is checkmated";
     }else{
+      gameObject.setDraw(result_obj.drawReason);
       message = "draw: " + result_obj.drawReason;
     }
     const gameMessage = document.getElementById("gameMessage");
