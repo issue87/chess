@@ -148,7 +148,6 @@ class Game{
     this._mate = true;
     this._gameOngoing = false;
   }
-  }
 
   switchPlayer(){
     [this.currentPlayer, this.otherPlayer] = [this.otherPlayer, this.currentPlayer];
