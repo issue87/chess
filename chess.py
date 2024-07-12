@@ -741,7 +741,7 @@ def eater_strategy(board, legal_moves, request_for_draw):
     for figure, moves in legal_moves.items():
         selected_figure_moves = set()
         for move in moves:
-            if board.get_board_square() != None:
+            if board.get_board_square(move[0], move[1]) != None:
                 selected_figure_moves.add(move)
         if selected_figure_moves != set():
             selected_dict[figure] = selected_figure_moves
