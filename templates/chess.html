@@ -35,11 +35,15 @@
                 <div>
                     <label for="choose1Computer">CPU Player</label>
                     <select id="choose1Computer">
-                        <option value="random">Random</option>
+                        {% for player in computer_players %}
+                            <option value="{{player}}">{{player}}</option>
+                        {% endfor %}
                     </select>
                     <label for="choose2Computer">CPU Player</label>
                     <select id="choose2Computer">
-                        <option value="random">Random</option>
+                        {% for player in computer_players %}
+                            <option value="{{player}}">{{player}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <button id="startGame" type="button">Play</button>

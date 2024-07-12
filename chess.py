@@ -725,6 +725,31 @@ def random_strategy(board, legal_moves, request_for_draw):
         promotion_figure_index = random.randrange(1,5)
     return (figure_to_move, to_move, promotion_figure_index)
 
+def eater_strategy(board, legal_moves, request_for_draw):
+    """
+    Just prefers to eat any figures with any figure.
+    """
+    #By default the draw is rejected.
+    #If a request for a draw has been passed, 
+    #you must return either "draw is accepted" or "draw is rejected"
+    if request_for_draw:
+        if False:
+            return "draw is accepted"
+        else:
+            return "draw is rejected"
+    selected_dict = dict()
+    for figure, moves in legal_moves.items():
+        selected_figure_moves = set()
+        for move in moves:
+            if board.get_board_square() != None:
+                selected_figure_moves.add(move)
+        if selected_figure_moves != set():
+            selected_dict[figure] = selected_figure_moves
+    if selected_dict != dict():
+        return random_strategy(board, selected_dict, request_for_draw)
+    else:
+        return random_strategy(board, legal_moves, request_for_draw)
+
 def human_choice(board, legal_moves, request_for_draw):
     """
     Handles interactions with a human player.
@@ -769,7 +794,7 @@ def human_choice(board, legal_moves, request_for_draw):
         assert 5 > figure_index > 0
     return (figure_to_move, to_move, figure_index)
 
-strategies = {"random":random_strategy}
+strategies = {"random":random_strategy, "simple eater":eater_strategy}
 
 def game():
     player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
@@ -832,7 +857,7 @@ def handle_move(chosen_move):
 
 @app.route('/', methods = ["GET","POST"])
 def index():
-    return render_template("chess.html")
+    return render_template("chess.html", computer_players = strategies.keys())
 
 @app.route('/start_game', methods = ["POST"])
 def start_game():
