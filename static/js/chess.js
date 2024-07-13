@@ -424,8 +424,7 @@ function handlePlayerMove(response){
     promotedSquare = result_obj.moveTo;
     moveFrom = result_obj.moveFrom;
     canvasAnimation();
-  }
-    con
+  }else{
     handleCPUMove(response);
   };
 }
