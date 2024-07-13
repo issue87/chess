@@ -303,12 +303,12 @@ class ChessBoard:
                 if previous_position[1] > position[1]:
                     self.board[position[0]][3] = self.board[position[0]][0]
                     self.board[position[0]][0] = None
-                    self.board[position[0]][3].change_pos((0, 3))
+                    self.board[position[0]][3].change_pos((position[0], 3))
                 #case of short castling
                 else:
                     self.board[position[0]][5] = self.board[position[0]][7]
                     self.board[position[0]][7] = None
-                    self.board[position[0]][5].change_pos((0, 5))
+                    self.board[position[0]][5].change_pos((position[0], 5))
         #should a king or rook make their first move, the castling between them
         #must be forbidden
         if self.get_current_player().is_long_castling_possible():
