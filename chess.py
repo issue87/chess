@@ -471,7 +471,7 @@ class ChessBoard:
                 #figures on the testboard are different from those 
                 #on the game board, so we can't refer to game board's figures 
                 #from test board
-                print(move)
+                print(figure, figure_pos, " - ", move)
                 test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
                 kings_position = test_board.kings_pos[color]
                 positions_to_check = set()
