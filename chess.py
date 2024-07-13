@@ -361,7 +361,7 @@ class ChessBoard:
         '''
         color = self.get_current_player().get_color()
         moves = self.get_possible_moves(color)
-        print(self.board)
+        print(self)
         legal_moves = self.get_possible_legal_moves(moves, color).values()
         exist_moves = False
         for moves_set in legal_moves:
