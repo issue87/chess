@@ -45,9 +45,6 @@ canvas{
     visibility: hidden;
 }
 
-#gameContainer{
-    visibility: hidden;
-}
 
 .resposiveFontSize{
     font-size: 4vw;
