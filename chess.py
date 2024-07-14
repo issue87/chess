@@ -361,7 +361,6 @@ class ChessBoard:
         '''
         color = self.get_current_player().get_color()
         moves = self.get_possible_moves(color)
-        print(self)
         legal_moves = self.get_possible_legal_moves(moves, color).values()
         exist_moves = False
         for moves_set in legal_moves:
@@ -471,7 +470,6 @@ class ChessBoard:
                 #figures on the testboard are different from those 
                 #on the game board, so we can't refer to game board's figures 
                 #from test board
-                print(figure, figure_pos, " - ", move)
                 test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
                 kings_position = test_board.kings_pos[color]
                 positions_to_check = set()
@@ -892,13 +890,12 @@ def start_game():
         games[session['id']] = ChessBoard(player1, player2)
     else:
         games[session['id']] = ChessBoard(player2, player1)
-    chessboard_figures_JSON = games[session['id']].translate_board_figures_to_JSON()
+   """  chessboard_figures_JSON = games[session['id']].translate_board_figures_to_JSON()
     player1JSON = player1.translate_to_JSON();
     player2JSON = player2.translate_to_JSON();
     game_JSON = {"players": [player1JSON, player2JSON],
-                  "board": chessboard_figures_JSON}
-    return jsonify(game_JSON)
-  
+                  "board": chessboard_figures_JSON} """
+    return render_template("game.html")
 @app.route('/cpu_move', methods = ["GET"])
 def cpu_move():
     color = games[session['id']].get_current_player().get_color()

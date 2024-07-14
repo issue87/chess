@@ -371,40 +371,10 @@ let canvasScaleRatio;
 const chessBoardImage = document.createElement("img");
 chessBoardImage.src = "../static/images/chessBoard.png";
 chessBoardImage.onload = resize;
-const radioButtons = document.getElementsByClassName("inputTypeOfGame");
-let typeOfGame = "userVSCPU";
-let cpuStrategy1 = null;
-let cpuStrategy2 = null;
 const fiftyMovesBtn =document.getElementById("draw50Moves");
 fiftyMovesBtn.addEventListener("click", acceptDrawFiftyMoves);
 const resignBtn =document.getElementById("resignButton");
 resignBtn.addEventListener("click", resign);
-for(let button of radioButtons){
-  button.addEventListener("change",selectTypeOfGame);
-}
-
-function selectTypeOfGame(){
-  if(this.value == "CPUVSCPU"){
-    typeOfGame = this.value;
-    document.getElementById("choose1Computer").style.visibility = "visible";
-    document.getElementById("choose2Computer").style.visibility = "visible";
-    document.querySelector("label[for='choose1Computer']").style.visibility  = "visible";
-    document.querySelector("label[for='choose2Computer']").style.visibility  = "visible";
-  }else if(this.value == "HotSeat")
-  {
-    typeOfGame = this.value;
-    document.getElementById("choose1Computer").style.visibility = "hidden";
-    document.getElementById("choose2Computer").style.visibility = "hidden";
-    document.querySelector("label[for='choose1Computer']").style.visibility  = "hidden";
-    document.querySelector("label[for='choose2Computer']").style.visibility  = "hidden";
-  }else if(this.value == "userVSCPU"){
-    typeOfGame = this.value;
-    document.getElementById("choose1Computer").style.visibility = "visible";
-    document.getElementById("choose2Computer").style.visibility = "hidden";
-    document.querySelector("label[for='choose1Computer']").style.visibility  = "visible";
-    document.querySelector("label[for='choose2Computer']").style.visibility  = "hidden";
-  };
-};
 
 function requestforCPUMove(){
   dataForRequest = new Object();
@@ -414,7 +384,6 @@ function requestforCPUMove(){
 
 function handlePlayerMove(response){
   const result_obj = JSON.parse(response.responseText);
-  console.log(result_obj);
   if (!result_obj.approved){
     const gameMessage = document.getElementById("gameMessage");
     gameMessage.innerText = result_obj.message;
@@ -475,7 +444,6 @@ function handleCPUMove(response){
     }else{
       if (result_obj.request_for_draw_50_moves){
         const fiftyMovesBtn =document.getElementById("draw50Moves");
-        console.log("50moves");
         if (!(fiftyMovesBtn.style.visibility == "visible")){
           fiftyMovesBtn.style.visibility = "visible";
         }
@@ -500,30 +468,6 @@ function handleCPUMove(response){
 
 const buttonStartGame = document.getElementById("startGame");
 buttonStartGame.addEventListener("click",startGame);
-
-function startGame(){
-  dataForRequest = new Object();
-  dataForRequest.typeOfRequest = "formData";
-  dataForRequest.typeOfGame = typeOfGame;
-  const radioButtons = document.getElementsByClassName("hiddenRadioButton");
-  let chosenColor;
-  for(let button of radioButtons){
-    if (button.checked){
-      chosenColor = button.value;
-    };
-  };
-  dataForRequest.color = chosenColor;
-  if (typeOfGame == "CPUVSCPU"){
-    cpuStrategy1 = document.getElementById("choose1Computer").value;
-    cpuStrategy2 = document.getElementById("choose2Computer").value;
-    dataForRequest.CPU1 = cpuStrategy1;
-    dataForRequest.CPU2 = cpuStrategy2;
-  }else if (typeOfGame == "userVSCPU"){
-    cpuStrategy1 = document.getElementById("choose1Computer").value;
-    dataForRequest.CPU1 = cpuStrategy1;
-  }
-  $ajaxUtils.sendGetRequest('/start_game', gameLoad, dataForRequest);
-}
 
 function gameLoad(response){
   /*This function gets initial data from server, where game class has been iniated.

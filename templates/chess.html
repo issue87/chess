@@ -1,71 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel = "stylesheet" href = "../static/css/index.css">
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="UTF-8"></script>
-        <script type="text/javascript" src="../static/js/ajax_lib.js" charset="UTF-8"></script>
-        <script type="text/javascript" src="../static/js/chess.js" charset="UTF-8" defer></script>
-        <title> Victor's chess</title>
-    </head>
-    <body>
-        <div id="initialPage">
-            <section id="gameSettings">
-                <div class="radioContainer">
-                    <input type="radio" id="userVSCPU" name="typeOfGame" value="userVSCPU" class="hiddenRadioButton inputTypeOfGame" checked>
-                    <label for="userVSCPU" class="labelTypeOfGame">play against CPU</label>
-                    <input type="radio" id="CPUVSCPU" name="typeOfGame" value="CPUVSCPU" class="hiddenRadioButton inputTypeOfGame">
-                    <label for="CPUVSCPU" class="labelTypeOfGame">CPU against CPU</label>
-                    <input type="radio" id="HotSeat" name="typeOfGame" value="HotSeat" class="hiddenRadioButton inputTypeOfGame">
-                    <label for="HotSeat" class="labelTypeOfGame">Hot seat</label>
-                </div>
-                <label>
-                    <input type="radio" id="black" name="color" value="black" class="hiddenRadioButton" checked>
-                    <img class="radioImage" src="../static/images/blackKing.jpg">
-                </label>
-                <label>
-                    <input type="radio" id="random" name="color" value="random" class="hiddenRadioButton">
-                    <img  class="radioImage" src="../static/images/randomKing.png">
-                </label>
-                <label>
-                    <input type="radio" id="white" name="color" value="white" class="hiddenRadioButton">
-                    <img  class="radioImage" src="../static/images/whiteKing.jpg">
-                </label>
-                <div>
-                    <label for="choose1Computer">CPU Player</label>
-                    <select id="choose1Computer">
-                        {% for player in computer_players %}
-                            <option value="{{player}}">{{player}}</option>
-                        {% endfor %}
-                    </select>
-                    <label for="choose2Computer">CPU Player</label>
-                    <select id="choose2Computer">
-                        {% for player in computer_players %}
-                            <option value="{{player}}">{{player}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button id="startGame" type="button">Play</button>
-            </section>
+{% extends base.html %}
+{% block js_links %}
+    <script type="text/javascript" src="../static/js/createGame.js" charset="UTF-8" defer></script>
+{% endblock %}
+{% block content %}
+<div id="initialPage">
+    <form id="gameSettings" action="/start_game" method=POST>
+        <div class="radioContainer">
+            <input type="radio" id="userVSCPU" name="typeOfGame" value="userVSCPU" class="hiddenRadioButton inputTypeOfGame" checked>
+            <label for="userVSCPU" class="labelTypeOfGame">play against CPU</label>
+            <input type="radio" id="CPUVSCPU" name="typeOfGame" value="CPUVSCPU" class="hiddenRadioButton inputTypeOfGame">
+            <label for="CPUVSCPU" class="labelTypeOfGame">CPU against CPU</label>
+            <input type="radio" id="HotSeat" name="typeOfGame" value="HotSeat" class="hiddenRadioButton inputTypeOfGame">
+            <label for="HotSeat" class="labelTypeOfGame">Hot seat</label>
         </div>
-        <div id="gameContainer">
-            <div id="gameControl">
-                <button id="resignButton" class="resposiveFontSize">Resign</button>
-                <button id="draw50Moves" class="resposiveFontSize">Draw by 50 moves</button>
-            </div>
-            <div class ="infopanel">
-                <div id="blackPlayerName" class="resposiveFontSize"></div>
-            </div>
-            <canvas id="gameCanvas">
-                
-            </canvas>
-            <div class ="infopanel">
-                <div id="whitePlayerName" class="resposiveFontSize"></div>
-            </div>
-            <div class ="infopanel">
-                <div id="gameMessage" class="resposiveFontSize"></div>
-            </div>
+        <label>
+            <input type="radio" id="black" name="color" value="black" class="hiddenRadioButton" checked>
+            <img class="radioImage" src="../static/images/blackKing.jpg">
+        </label>
+        <label>
+            <input type="radio" id="random" name="color" value="random" class="hiddenRadioButton">
+            <img  class="radioImage" src="../static/images/randomKing.png">
+        </label>
+        <label>
+            <input type="radio" id="white" name="color" value="white" class="hiddenRadioButton">
+            <img  class="radioImage" src="../static/images/whiteKing.jpg">
+        </label>
+        <div>
+            <label for="choose1Computer">CPU Player</label>
+            <select id="choose1Computer" name="CPU1">
+                {% for player in computer_players %}
+                    <option value="{{player}}">{{player}}</option>
+                {% endfor %}
+            </select>
+            <label for="choose2Computer">CPU Player</label>
+            <select id="choose2Computer" name="CPU2">
+                {% for player in computer_players %}
+                    <option value="{{player}}">{{player}}</option>
+                {% endfor %}
+            </select>
         </div>
-    </body>
-</html>
+        <button id="startGame" type="submit">Play</button>
+    </form>
+</div>
+{% endblock %}

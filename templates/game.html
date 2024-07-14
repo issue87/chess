@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block js_links %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../static/js/ajax_lib.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../static/js/chess.js" charset="UTF-8" defer></script>
+{% endblock %}
+{% block content %}
+<div id="gameContainer">
+    <div id="gameControl">
+        <button id="resignButton" class="resposiveFontSize">Resign</button>
+        <button id="draw50Moves" class="resposiveFontSize">Draw by 50 moves</button>
+    </div>
+    <div class ="infopanel">
+        <div id="blackPlayerName" class="resposiveFontSize"></div>
+    </div>
+    <canvas id="gameCanvas">
+        
+    </canvas>
+    <div class ="infopanel">
+        <div id="whitePlayerName" class="resposiveFontSize"></div>
+    </div>
+    <div class ="infopanel">
+        <div id="gameMessage" class="resposiveFontSize"></div>
+    </div>
+</div>
+{% endblock %}
