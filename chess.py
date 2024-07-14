@@ -890,11 +890,13 @@ def start_game():
         games[session['id']] = ChessBoard(player1, player2)
     else:
         games[session['id']] = ChessBoard(player2, player1)
-   """  chessboard_figures_JSON = games[session['id']].translate_board_figures_to_JSON()
+    """
+    chessboard_figures_JSON = games[session['id']].translate_board_figures_to_JSON()
     player1JSON = player1.translate_to_JSON();
     player2JSON = player2.translate_to_JSON();
     game_JSON = {"players": [player1JSON, player2JSON],
-                  "board": chessboard_figures_JSON} """
+                  "board": chessboard_figures_JSON}
+    """
     return render_template("game.html")
 @app.route('/cpu_move', methods = ["GET"])
 def cpu_move():
