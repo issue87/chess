@@ -44,6 +44,6 @@ canvas{
     visibility: hidden;
 };
 
-#gameControl button{
+#gameControl{
     font-size: 14vw;
 }
