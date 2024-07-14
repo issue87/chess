@@ -2,8 +2,19 @@ body{
     width:100%;
 }
 
-.navbar, .navbar ul{
+.navbar{
     display: flex;
+    background-color: black;
+    color:#ffffff;
+}
+
+.navbar ul{
+    display: flex; 
+    justify-content: space-evenly;
+}
+
+.navbar a, .navbar li{
+    text-decoration: none;
 }
 
 canvas{
