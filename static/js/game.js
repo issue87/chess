@@ -503,21 +503,6 @@ function gameLoadFinish(response){
   const player2JSON = result_obj.players[1];
   let player1 = new Player(player1JSON.playerType, player1JSON.color);
   let player2 = new Player(player2JSON.playerType, player2JSON.color);
-  const playerWhiteHeader = document.getElementById("whitePlayerName");
-  const playerBlackHeader = document.getElementById("blackPlayerName");
-  if (player1.typeOfPlayer == humanPlayer && player2.typeOfPlayer == humanPlayer){
-    playerWhiteHeader.innerText = "Player 1";
-    playerBlackHeader.innerText = "Player 2";
-  } else if(player1.typeOfPlayer == computerPlayer && player2.typeOfPlayer == computerPlayer){
-    playerWhiteHeader.innerText = "CPU: " + cpuStrategy1;
-    playerBlackHeader.innerText = "CPU: " + cpuStrategy2;
-  }else if (player1.typeOfPlayer == computerPlayer){
-    playerWhiteHeader.innerText = "CPU: " + cpuStrategy1;
-    playerBlackHeader.innerText = "Player";
-  } else {
-    playerBlackHeader.innerText = "CPU: " + cpuStrategy1;
-    playerWhiteHeader.innerText = "Player";
-  };
   gameObject = new Game(player1, player2, chessBoard);
   canvasAnimation();
   if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){

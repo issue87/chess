@@ -874,23 +874,35 @@ def start_game():
     #get the other color 
     opponent_color = (color + 1) % 2
     #creating players
+    player_white_str
+    player_black_str
     if type_of_game == "CPUVSCPU":
         computer1_strategy = strategies[request.form["CPU1"]]
         computer2_strategy = strategies[request.form["CPU2"]]
         player1 = Player(color, COMPUTER_PLAYER, computer1_strategy)
         player2 = Player(opponent_color, COMPUTER_PLAYER, computer2_strategy)
+        player_white_str = "CPU: " + computer1_strategy
+        player_black_str = "CPU: " + computer2_strategy
     elif type_of_game == "userVSCPU":
         player1 = Player(color, HUMAN_PLAYER)
         computer1_strategy = strategies[request.form["CPU1"]]
-        player2 = Player(opponent_color, COMPUTER_PLAYER, computer1_strategy)   
+        player2 = Player(opponent_color, COMPUTER_PLAYER, computer1_strategy)
+        if color:
+            player_white_str = "CPU: " + computer1_strategy
+            player_black_str = "Player"
+        else:
+            player_white_str = "Player"
+            player_black_str = "CPU: " + computer1_strategy   
     elif type_of_game == "HotSeat":
         player1 = Player(WHITE_FIGURE_COLOR, HUMAN_PLAYER)
         player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)
+        player_white_str = "Player 1"
+        player_black_str = "Player 2"
     if player1.get_color() == WHITE_FIGURE_COLOR:
         games[session['id']] = ChessBoard(player1, player2)
     else:
         games[session['id']] = ChessBoard(player2, player1)
-    return render_template("game.html", type_of_game = type_of_game)
+    return render_template("game.html", type_of_game = type_of_game, player_white_str = player_white_str, player_black_str = player_black_str)
 
 @app.route('/load_game', methods = ["GET"])
 def load_game():

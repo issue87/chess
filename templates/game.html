@@ -7,13 +7,13 @@
 {% block content %}
 <div id="gameContainer">
     <div class ="infopanel">
-        <div id="blackPlayerName" class="resposiveFontSize"></div>
+        <div id={{player_black_str}} class="resposiveFontSize"></div>
     </div>
     <canvas id="gameCanvas">
         
     </canvas>
     <div class ="infopanel">
-        <div id="whitePlayerName" class="resposiveFontSize"></div>
+        <div id={{player_white_str}} class="resposiveFontSize"></div>
     </div>
     {% if type_of_game != "CPUVSCPU" %}
     <div id="gameControl">
