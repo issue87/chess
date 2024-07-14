@@ -874,8 +874,8 @@ def start_game():
     #get the other color 
     opponent_color = (color + 1) % 2
     #creating players
-    player_white_str
-    player_black_str
+    player_white_str = None
+    player_black_str = None
     if type_of_game == "CPUVSCPU":
         computer1_strategy = strategies[request.form["CPU1"]]
         computer2_strategy = strategies[request.form["CPU2"]]
