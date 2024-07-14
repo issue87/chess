@@ -42,7 +42,7 @@ canvas{
 
 #gameContainer{
     visibility: hidden;
-};
+}
 
 #gameControl{
     font-size: 14vw;
