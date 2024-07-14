@@ -11,6 +11,7 @@ body{
 .navbar ul{
     display: flex; 
     justify-content: space-evenly;
+    width:auto;
 }
 
 .navbar a{
