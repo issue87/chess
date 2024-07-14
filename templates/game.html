@@ -6,10 +6,6 @@
 {% endblock %}
 {% block content %}
 <div id="gameContainer">
-    <div id="gameControl">
-        <button id="resignButton" class="resposiveFontSize">Resign</button>
-        <button id="draw50Moves" class="resposiveFontSize">Draw by 50 moves</button>
-    </div>
     <div class ="infopanel">
         <div id="blackPlayerName" class="resposiveFontSize"></div>
     </div>
@@ -19,6 +15,12 @@
     <div class ="infopanel">
         <div id="whitePlayerName" class="resposiveFontSize"></div>
     </div>
+    {% if type_of_game != "CPUVSCPU"}
+    <div id="gameControl">
+        <button id="resignButton" class="resposiveFontSize">Resign</button>
+        <button id="draw50Moves" class="resposiveFontSize">Draw by 50 moves</button>
+    </div>
+    {% endif %}
     <div class ="infopanel">
         <div id="gameMessage" class="resposiveFontSize"></div>
     </div>

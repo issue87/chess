@@ -890,14 +890,17 @@ def start_game():
         games[session['id']] = ChessBoard(player1, player2)
     else:
         games[session['id']] = ChessBoard(player2, player1)
-    """
+    return render_template("game.html", type_of_game = type_of_game)
+
+@app.route('/load_game', methods = ["GET"])
+def load_game():
     chessboard_figures_JSON = games[session['id']].translate_board_figures_to_JSON()
     player1JSON = player1.translate_to_JSON();
     player2JSON = player2.translate_to_JSON();
     game_JSON = {"players": [player1JSON, player2JSON],
                   "board": chessboard_figures_JSON}
-    """
-    return render_template("game.html")
+    return jsonify(game_JSON)
+
 @app.route('/cpu_move', methods = ["GET"])
 def cpu_move():
     color = games[session['id']].get_current_player().get_color()

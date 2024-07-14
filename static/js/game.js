@@ -466,10 +466,14 @@ function handleCPUMove(response){
   }
 }
 
-const buttonStartGame = document.getElementById("startGame");
-buttonStartGame.addEventListener("click",startGame);
+function gameLoad(){
+  dataForRequest = new Object();
+  dataForRequest.typeOfRequest = "GET";
+  $ajaxUtils.sendGetRequest('/load_game', gameLoadFinish, dataForRequest);
 
-function gameLoad(response){
+}
+
+function gameLoadFinish(response){
   /*This function gets initial data from server, where game class has been iniated.
    After that the function iniates game class object in js.
    At the end it starts canvas animation, hides setting game section*/
@@ -517,19 +521,12 @@ function gameLoad(response){
   };
   gameObject = new Game(player1, player2, chessBoard);
   canvasAnimation();
-  document.getElementById("choose1Computer").style.visibility = "hidden";
-  document.getElementById("choose2Computer").style.visibility = "hidden";
-  document.querySelector("label[for='choose1Computer']").style.visibility  = "hidden";
-  document.querySelector("label[for='choose2Computer']").style.visibility  = "hidden";
-  const gsmeCont = document.getElementById("gameContainer");
-  const initialPage = document.getElementById("initialPage");
-  gsmeCont.style.visibility = "visible";
-  initialPage.style.visibility = "hidden";
-  initialPage.style.height = 0;
   if (gameObject.currentPlayer.typeOfPlayer == computerPlayer){
     requestforCPUMove();
   }
 };
+
+gameLoad();
 
 
 
