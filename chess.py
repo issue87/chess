@@ -881,18 +881,22 @@ def start_game():
         computer2_strategy = strategies[request.form["CPU2"]]
         player1 = Player(color, COMPUTER_PLAYER, computer1_strategy)
         player2 = Player(opponent_color, COMPUTER_PLAYER, computer2_strategy)
-        player_white_str = "CPU: " + computer1_strategy
-        player_black_str = "CPU: " + computer2_strategy
+        if color:
+            player_white_str = "CPU: " + request.form["CPU2"]
+            player_black_str = "CPU: " + request.form["CPU1"]
+        else:
+            player_white_str = "CPU: " + request.form["CPU1"]
+            player_black_str = "CPU: " + request.form["CPU2"]
     elif type_of_game == "userVSCPU":
         player1 = Player(color, HUMAN_PLAYER)
         computer1_strategy = strategies[request.form["CPU1"]]
         player2 = Player(opponent_color, COMPUTER_PLAYER, computer1_strategy)
         if color:
-            player_white_str = "CPU: " + computer1_strategy
+            player_white_str = "CPU: " + request.form["CPU1"]
             player_black_str = "Player"
         else:
             player_white_str = "Player"
-            player_black_str = "CPU: " + computer1_strategy   
+            player_black_str = "CPU: " + request.form["CPU1"]   
     elif type_of_game == "HotSeat":
         player1 = Player(WHITE_FIGURE_COLOR, HUMAN_PLAYER)
         player2 = Player(BLACK_FIGURE_COLOR, HUMAN_PLAYER)
