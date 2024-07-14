@@ -895,8 +895,8 @@ def start_game():
 @app.route('/load_game', methods = ["GET"])
 def load_game():
     chessboard_figures_JSON = games[session['id']].translate_board_figures_to_JSON()
-    player1JSON = games[session['id']].get_current_player.translate_to_JSON();
-    player2JSON = games[session['id']].get_opponent_player.translate_to_JSON();
+    player1JSON = games[session['id']].get_current_player().translate_to_JSON();
+    player2JSON = games[session['id']].get_opponent_player().translate_to_JSON();
     game_JSON = {"players": [player1JSON, player2JSON],
                   "board": chessboard_figures_JSON}
     return jsonify(game_JSON)
