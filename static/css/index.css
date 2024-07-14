@@ -44,6 +44,6 @@ canvas{
     visibility: hidden;
 }
 
-#resposiveFontSize{
+.resposiveFontSize{
     font-size: 14vw;
 }
