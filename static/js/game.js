@@ -371,8 +371,10 @@ let canvasScaleRatio;
 const chessBoardImage = document.createElement("img");
 chessBoardImage.src = "../static/images/chessBoard.png";
 chessBoardImage.onload = resize;
-const fiftyMovesBtn =document.getElementById("draw50Moves");
-fiftyMovesBtn.addEventListener("click", acceptDrawFiftyMoves);
+const fiftyMovesBtn = document.getElementById("draw50Moves");
+if (fiftyMovesBtn){
+  fiftyMovesBtn.addEventListener("click", acceptDrawFiftyMoves);
+}
 const resignBtn =document.getElementById("resignButton");
 resignBtn.addEventListener("click", resign);
 
@@ -444,13 +446,18 @@ function handleCPUMove(response){
     }else{
       if (result_obj.request_for_draw_50_moves){
         const fiftyMovesBtn =document.getElementById("draw50Moves");
-        if (!(fiftyMovesBtn.style.visibility == "visible")){
-          fiftyMovesBtn.style.visibility = "visible";
+        if (fiftyMovesBtn){
+          if (!(fiftyMovesBtn.style.visibility == "visible")){
+            fiftyMovesBtn.style.visibility = "visible";
+          }
         }
       }
     }
-    if (!result_obj.request_for_draw_50_moves && document.getElementById("draw50Moves").style.visibility == "visible"){
-      document.getElementById("draw50Moves").style.visibility = "hidden";
+    const fiftyMovesBtn =document.getElementById("draw50Moves");
+    if (fiftyMovesBtn){
+      if (!result_obj.request_for_draw_50_moves && document.getElementById("draw50Moves").style.visibility == "visible"){
+        fiftyMovesBtn.style.visibility = "hidden";
+      }
     }
   }else{
     let message;
