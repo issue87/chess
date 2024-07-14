@@ -496,14 +496,6 @@ function gameLoadFinish(response){
   const player2JSON = result_obj.players[1];
   let player1 = new Player(player1JSON.playerType, player1JSON.color);
   let player2 = new Player(player2JSON.playerType, player2JSON.color);
-  //Guaranteeing that first player's color is white 
-  if (player1.color == blackChessColor){
-    [player1, player2] = [player2, player1];
-    if (player1.typeOfPlayer == computerPlayer && player2.typeOfPlayer == computerPlayer){
-      [cpuStrategy1, cpuStrategy2] = [cpuStrategy2, cpuStrategy1];
-    }
-  };
-  //
   const playerWhiteHeader = document.getElementById("whitePlayerName");
   const playerBlackHeader = document.getElementById("blackPlayerName");
   if (player1.typeOfPlayer == humanPlayer && player2.typeOfPlayer == humanPlayer){
