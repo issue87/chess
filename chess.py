@@ -171,6 +171,7 @@ class ChessBoard:
         self.draw = False
         self.type_of_draw = None
         self.resigned = False
+        self.game_ongoing = True
         self.eaten_figures = set()
         self.kings_pos = {0: (0, 4), 1: (7, 4)}
         self.counter = 0
@@ -368,6 +369,7 @@ class ChessBoard:
                 exist_moves = True
                 break
         if not exist_moves:
+            self.game_ongoing = False
             if self.checked:
                 self.mate = True
             else:
@@ -385,6 +387,10 @@ class ChessBoard:
         returns true if game result is draw
         '''
         return self.draw
+
+    def is_game_ongoing(self):
+        return self.game_ongoing;
+
     def is_dead_position(self):
         remained_figures = self.get_remained_figures()
         if len(remained_figures[0]) < 3 and len(remained_figures[1]) < 3:
@@ -419,6 +425,7 @@ class ChessBoard:
         sets draw by agreement of the parties
         """
         self.draw = True
+        self.game_ongoing = False
         self.type_of_draw  = AGREEMENT_OF_PLAYERS
     
     def set_draw_by_75_moves(self):
@@ -426,6 +433,7 @@ class ChessBoard:
         sets draw according to 75 moves rule
         """
         self.draw = True
+        self.game_ongoing = False
         self.type_of_draw  = RULE_OF_75_MOVES
         
     def set_draw_by_50_moves(self):
@@ -433,10 +441,12 @@ class ChessBoard:
         sets draw according to 50 moves rule
         """
         self.draw = True
+        self.game_ongoing = False
         self.type_of_draw  = RULE_OF_50_MOVES
     
     def set_draw_due_to_dead_position(self):
         self.draw = True
+        self.game_ongoing = False
         self.type_of_draw  = DEAD_POSITION
         
     def get_draw_reason(self):
@@ -449,6 +459,7 @@ class ChessBoard:
         """
         Set resignation if the current player resigned
         """
+        self.game_ongoing = False
         self.resigned = True
         
     #def set_current_player(self, player):
@@ -960,20 +971,22 @@ def register_promotion():
 
 @app.route('/accept_draw_50_moves', methods = ["GET"])
 def accept_draw_50_moves():
-    if (games[session['id']].get_moves_without_pawn_move_or_eaten() >= 50
-     and games[session['id']].get_current_player().get_type_of_player() == HUMAN_PLAYER):
-        games[session['id']].set_draw_by_50_moves()
-        json_response = {"approved":True, "drawReason":games[session['id']].get_draw_reason()}
-    else:
-        json_response = {"approved":False}
-    return jsonify(json_response)
+    if games[session['id']].is_game_ongoing():
+        if (games[session['id']].get_moves_without_pawn_move_or_eaten() >= 50
+        and games[session['id']].get_current_player().get_type_of_player() == HUMAN_PLAYER):
+            games[session['id']].set_draw_by_50_moves()
+            json_response = {"approved":True, "drawReason":games[session['id']].get_draw_reason()}
+        else:
+            json_response = {"approved":False}
+        return jsonify(json_response)
 
 @app.route('/resign', methods = ["GET"])
 def resign():
-    if games[session['id']].get_current_player().get_type_of_player() == HUMAN_PLAYER:
-        games[session['id']].set_resign()
-        json_response = {"approved":True}
-    else:
-        json_response = {"approved":False} 
-    return jsonify(json_response)
+    if games[session['id']].is_game_ongoing():
+        if games[session['id']].get_current_player().get_type_of_player() == HUMAN_PLAYER:
+            games[session['id']].set_resign()
+            json_response = {"approved":True}
+        else:
+            json_response = {"approved":False} 
+        return jsonify(json_response)
 

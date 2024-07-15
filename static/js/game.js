@@ -326,9 +326,11 @@ function touchSquare(event){
 };
 
 function acceptDrawFiftyMoves(){
-  dataForRequest = new Object();
-  dataForRequest.typeOfRequest = "GET";
-  $ajaxUtils.sendGetRequest('/accept_draw_50_moves', acceptDrawFiftyMovesFinish, dataForRequest);
+  if (gameObject.isGameOngoing()){
+    dataForRequest = new Object();
+    dataForRequest.typeOfRequest = "GET";
+    $ajaxUtils.sendGetRequest('/accept_draw_50_moves', acceptDrawFiftyMovesFinish, dataForRequest);
+  } 
 };
 
 function acceptDrawFiftyMovesFinish(response){
@@ -341,7 +343,7 @@ function acceptDrawFiftyMovesFinish(response){
 }
 
 function resign(){
-  if (gameObject.currentPlayer.typeOfPlayer == humanPlayer){
+  if (gameObject.currentPlayer.typeOfPlayer == humanPlayer && gameObject.isGameOngoing()){
     dataForRequest = new Object();
     dataForRequest.typeOfRequest = "GET";
     $ajaxUtils.sendGetRequest('/resign', resignFinish, dataForRequest);
