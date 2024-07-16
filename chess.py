@@ -823,9 +823,9 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     for figure, moves in legal_moves.items():
         for move in moves:
             if board.get_board_square(move[0], move[1]) != None:
-                    value = board.get_board_square(move[0], move[1]).get_value()
-                else:
-                    value = 0
+                value = board.get_board_square(move[0], move[1]).get_value()
+            else:
+                value = 0
             if depth > 0:
                 test_board = copy.deepcopy(board)
                 figure_pos = figure.get_pos()
