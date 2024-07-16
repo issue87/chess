@@ -807,6 +807,7 @@ def minimaxStrategy2depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 2)
 
 def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration = True):
+    counter = 0
     if request_for_draw:
         if False:
             return "draw is accepted"
@@ -827,6 +828,8 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
             else:
                 value = 0
             if depth > 0:
+                counter += 1
+                print (counter)
                 test_board = copy.deepcopy(board)
                 figure_pos = figure.get_pos()
                 if board.get_board_square(move[0], move[1]) != None:
