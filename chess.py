@@ -803,6 +803,9 @@ def valued_eater_strategy(board, legal_moves, request_for_draw):
 def minimaxStrategy1depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 1)
 
+def minimaxStrategy2depth(board, legal_moves, request_for_draw):
+    return minimaxStrategy(board, legal_moves, request_for_draw, 2)
+
 def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration = True):
     if request_for_draw:
         if False:
@@ -819,18 +822,21 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     best_figure = None
     for figure, moves in legal_moves.items():
         for move in moves:
+            if board.get_board_square(move[0], move[1]) != None:
+                    value = board.get_board_square(move[0], move[1]).get_value()
+                else:
+                    value = 0
             if depth > 0:
                 test_board = copy.deepcopy(board)
                 figure_pos = figure.get_pos()
-                test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
-                color = test_board.get_current_player().get_color()
-                possible_moves = test_board.get_possible_moves(color)
-                value = minimaxStrategy(test_board, test_board.get_possible_legal_moves(possible_moves, color), request_for_draw, depth - 1, False) * (-1)
-            else:
                 if board.get_board_square(move[0], move[1]) != None:
                     value = board.get_board_square(move[0], move[1]).get_value()
                 else:
                     value = 0
+                test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
+                color = test_board.get_current_player().get_color()
+                possible_moves = test_board.get_possible_moves(color)
+                value += minimaxStrategy(test_board, test_board.get_possible_legal_moves(possible_moves, color), request_for_draw, depth - 1, False) * (-1)
             if max_value < value:
                 max_value = value
                 if first_iteration:
@@ -889,7 +895,11 @@ def human_choice(board, legal_moves, request_for_draw):
         assert 5 > figure_index > 0
     return (figure_to_move, to_move, figure_index)
 
-strategies = {"random":random_strategy, "simple eater":eater_strategy, "valued eater": valued_eater_strategy, "Lasely(easy)": minimaxStrategy1depth}
+strategies = {"random":random_strategy, 
+              "simple eater":eater_strategy,
+              "valued eater": valued_eater_strategy,
+              "Lasely(very easy)": minimaxStrategy1depth,
+              "Henry(easy)": minimaxStrategy2depth}
 
 def game():
     player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
