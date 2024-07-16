@@ -126,7 +126,7 @@ class Figure:
     def get_pos(self):
         return self.pos
 
-    def get_value():
+    def get_value(self):
         return self.value
 
     def change_pos(self, pos):
