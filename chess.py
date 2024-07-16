@@ -41,7 +41,7 @@ text_representation_draw_resons = {0: "by agreement of the playes",
 
 colors_representations = {0:"white", 1:"black"}
 figures_representation = {0:"king", 1: "queen", 2: "rook", 3: "bishop", 4: "knight", 5: "pawn"}
-figures_values = {0:1000, 1: 9, 2: 5, 3: 3, 4: 3, 5: 1}
+figures_values = {0:0, 1: 9, 2: 5, 3: 3, 4: 3, 5: 1}
 figures_directions = {0: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       1: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       2: {(0, 1), (0, -1), (1, 0), (-1, 0)},
@@ -800,6 +800,49 @@ def valued_eater_strategy(board, legal_moves, request_for_draw):
     else:
         return random_strategy(board, legal_moves, request_for_draw)
 
+def minimaxStrategy1depth(board, legal_moves, request_for_draw):
+    return minimaxStrategy(board, legal_moves, request_for_draw, 1)
+
+def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration = True):
+    if request_for_draw:
+        if False:
+            return "draw is accepted"
+        else:
+            return "draw is rejected"
+    board.set_if_mate_stalemate()
+    if board.is_mate():
+        return -1000
+    if board.is_draw():
+        return 0
+    max_value = -1000
+    best_move = None
+    best_figure = None
+    for figure, moves in legal_moves.items():
+        for move in moves:
+            if depth > 0:
+                test_board = copy.deepcopy(self)
+                figure_pos = figure.get_pos()
+                test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
+                value = minimaxStrategy(test_board, test_board.get_possible_legal_moves(), request_for_draw, depth - 1, False) * (-1)
+            else:
+                if board.get_board_square(move[0], move[1]) != None:
+                    value = board.get_board_square(move[0], move[1]).get_value()
+                else:
+                    value = 0
+            if max_value < value:
+                max_value = value
+                if first_iteration:
+                    best_move = move
+                    best_figure = figure
+    if first_iteration:
+        return (best_figure, best_move, 1) 
+    else:
+        return max_value
+
+
+                
+            
+
 def human_choice(board, legal_moves, request_for_draw):
     """
     Handles interactions with a human player.
@@ -844,7 +887,7 @@ def human_choice(board, legal_moves, request_for_draw):
         assert 5 > figure_index > 0
     return (figure_to_move, to_move, figure_index)
 
-strategies = {"random":random_strategy, "simple eater":eater_strategy, "valued eater":valued_eater_strategy}
+strategies = {"random":random_strategy, "simple eater":eater_strategy, "valued eater": valued_eater_strategy, "Lasely(easy)": minimaxStrategy1depth}
 
 def game():
     player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
