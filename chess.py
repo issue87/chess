@@ -779,7 +779,7 @@ def valued_eater_strategy(board, legal_moves, request_for_draw):
         else:
             return "draw is rejected"
     selected_dict = dict()
-    max_value = -1000
+    max_value = 0
     for figure, moves in legal_moves.items():
         for move in moves:
             if board.get_board_square(move[0], move[1]) != None:
