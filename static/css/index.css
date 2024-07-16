@@ -76,10 +76,7 @@ canvas{
 }
 
 @media screen and (min-width: 750px){
-    .resposiveFontSize{
+    .resposiveFontSize, .navbar{
         font-size: 30px;
     } 
-    .navbar{
-        font-size: 40px;
-    }
 }

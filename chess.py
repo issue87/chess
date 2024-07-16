@@ -41,6 +41,7 @@ text_representation_draw_resons = {0: "by agreement of the playes",
 
 colors_representations = {0:"white", 1:"black"}
 figures_representation = {0:"king", 1: "queen", 2: "rook", 3: "bishop", 4: "knight", 5: "pawn"}
+figures_values = {0:1000, 1: 9, 2: 5, 3: 3, 4: 3, 5: 1}
 figures_directions = {0: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       1: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1)},
                       2: {(0, 1), (0, -1), (1, 0), (-1, 0)},
@@ -107,6 +108,7 @@ class Figure:
     def __init__(self, color, kind, pos):
         self.color = color
         self.kind = kind
+        self.value = figures_values[kind]
         self.pos = pos
         
     def __str__(self):
@@ -123,7 +125,10 @@ class Figure:
     
     def get_pos(self):
         return self.pos
-    
+
+    def get_value():
+        return self.value
+
     def change_pos(self, pos):
         self.pos = pos
 
@@ -761,6 +766,40 @@ def eater_strategy(board, legal_moves, request_for_draw):
     else:
         return random_strategy(board, legal_moves, request_for_draw)
 
+def valued_eater_strategy(board, legal_moves, request_for_draw):
+    """
+    Just prefers to eat any figures with any figure.
+    """
+    #By default the draw is rejected.
+    #If a request for a draw has been passed, 
+    #you must return either "draw is accepted" or "draw is rejected"
+    if request_for_draw:
+        if False:
+            return "draw is accepted"
+        else:
+            return "draw is rejected"
+    selected_dict = dict()
+    max_value = -1000
+    for figure, moves in legal_moves.items():
+        for move in moves:
+            if board.get_board_square(move[0], move[1]) != None:
+                value = board.get_board_square(move[0], move[1]).get_value() - figure.get_value()
+                if value > max_value:
+                    max_value = value
+    for figure, moves in legal_moves.items():
+        selected_figure_moves = set()
+        for move in moves:
+            if board.get_board_square(move[0], move[1]) != None:
+                value = board.get_board_square(move[0], move[1]).get_value() - figure.get_value()
+                if value == max_value:
+                    selected_figure_moves.add(move)
+        if selected_figure_moves != set():
+            selected_dict[figure] = selected_figure_moves
+    if selected_dict != dict():
+        return random_strategy(board, selected_dict, request_for_draw)
+    else:
+        return random_strategy(board, legal_moves, request_for_draw)
+
 def human_choice(board, legal_moves, request_for_draw):
     """
     Handles interactions with a human player.
@@ -805,7 +844,7 @@ def human_choice(board, legal_moves, request_for_draw):
         assert 5 > figure_index > 0
     return (figure_to_move, to_move, figure_index)
 
-strategies = {"random":random_strategy, "simple eater":eater_strategy}
+strategies = {"random":random_strategy, "simple eater":eater_strategy, "valued eater":valued_eater_strategy}
 
 def game():
     player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
