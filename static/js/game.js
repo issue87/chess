@@ -378,7 +378,10 @@ if (fiftyMovesBtn){
   fiftyMovesBtn.addEventListener("click", acceptDrawFiftyMoves);
 }
 const resignBtn =document.getElementById("resignButton");
-resignBtn.addEventListener("click", resign);
+if (resignBtn){
+  resignBtn.addEventListener("click", resign);
+}
+
 
 function requestforCPUMove(){
   dataForRequest = new Object();
