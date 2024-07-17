@@ -501,7 +501,7 @@ class ChessBoard:
             legal_moves[figure] = set()
             for move in figure_moves:
                 illegal_move = False
-                test_board = self.copy()
+                test_board = self.copy_board()
                 figure_pos = figure.get_pos()
                 #figures on the testboard are different from those 
                 #on the game board, so we can't refer to game board's figures 
@@ -648,7 +648,7 @@ class ChessBoard:
                     remained_figures[color].append(kind)
         return remained_figures
     
-    def copy(self):
+    def copy_board(self):
         copied_board = []
         for row in self.board:
             copied_row = []
@@ -890,7 +890,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
             else:
                 value = 0
             if depth > 0:
-                test_board = board.copy()
+                test_board = board.copy_board()
                 figure_pos = figure.get_pos()
                 if board.get_board_square(move[0], move[1]) != None:
                     counter += 1 
