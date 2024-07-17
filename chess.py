@@ -825,7 +825,7 @@ def valued_eater_strategy(board, legal_moves, request_for_draw):
 
 def minimaxStrategy1depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 1)
-    
+
 @profile
 
 def minimaxStrategy2depth(board, legal_moves, request_for_draw):
@@ -834,8 +834,6 @@ def minimaxStrategy2depth(board, legal_moves, request_for_draw):
 @profile
 
 def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration = True):
-    start = time.time()
-    counter = 0
     if request_for_draw:
         if False:
             return "draw is accepted"
@@ -849,8 +847,6 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     max_value = -1000
     best_move = None
     best_figure = None
-    end = time.time()
-    print ("start", end - start)
     for figure, moves in legal_moves.items():
         for move in moves:
             if board.get_board_square(move[0], move[1]) != None:
@@ -858,12 +854,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
             else:
                 value = 0
             if depth > 0:
-                counter += 1
-                print (counter)
-                start = time.time()
                 test_board = copy.deepcopy(board)
-                end = time.time()
-                print ("deepcopy", end - start)
                 figure_pos = figure.get_pos()
                 if board.get_board_square(move[0], move[1]) != None:
                     value = board.get_board_square(move[0], move[1]).get_value()
@@ -871,14 +862,8 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                     value = 0
                 test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
                 color = test_board.get_current_player().get_color()
-                start = time.time()
                 possible_moves = test_board.get_possible_moves(color)
-                end = time.time()
-                print ("possiblemoves", end - start)
-                start = time.time()
                 legal_moves = test_board.get_possible_legal_moves(possible_moves, color)
-                end = time.time()
-                print ("legalmoves", end - start)
                 value += minimaxStrategy(test_board, test_board.get_possible_legal_moves(possible_moves, color), request_for_draw, depth - 1, False) * (-1)
             if max_value < value:
                 max_value = value
