@@ -91,6 +91,7 @@ class Player:
         return self.short_castling_possible
     
     def implement_strategy(self, board, legal_moves, request_for_draw = False):
+        print ("implement_strategy", legal_moves)
         move = self.strategy(board, legal_moves, request_for_draw)
         return move
     
@@ -1096,6 +1097,7 @@ def cpu_move():
     color = games[session['id']].get_current_player().get_color()
     moves = games[session['id']].get_possible_moves(color)
     legal_moves = clean_empty_sets_from_dict(games[session['id']].get_possible_legal_moves(moves, color))
+    print ("cpu move", legal_moves)
     chosen_move = games[session['id']].get_current_player().implement_strategy(games[session['id']], legal_moves)
     return handle_move(chosen_move)
 
