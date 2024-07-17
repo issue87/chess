@@ -4,6 +4,8 @@ import copy
 import random
 from collections import Counter
 import time
+import os
+import psutil
 
 #main object of application. It is used by Gunicorn
 app = Flask(__name__)
@@ -705,6 +707,26 @@ def game_recursive(player1, player2, ex):
     ex.set_if_mate_stalemate()
     game_recursive(player1, player2, ex)
 
+# inner psutil function
+def process_memory():
+    process = psutil.Process(os.getpid())
+    mem_info = process.memory_info()
+    return mem_info.rss
+
+# decorator function
+def profile(func):
+    def wrapper(*args, **kwargs):
+
+        mem_before = process_memory()
+        result = func(*args, **kwargs)
+        mem_after = process_memory()
+        print("{}:consumed memory: {:,}".format(
+            func.__name__,
+            mem_before, mem_after, mem_after - mem_before))
+
+        return result
+    return wrapper
+
 def template_for_strategy(board, legal_moves, request_for_draw):
     """
     This is the template for a strategy.
@@ -803,9 +825,13 @@ def valued_eater_strategy(board, legal_moves, request_for_draw):
 
 def minimaxStrategy1depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 1)
+    
+@profile
 
 def minimaxStrategy2depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 2)
+
+@profile
 
 def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration = True):
     start = time.time()
