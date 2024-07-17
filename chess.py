@@ -823,17 +823,16 @@ def valued_eater_strategy(board, legal_moves, request_for_draw):
     else:
         return random_strategy(board, legal_moves, request_for_draw)
 
+@profile
+
 def minimaxStrategy1depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 1)
-
-@profile
 
 def minimaxStrategy2depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 2)
 
-@profile
-
 def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration = True):
+    counter = 0 
     if request_for_draw:
         if False:
             return "draw is accepted"
@@ -857,6 +856,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                 test_board = copy.deepcopy(board)
                 figure_pos = figure.get_pos()
                 if board.get_board_square(move[0], move[1]) != None:
+                    counter += 1 
                     value = board.get_board_square(move[0], move[1]).get_value()
                 else:
                     value = 0
@@ -870,6 +870,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                 if first_iteration:
                     best_move = move
                     best_figure = figure
+    print ("counter", counter)
     if first_iteration:
         return (best_figure, best_move, 1) 
     else:
