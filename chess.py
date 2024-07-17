@@ -1074,8 +1074,12 @@ def start_game():
         player_black_str = "Player 2"
     if player1.get_color() == WHITE_FIGURE_COLOR:
         games[session['id']] = ChessBoard(player1, player2)
+        print(ChessBoard)
+        print(ChessBoard.copy())
     else:
         games[session['id']] = ChessBoard(player2, player1)
+        print(ChessBoard)
+        print(ChessBoard.copy())
     return render_template("game.html", type_of_game = type_of_game, player_white_str = player_white_str, player_black_str = player_black_str)
 
 @app.route('/load_game', methods = ["GET"])
