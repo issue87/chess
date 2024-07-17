@@ -65,11 +65,11 @@ class Player:
     All computer players have different strategies to represent opponents of 
     different levels. Strategy must be passed as an argument.
     """
-    def __init__(self, color, type_of_player, strategy = None):
+    def __init__(self, color, type_of_player, strategy = None, long_castling_possible = True, short_castling_possible = True):
         self.color = color
         self.type_of_player = type_of_player
-        self.long_castling_possible = True
-        self.short_castling_possible = True
+        self.long_castling_possible = long_castling_possible
+        self.short_castling_possible = short_castling_possible
         self.strategy = strategy
         
     def get_color(self):
@@ -99,7 +99,13 @@ class Player:
             "color": self.color,
             "playerType": self.type_of_player
         }
-    
+
+    def copy(self):
+        return Player(self.color,
+                      self.type_of_player,
+                      self.strategy,
+                      self.long_castling_possible,
+                      self.short_castling_possible)
     
 class Figure:
     """
@@ -141,7 +147,10 @@ class Figure:
                 "row_pos": self.pos[0],
                 "col_pos": self.pos[1]
                }
-        
+    
+    def copy(self):
+        return Figure(self.color, self.kind, self.pos)
+
 class ChessBoard:
     """
     Chessboard class. Keeps figures and their positions, what player must move,
@@ -149,41 +158,48 @@ class ChessBoard:
     eaten figures, positions of the black and the white kings.
     """
     
-    def __init__(self, white_player, black_player):
-        self.board = [[None for dummy_square in range(8)] for dummy_row in range(8)]
-        for column in range(8):
-            self.board[1][column] = Figure(WHITE_FIGURE_COLOR, PAWN_FIGURE, (1, column))
-        for column in range(8):
-            self.board[6][column] = Figure(BLACK_FIGURE_COLOR, PAWN_FIGURE, (6, column))
-        self.board[0][0] = Figure(WHITE_FIGURE_COLOR, ROOK_FIGURE, (0, 0))
-        self.board[0][7] = Figure(WHITE_FIGURE_COLOR, ROOK_FIGURE, (0, 7))
-        self.board[7][0] = Figure(BLACK_FIGURE_COLOR, ROOK_FIGURE, (7, 0))
-        self.board[7][7] = Figure(BLACK_FIGURE_COLOR, ROOK_FIGURE, (7, 7))
-        self.board[0][1] = Figure(WHITE_FIGURE_COLOR, KNIGHT_FIGURE, (0, 1))
-        self.board[0][6] = Figure(WHITE_FIGURE_COLOR, KNIGHT_FIGURE, (0, 6))
-        self.board[7][1] = Figure(BLACK_FIGURE_COLOR, KNIGHT_FIGURE, (7, 1))
-        self.board[7][6] = Figure(BLACK_FIGURE_COLOR, KNIGHT_FIGURE, (7, 6))
-        self.board[0][2] = Figure(WHITE_FIGURE_COLOR, BISHOP_FIGURE, (0, 2))
-        self.board[0][5] = Figure(WHITE_FIGURE_COLOR, BISHOP_FIGURE, (0, 5))
-        self.board[7][2] = Figure(BLACK_FIGURE_COLOR, BISHOP_FIGURE, (7, 2))
-        self.board[7][5] = Figure(BLACK_FIGURE_COLOR, BISHOP_FIGURE, (7, 5))
-        self.board[0][3] = Figure(WHITE_FIGURE_COLOR, QUEEN_FIGURE, (0, 3))
-        self.board[0][4] = Figure(WHITE_FIGURE_COLOR, KING_FIGURE, (0, 4))
-        self.board[7][3] = Figure(BLACK_FIGURE_COLOR, QUEEN_FIGURE, (7, 3))
-        self.board[7][4] = Figure(BLACK_FIGURE_COLOR, KING_FIGURE, (7, 4))
-        self.en_passant = None
+    def __init__(self, 
+                 white_player, black_player, en_passant = None, outer_board = None,
+                 checked = False, mate = False, draw = False, type_of_draw = None, 
+                 resigned = False, game_ongoing = True, eaten_figures = set()
+                 , kings_pos = {0: (0, 4), 1: (7, 4)}, counter = 0, last_pawn_move_or_eaten = 0):
+        if not outer_board:
+            self.board = [[None for dummy_square in range(8)] for dummy_row in range(8)]
+            for column in range(8):
+                self.board[1][column] = Figure(WHITE_FIGURE_COLOR, PAWN_FIGURE, (1, column))
+            for column in range(8):
+                self.board[6][column] = Figure(BLACK_FIGURE_COLOR, PAWN_FIGURE, (6, column))
+            self.board[0][0] = Figure(WHITE_FIGURE_COLOR, ROOK_FIGURE, (0, 0))
+            self.board[0][7] = Figure(WHITE_FIGURE_COLOR, ROOK_FIGURE, (0, 7))
+            self.board[7][0] = Figure(BLACK_FIGURE_COLOR, ROOK_FIGURE, (7, 0))
+            self.board[7][7] = Figure(BLACK_FIGURE_COLOR, ROOK_FIGURE, (7, 7))
+            self.board[0][1] = Figure(WHITE_FIGURE_COLOR, KNIGHT_FIGURE, (0, 1))
+            self.board[0][6] = Figure(WHITE_FIGURE_COLOR, KNIGHT_FIGURE, (0, 6))
+            self.board[7][1] = Figure(BLACK_FIGURE_COLOR, KNIGHT_FIGURE, (7, 1))
+            self.board[7][6] = Figure(BLACK_FIGURE_COLOR, KNIGHT_FIGURE, (7, 6))
+            self.board[0][2] = Figure(WHITE_FIGURE_COLOR, BISHOP_FIGURE, (0, 2))
+            self.board[0][5] = Figure(WHITE_FIGURE_COLOR, BISHOP_FIGURE, (0, 5))
+            self.board[7][2] = Figure(BLACK_FIGURE_COLOR, BISHOP_FIGURE, (7, 2))
+            self.board[7][5] = Figure(BLACK_FIGURE_COLOR, BISHOP_FIGURE, (7, 5))
+            self.board[0][3] = Figure(WHITE_FIGURE_COLOR, QUEEN_FIGURE, (0, 3))
+            self.board[0][4] = Figure(WHITE_FIGURE_COLOR, KING_FIGURE, (0, 4))
+            self.board[7][3] = Figure(BLACK_FIGURE_COLOR, QUEEN_FIGURE, (7, 3))
+            self.board[7][4] = Figure(BLACK_FIGURE_COLOR, KING_FIGURE, (7, 4))
+        else:
+            self.board = outer_board
+        self.en_passant = en_passant
         self.current_player = white_player
         self.other_player = black_player
-        self.checked = False
-        self.mate = False
-        self.draw = False
-        self.type_of_draw = None
-        self.resigned = False
-        self.game_ongoing = True
-        self.eaten_figures = set()
-        self.kings_pos = {0: (0, 4), 1: (7, 4)}
-        self.counter = 0
-        self.last_pawn_move_or_eaten = 0
+        self.checked = checked
+        self.mate = mate
+        self.draw = draw
+        self.type_of_draw = type_of_draw
+        self.resigned = resigned
+        self.game_ongoing = game_ongoing
+        self.eaten_figures = eaten_figures
+        self.kings_pos = kings_pos
+        self.counter = counter
+        self.last_pawn_move_or_eaten = last_pawn_move_or_eaten
         
     def __str__(self):
         """
@@ -483,8 +499,8 @@ class ChessBoard:
         for figure, figure_moves in moves.items():
             legal_moves[figure] = set()
             for move in figure_moves:
-                illegal_move = False 
-                test_board = copy.deepcopy(self)
+                illegal_move = False
+                test_board = self.copy()
                 figure_pos = figure.get_pos()
                 #figures on the testboard are different from those 
                 #on the game board, so we can't refer to game board's figures 
@@ -630,8 +646,28 @@ class ChessBoard:
                     kind = square.get_kind()
                     remained_figures[color].append(kind)
         return remained_figures
-                    
-                                  
+    
+    def copy(self):
+        copied_board = []
+        for row in self.board:
+            copied_row = []
+            for square in row:
+                if square == None:
+                    copied_row.append(None)
+                else:
+                    copied_row.append(square.copy()) 
+            copied_board.append(copied_row)
+        copied_eaten_figure = set()
+        for figure in self.eaten_figures:
+            copied_eaten_figure.add(figure.copy())
+        copied_current_player = self.current_player.copy()
+        copied_other_player = self.other_player.copy()
+        return ChessBoard(copied_current_player, copied_other_player,
+                   self.en_passant, copied_board, self.checked, self.mate, self.draw,
+                   self.type_of_draw, self.resigned, self.game_ongoing,
+                   copied_eaten_figure, self.kings_pos, self.counter, self.last_pawn_move_or_eaten)
+
+
 def clean_empty_sets_from_dict(dict_to_clean):
     """
     cleans items, having a value of an empty set, from a dictionary
@@ -853,7 +889,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
             else:
                 value = 0
             if depth > 0:
-                test_board = copy.deepcopy(board)
+                test_board = board.copy()
                 figure_pos = figure.get_pos()
                 if board.get_board_square(move[0], move[1]) != None:
                     counter += 1 
