@@ -793,6 +793,7 @@ def random_strategy(board, legal_moves, request_for_draw):
             return "draw is accepted"
         else:
             return "draw is rejected"
+    print ("random_strategy", legal_moves)
     figure_to_move, figure_moves = random.choice(list(legal_moves.items()))
     to_move = random.choice(list(figure_moves))
     promotion_figure_index = None
@@ -864,6 +865,8 @@ def valued_eater_strategy(board, legal_moves, request_for_draw):
 def minimaxStrategy1depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 1)
 
+@profile
+
 def minimaxStrategy2depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 2)
 
@@ -901,7 +904,11 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                 best_moves_of_figure.add(move)
         if best_moves_of_figure != set():
             best_moves[figure] = best_moves_of_figure
-    return random_strategy(board, best_moves, request_for_draw)
+    print ("max_value", max_value)
+    print ("valued moves", valued_moves)
+    print ("best moves", best_moves)
+    random_move = random_strategy(board, best_moves, request_for_draw)
+    return (random_move[0], random_move[1], 1)
 
 def minimaxStrategyRecursive(board, legal_moves, depth):
     board.set_if_mate_stalemate()
