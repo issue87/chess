@@ -308,8 +308,6 @@ class ChessBoard:
         upon other methods. Switch players at the end. 
         '''
         previous_position = figure.get_pos()
-        print (previous_position)
-        print (position)
         if figure.get_kind() == PAWN_FIGURE or self.board[position[0]][position[1]] != None:
             self.adjust_last_pawn_move_or_eaten()
         if figure.get_kind() == PAWN_FIGURE and position == self.en_passant:
