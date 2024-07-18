@@ -793,7 +793,6 @@ def random_strategy(board, legal_moves, request_for_draw):
             return "draw is accepted"
         else:
             return "draw is rejected"
-    print ("random_strategy", legal_moves)
     figure_to_move, figure_moves = random.choice(list(legal_moves.items()))
     to_move = random.choice(list(figure_moves))
     promotion_figure_index = None
@@ -881,7 +880,6 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     for figure, moves in legal_moves.items():
         valued_moves_of_figure = dict()
         for move in moves:
-            print (move)
             if board.get_board_square(move[0], move[1]) != None:
                 value = board.get_board_square(move[0], move[1]).get_value()
             else:
@@ -889,6 +887,10 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
             test_board = board.copy_board()
             figure_pos = figure.get_pos()
             test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
+            if (figure.get_kind() == PAWN_FIGURE
+                    and move[0] == initianal_king_pos[test_board.get_current_player().get_color()][0]):
+                    test_board.promote_pawn((move[0], move[1]), 1)
+                    value += 8
             opponent_color = test_board.get_current_player().get_color()
             opponent_possible_moves = test_board.get_possible_moves(opponent_color)
             opponent_legal_moves = test_board.get_possible_legal_moves(opponent_possible_moves, opponent_color)
@@ -905,9 +907,8 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                 best_moves_of_figure.add(move)
         if best_moves_of_figure != set():
             best_moves[figure] = best_moves_of_figure
-    print ("max_value", max_value)
-    print ("valued moves", valued_moves)
-    print ("best moves", best_moves)
+    if best_moves == dict():
+        return random_strategy(board, legal_moves, request_for_draw)
     random_move = random_strategy(board, best_moves, request_for_draw)
     return (random_move[0], random_move[1], 1)
 
@@ -915,7 +916,6 @@ def minimaxStrategyRecursive(board, legal_moves, depth):
     board.set_if_mate_stalemate()
     if board.is_mate():
         return -1000
-        print ("detected mate")
     if board.is_draw():
         return 0
     max_value = -1000
@@ -933,6 +933,10 @@ def minimaxStrategyRecursive(board, legal_moves, depth):
                 else:
                     value = 0
                 test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
+                if (figure.get_kind() == PAWN_FIGURE
+                    and move[0] == initianal_king_pos[test_board.get_current_player().get_color()][0]):
+                    test_board.promote_pawn((move[0], move[1]), 1)
+                    value += 8
                 color = test_board.get_current_player().get_color()
                 possible_moves = test_board.get_possible_moves(color)
                 legal_moves = test_board.get_possible_legal_moves(possible_moves, color)
