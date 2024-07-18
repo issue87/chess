@@ -1033,6 +1033,7 @@ def handle_move(chosen_move):
     games[session['id']].dismiss_check()
     games[session['id']].set_if_check()
     print("handle_move")
+    print("mateResult", games[session['id']].is_mate())
     games[session['id']].set_if_mate_stalemate()
     request_for_draw_50_moves = False
     print("mateResult", games[session['id']].is_mate())
