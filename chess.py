@@ -899,7 +899,8 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
         for move in moves: 
             if valued_moves[figure][move] == max_value:
                 best_moves_of_figure.add(move)
-        best_moves[figure] = best_moves_of_figure
+        if best_moves_of_figure != set():
+            best_moves[figure] = best_moves_of_figure
     return random_strategy(board, best_moves, request_for_draw)
 
 def minimaxStrategyRecursive(board, legal_moves, depth):
