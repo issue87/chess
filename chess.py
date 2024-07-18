@@ -937,8 +937,8 @@ def minimaxStrategyRecursive(board, legal_moves, depth):
                 possible_moves = test_board.get_possible_moves(color)
                 legal_moves = test_board.get_possible_legal_moves(possible_moves, color)
                 value += minimaxStrategyRecursive(test_board, legal_moves, depth - 1) * (-1)
-                if max_value < value:
-                    max_value = value
+            if max_value < value:
+                max_value = value
     return max_value
                 
             
