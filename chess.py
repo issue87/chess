@@ -881,6 +881,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     for figure, moves in legal_moves.items():
         valued_moves_of_figure = dict()
         for move in moves:
+            print (move)
             if board.get_board_square(move[0], move[1]) != None:
                 value = board.get_board_square(move[0], move[1]).get_value()
             else:
@@ -914,6 +915,7 @@ def minimaxStrategyRecursive(board, legal_moves, depth):
     board.set_if_mate_stalemate()
     if board.is_mate():
         return -1000
+        print ("detected mate")
     if board.is_draw():
         return 0
     max_value = -1000
