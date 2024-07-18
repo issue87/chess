@@ -885,10 +885,10 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
             test_board = board.copy_board()
             figure_pos = figure.get_pos()
             test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
-            color = test_board.get_current_player().get_color()
-            possible_moves = test_board.get_possible_moves(color)
-            legal_moves = test_board.get_possible_legal_moves(possible_moves, color)
-            value += minimaxStrategyRecursive(test_board, test_board.get_possible_legal_moves(possible_moves, color), depth - 1) * (-1)
+            opponent_color = test_board.get_current_player().get_color()
+            opponent_possible_moves = test_board.get_possible_moves(opponent_color)
+            opponent_legal_moves = test_board.get_possible_legal_moves(opponent_possible_moves, opponent_color)
+            value += minimaxStrategyRecursive(test_board, opponent_legal_moves, depth - 1) * (-1)
             if value > max_value:
                 max_value = value
             valued_moves_of_figure[move] = value
@@ -897,9 +897,6 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     for figure, moves in legal_moves.items():
         best_moves_of_figure = set()
         for move in moves: 
-            print (valued_moves)
-            print (figure)
-            print (move) 
             if valued_moves[figure][move] == max_value:
                 best_moves_of_figure.add(move)
         best_moves[figure] = best_moves_of_figure
