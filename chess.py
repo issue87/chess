@@ -355,9 +355,12 @@ class ChessBoard:
         sets check, if the current player is in check
         '''
         king_pos = self.kings_pos[self.get_current_player().get_color()]
+        print (king_pos)
         moves = self.get_possible_moves(self.get_opponent_player().get_color()).values()
+        print (moves)
         for set_of_moves in moves:
             if king_pos in set_of_moves:
+                print (set_of_moves)
                 self.checked = True
                 return
             
@@ -1030,8 +1033,11 @@ def handle_move(chosen_move):
         en_passant = True
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
+    print("checked", games[session['id']].is_checked())
     games[session['id']].dismiss_check()
+    print("checked", games[session['id']].is_checked())
     games[session['id']].set_if_check()
+    print("checked", games[session['id']].is_checked())
     print("handle_move")
     print("mateResult", games[session['id']].is_mate())
     games[session['id']].set_if_mate_stalemate()
