@@ -308,6 +308,8 @@ class ChessBoard:
         upon other methods. Switch players at the end. 
         '''
         previous_position = figure.get_pos()
+        print (previous_position)
+        print (position)
         if figure.get_kind() == PAWN_FIGURE or self.board[position[0]][position[1]] != None:
             self.adjust_last_pawn_move_or_eaten()
         if figure.get_kind() == PAWN_FIGURE and position == self.en_passant:
@@ -395,6 +397,8 @@ class ChessBoard:
         if not exist_moves:
             self.game_ongoing = False
             if self.checked:
+                print (self)
+                print("mate")
                 self.mate = True
             else:
                 self.draw = True
@@ -913,6 +917,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     return (random_move[0], random_move[1], 1)
 
 def minimaxStrategyRecursive(board, legal_moves, depth):
+    print("minimaxStrategyRecursive")
     board.set_if_mate_stalemate()
     if board.is_mate():
         return -1000
@@ -1029,6 +1034,7 @@ def handle_move(chosen_move):
         castling = True
     games[session['id']].dismiss_check()
     games[session['id']].set_if_check()
+    print("handle_move")
     games[session['id']].set_if_mate_stalemate()
     request_for_draw_50_moves = False
     if not games[session['id']].is_mate() and not games[session['id']].is_draw():
