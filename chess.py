@@ -1037,6 +1037,7 @@ def handle_move(chosen_move):
     print("handle_move")
     games[session['id']].set_if_mate_stalemate()
     request_for_draw_50_moves = False
+    print("mateResult", games[session['id']].is_mate())
     if not games[session['id']].is_mate() and not games[session['id']].is_draw():
         if games[session['id']].is_dead_position():
             games[session['id']].set_draw_due_to_dead_position()
