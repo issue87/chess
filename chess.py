@@ -101,7 +101,7 @@ class Player:
             "playerType": self.type_of_player
         }
 
-    def copy(self):
+    def copy_player(self):
         return Player(self.color,
                       self.type_of_player,
                       self.strategy,
@@ -149,7 +149,7 @@ class Figure:
                 "col_pos": self.pos[1]
                }
     
-    def copy(self):
+    def copy_figure(self):
         return Figure(self.color, self.kind, self.pos)
 
 class ChessBoard:
@@ -656,13 +656,13 @@ class ChessBoard:
                 if square == None:
                     copied_row.append(None)
                 else:
-                    copied_row.append(square.copy()) 
+                    copied_row.append(square.copy_figure()) 
             copied_board.append(copied_row)
         copied_eaten_figure = set()
         for figure in self.eaten_figures:
-            copied_eaten_figure.add(figure.copy())
-        copied_current_player = self.current_player.copy()
-        copied_other_player = self.other_player.copy()
+            copied_eaten_figure.add(figure.copy_figure())
+        copied_current_player = self.current_player.copy_player()
+        copied_other_player = self.other_player.copy_player()
         return ChessBoard(copied_current_player, copied_other_player,
                    self.en_passant, copied_board, self.checked, self.mate, self.draw,
                    self.type_of_draw, self.resigned, self.game_ongoing,
@@ -869,20 +869,47 @@ def minimaxStrategy2depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 2)
 
 def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration = True):
-    counter = 0 
     if request_for_draw:
         if False:
             return "draw is accepted"
         else:
             return "draw is rejected"
+    max_value = -1000
+    valued_moves = dict()
+    for figure, moves in legal_moves.items():
+        valued_moves_of_figure = dict()
+        for move in moves:
+            if board.get_board_square(move[0], move[1]) != None:
+                value = board.get_board_square(move[0], move[1]).get_value()
+            else:
+                value = 0
+            test_board = board.copy_board()
+            figure_pos = figure.get_pos()
+            test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
+            color = test_board.get_current_player().get_color()
+            possible_moves = test_board.get_possible_moves(color)
+            legal_moves = test_board.get_possible_legal_moves(possible_moves, color)
+            value += minimaxStrategyRecursive(test_board, test_board.get_possible_legal_moves(possible_moves, color), depth - 1) * (-1)
+            if value > max_value:
+                max_value = value
+            valued_moves_of_figure[move] = value
+        valued_moves[figure] = valued_moves_of_figure
+    best_moves = dict()
+    for figure, moves in legal_moves.items():
+        best_moves_of_figure = set()
+        for move in moves: 
+            if valued_moves[figure][move] == max_value:
+                best_moves_of_figure.add(move)
+        best_moves[figure] = best_moves_of_figure
+    return random_strategy(board, best_moves, request_for_draw)
+
+def minimaxStrategyRecursive(board, legal_moves, depth):
     board.set_if_mate_stalemate()
     if board.is_mate():
         return -1000
     if board.is_draw():
         return 0
     max_value = -1000
-    best_move = None
-    best_figure = None
     for figure, moves in legal_moves.items():
         for move in moves:
             if board.get_board_square(move[0], move[1]) != None:
@@ -893,7 +920,6 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                 test_board = board.copy_board()
                 figure_pos = figure.get_pos()
                 if board.get_board_square(move[0], move[1]) != None:
-                    counter += 1 
                     value = board.get_board_square(move[0], move[1]).get_value()
                 else:
                     value = 0
@@ -901,19 +927,10 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                 color = test_board.get_current_player().get_color()
                 possible_moves = test_board.get_possible_moves(color)
                 legal_moves = test_board.get_possible_legal_moves(possible_moves, color)
-                value += minimaxStrategy(test_board, test_board.get_possible_legal_moves(possible_moves, color), request_for_draw, depth - 1, False) * (-1)
-            if max_value < value:
-                max_value = value
-                if first_iteration:
-                    best_move = move
-                    best_figure = figure
-    print ("counter", counter)
-    if first_iteration:
-        return (best_figure, best_move, 1) 
-    else:
-        return max_value
-
-
+                value += minimaxStrategyRecursive(test_board, legal_moves, depth - 1) * (-1)
+                if max_value < value:
+                    max_value = value
+    return max_value
                 
             
 
