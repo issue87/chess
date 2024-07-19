@@ -197,7 +197,7 @@ class ChessBoard:
         self.resigned = resigned
         self.game_ongoing = game_ongoing
         self.eaten_figures = eaten_figures
-        self.kings_pos = dict(kings_pos)
+        self.kings_pos = kings_pos
         self.counter = counter
         self.last_pawn_move_or_eaten = last_pawn_move_or_eaten
         
@@ -671,7 +671,7 @@ class ChessBoard:
         return ChessBoard(copied_current_player, copied_other_player,
                    self.en_passant, copied_board, self.checked, self.mate, self.draw,
                    self.type_of_draw, self.resigned, self.game_ongoing,
-                   copied_eaten_figure, self.kings_pos, self.counter, self.last_pawn_move_or_eaten)
+                   copied_eaten_figure, dict(self.kings_pos), self.counter, self.last_pawn_move_or_eaten)
 
 
 def clean_empty_sets_from_dict(dict_to_clean):
