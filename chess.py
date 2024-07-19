@@ -197,7 +197,7 @@ class ChessBoard:
         self.resigned = resigned
         self.game_ongoing = game_ongoing
         self.eaten_figures = eaten_figures
-        self.kings_pos = kings_pos
+        self.kings_pos = dict(kings_pos)
         self.counter = counter
         self.last_pawn_move_or_eaten = last_pawn_move_or_eaten
         
