@@ -319,7 +319,6 @@ class ChessBoard:
         if self.board[position[0]][position[1]] is not None:
             self.eaten_figures.add(self.board[position[0]][position[1]])
         self.board[position[0]][position[1]] = figure
-        print (self.kings_pos)
         if figure.get_kind() == KING_FIGURE:
             #renews kings position on the board
             
@@ -338,7 +337,6 @@ class ChessBoard:
                     self.board[position[0]][5].change_pos((position[0], 5))
         #should a king or rook make their first move, the castling between them
         #must be forbidden
-        print (self.kings_pos)
         if self.get_current_player().is_long_castling_possible():
             king_pos = initianal_king_pos[self.get_current_player().get_color()]
             if previous_position == king_pos or previous_position == (king_pos[0], 0):
@@ -398,8 +396,6 @@ class ChessBoard:
         if not exist_moves:
             self.game_ongoing = False
             if self.checked:
-                print (self)
-                print("mate")
                 self.mate = True
             else:
                 self.draw = True
@@ -510,7 +506,6 @@ class ChessBoard:
                 #figures on the testboard are different from those 
                 #on the game board, so we can't refer to game board's figures 
                 #from test board
-                print("get_possible_legal_moves")
                 test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
                 kings_position = test_board.kings_pos[color]
                 positions_to_check = set()
@@ -948,7 +943,6 @@ def minimaxStrategyRecursive(board, legal_moves, depth):
                     value = board.get_board_square(move[0], move[1]).get_value()
                 else:
                     value = 0
-                print ("minimaxStrategyRecursive")
                 test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
                 if (figure.get_kind() == PAWN_FIGURE
                     and move[0] == initianal_king_pos[test_board.get_current_player().get_color()][0]):
@@ -1028,7 +1022,6 @@ def handle_move(chosen_move):
     figure_to_move, to_move, promotion_figure_index = chosen_move
     move_from = figure_to_move.get_pos()
     en_passant_square = games[session['id']].get_en_passant()
-    print("handle_move")
     games[session['id']].make_move(figure_to_move, (to_move[0], to_move[1]))
     games[session['id']].count_turn()
     promotion = False
