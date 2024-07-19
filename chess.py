@@ -664,6 +664,7 @@ class ChessBoard:
                     copied_row.append(square.copy_figure()) 
             copied_board.append(copied_row)
         copied_eaten_figure = set()
+        copied_kings_pos = dict(self.kings_pos)
         for figure in self.eaten_figures:
             copied_eaten_figure.add(figure.copy_figure())
         copied_current_player = self.current_player.copy_player()
@@ -671,7 +672,7 @@ class ChessBoard:
         return ChessBoard(copied_current_player, copied_other_player,
                    self.en_passant, copied_board, self.checked, self.mate, self.draw,
                    self.type_of_draw, self.resigned, self.game_ongoing,
-                   copied_eaten_figure, dict(self.kings_pos), self.counter, self.last_pawn_move_or_eaten)
+                   copied_eaten_figure, copied_kings_pos, self.counter, self.last_pawn_move_or_eaten)
 
 
 def clean_empty_sets_from_dict(dict_to_clean):
