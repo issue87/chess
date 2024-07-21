@@ -71,7 +71,7 @@ canvas{
 }
 
 
-.resposiveFontSize{
+.resposiveFontSize, .navbar, .navbar h1{
     font-size: 4vw;
 }
 
