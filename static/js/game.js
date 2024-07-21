@@ -433,7 +433,8 @@ function handleChooseFigureForPromotion(response){
     }
     const gameMessage = document.getElementById("gameMessage");
     gameMessage.innerText = message;
-  }
+  };
+  request_is_processing = false;
 }
 
 function handleCPUMove(response){
