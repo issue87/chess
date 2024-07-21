@@ -73,6 +73,7 @@ let selectedSqare = null;
 let promotedSquare = null;
 let moveFrom = null;
 let gameObject = null;
+let request_is_processing = false
 
 class Player{
   constructor(typeOfPlayer, color){
@@ -312,9 +313,10 @@ function touchSquare(event){
         dataForRequest.toCol = clickedCol;
         $ajaxUtils.sendGetRequest('/player_move', handlePlayerMove, dataForRequest);
         selectedSqare = null;
+        request_is_processing = true;
         return;
       };
-      if (gameObject.getSquare(clickedRow, clickedCol) != null){
+      if (gameObject.getSquare(clickedRow, clickedCol) != null && !request_is_processing){
         /*checking figure was touched belongs to player who must move now, because figure color is a string and player color is a number it uses colorNumberSign to translate string 
         into its number representation*/
         if (colorNumberSign[gameObject.getSquare(clickedRow, clickedCol).color] == gameObject.currentPlayer.color && gameObject.currentPlayer.typeOfPlayer == humanPlayer){
@@ -326,10 +328,11 @@ function touchSquare(event){
 };
 
 function acceptDrawFiftyMoves(){
-  if (gameObject.isGameOngoing()){
+  if (gameObject.isGameOngoing() && !request_is_processing){
     dataForRequest = new Object();
     dataForRequest.typeOfRequest = "GET";
     $ajaxUtils.sendGetRequest('/accept_draw_50_moves', acceptDrawFiftyMovesFinish, dataForRequest);
+    request_is_processing = true;
   } 
 };
 
@@ -340,13 +343,15 @@ function acceptDrawFiftyMovesFinish(response){
     const gameMessage = document.getElementById("gameMessage");
     gameMessage.innerText = "Draw " + result_obj.drawReason;
   }
+  request_is_processing = false;
 }
 
 function resign(){
-  if (gameObject.currentPlayer.typeOfPlayer == humanPlayer && gameObject.isGameOngoing()){
+  if (gameObject.currentPlayer.typeOfPlayer == humanPlayer && gameObject.isGameOngoing() && !request_is_processing){
     dataForRequest = new Object();
     dataForRequest.typeOfRequest = "GET";
     $ajaxUtils.sendGetRequest('/resign', resignFinish, dataForRequest);
+    request_is_processing = true;
   }
 }
 
@@ -357,6 +362,7 @@ function resignFinish(response){
     const gameMessage = document.getElementById("gameMessage");
     gameMessage.innerHTML = colors[gameObject.currentPlayer.color] + " has resigned";
   }
+  request_is_processing = false;
 }
 
 const canvasEl = document.getElementById("gameCanvas");
@@ -387,6 +393,7 @@ function requestforCPUMove(){
   dataForRequest = new Object();
   dataForRequest.typeOfRequest = "GET";
   $ajaxUtils.sendGetRequest('/cpu_move', handleCPUMove, dataForRequest);
+  request_is_processing = true;
 }
 
 function handlePlayerMove(response){
@@ -394,6 +401,7 @@ function handlePlayerMove(response){
   if (!result_obj.approved){
     const gameMessage = document.getElementById("gameMessage");
     gameMessage.innerText = result_obj.message;
+    request_is_processing = false;
   }else if (result_obj.choosePromotedFigure){
     gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
     canvasAnimation();
@@ -476,6 +484,7 @@ function handleCPUMove(response){
     const gameMessage = document.getElementById("gameMessage");
     gameMessage.innerText = message;
   }
+  request_is_processing = false;
 }
 
 function gameLoad(){
