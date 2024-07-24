@@ -1084,8 +1084,8 @@ def handle_move(chosen_move):
 player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
 player2 = Player(BLACK_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)                            
 ex = ChessBoard(player1, player2)
-print (ex.get_figures_pos_by_kind(0, 2))
-print (ex.get_figures_pos_by_kind(0, 2))
+print (ex.get_figures_pos_by_kind(2, 0))
+print (ex.get_figures_pos_by_kind(0, 0))
 
 @app.route('/', methods = ["GET","POST"])
 def index():
