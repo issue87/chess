@@ -632,6 +632,18 @@ class ChessBoard:
                                 target_column += direction[1]
                     moves[current_figure] = figure_moves
         return moves           
+    def get_figures_pos_by_kind(kind, color):
+        result = set()
+        for row_index in range(8):
+            for column_index in range(8):
+                if self.board[row_index][column_index] == None:
+                    continue
+                if (self.board[row_index][column_index].get_color() == color
+                    and self.board[row_index][column_index].get_kind() == kind
+                    ):
+                    pos_ = self.board[row_index][column_index].get_pos()
+                    result.add(pos_)
+        return result
 
     def get_remained_figures(self):
         """
@@ -1065,7 +1077,11 @@ def handle_move(chosen_move):
     if games[session['id']].is_draw():
         move_JSON["drawReason"] = games[session['id']].get_draw_reason()
     return jsonify(move_JSON)
-
+player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
+player2 = Player(BLACK_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)                            
+ex = ChessBoard(player1, player2)
+print (ex.get_figures_pos_by_kind(0, 2))
+print (ex.get_figures_pos_by_kind(0, 2))
 
 @app.route('/', methods = ["GET","POST"])
 def index():
