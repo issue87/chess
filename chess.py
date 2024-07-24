@@ -633,21 +633,27 @@ class ChessBoard:
                     moves[current_figure] = figure_moves
         return moves    
 
-    def get_figures_pos_by_kind(self, kind, color):
+    def get_figures_by_kind(self, kind, color):
         result = set()
         for row_index in range(8):
             for column_index in range(8):
                 if self.board[row_index][column_index] == None:
                     continue
-                print (self.board[row_index][column_index].get_color())
-                print (self.board[row_index][column_index].get_kind())
                 if (self.board[row_index][column_index].get_color() == color
                     and self.board[row_index][column_index].get_kind() == kind
                     ):
-                    pos_ = self.board[row_index][column_index].get_pos()
-                    print (pos_)
-                    result.add(pos_)
+                    result.add(self.board[row_index][column_index])
         return result
+    
+    def beat_square(figures_set, square_pos, color):
+        """
+        returns true if some figures/figure in figures_set beat position in square_pos."
+        """
+        const legal_moves =  self.get_possible_legal_moves(color)
+        for figure in figures_set:
+            if square_pos in legal_moves[figure]:
+                return True
+        return False
 
     def get_remained_figures(self):
         """
@@ -1038,6 +1044,10 @@ def handle_move(chosen_move):
     figure_to_move, to_move, promotion_figure_index = chosen_move
     move_from = figure_to_move.get_pos()
     en_passant_square = games[session['id']].get_en_passant()
+    const equal_figures = games[session['id']].get_figures_by_kind(figure_to_move.get_kind(), figure_to_move.get_color())
+    #exclude figure that moves we get other figures the same color and kind
+    equal_figures.discard(figure_to_move)
+    const other_figure_might_move = games[session['id']].beat_square(equal_figures, to_move, figure_to_move.get_color())
     games[session['id']].make_move(figure_to_move, (to_move[0], to_move[1]))
     games[session['id']].count_turn()
     promotion = False
@@ -1081,11 +1091,6 @@ def handle_move(chosen_move):
     if games[session['id']].is_draw():
         move_JSON["drawReason"] = games[session['id']].get_draw_reason()
     return jsonify(move_JSON)
-player1 = Player(WHITE_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)
-player2 = Player(BLACK_FIGURE_COLOR, COMPUTER_PLAYER, random_strategy)                            
-ex = ChessBoard(player1, player2)
-print (ex.get_figures_pos_by_kind(2, 0))
-print (ex.get_figures_pos_by_kind(0, 0))
 
 @app.route('/', methods = ["GET","POST"])
 def index():
