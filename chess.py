@@ -632,7 +632,7 @@ class ChessBoard:
                                 target_column += direction[1]
                     moves[current_figure] = figure_moves
         return moves           
-    def get_figures_pos_by_kind(kind, color):
+    def get_figures_pos_by_kind(self, kind, color):
         result = set()
         for row_index in range(8):
             for column_index in range(8):
