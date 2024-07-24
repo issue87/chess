@@ -637,10 +637,10 @@ class ChessBoard:
         result = set()
         for row_index in range(8):
             for column_index in range(8):
+                print (self.board[row_index][column_index].get_color())
+                print (self.board[row_index][column_index].get_kind())
                 if self.board[row_index][column_index] == None:
                     continue
-                    print (self.board[row_index][column_index].get_color())
-                    print (self.board[row_index][column_index].get_kind())
                 if (self.board[row_index][column_index].get_color() == color
                     and self.board[row_index][column_index].get_kind() == kind
                     ):
