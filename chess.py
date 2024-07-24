@@ -631,17 +631,21 @@ class ChessBoard:
                                 target_row += direction[0]
                                 target_column += direction[1]
                     moves[current_figure] = figure_moves
-        return moves           
+        return moves    
+
     def get_figures_pos_by_kind(self, kind, color):
         result = set()
         for row_index in range(8):
             for column_index in range(8):
                 if self.board[row_index][column_index] == None:
                     continue
+                    print (self.board[row_index][column_index].get_color())
+                    print (self.board[row_index][column_index].get_kind())
                 if (self.board[row_index][column_index].get_color() == color
                     and self.board[row_index][column_index].get_kind() == kind
                     ):
                     pos_ = self.board[row_index][column_index].get_pos()
+                    print (pos_)
                     result.add(pos_)
         return result
 
