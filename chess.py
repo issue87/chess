@@ -646,7 +646,7 @@ class ChessBoard:
                     result.add(self.board[row_index][column_index])
         return result
     
-    def pos_figures_which_beat_square(figures_set, square_pos, color):
+    def pos_figures_which_beat_square(self, figures_set, square_pos, color):
         """
         returns true if some figures/figure in figures_set beat position in square_pos."
         """
