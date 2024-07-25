@@ -122,7 +122,7 @@ class Game{
   }
 
   get chessNotationSeq(){
-    return _chessNotationSeq();
+    return _chessNotationSeq;
   }
 
   set currentPlayer(player){
