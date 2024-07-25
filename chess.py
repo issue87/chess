@@ -1087,7 +1087,7 @@ def handle_move(chosen_move):
             request_for_draw_50_moves = True
     let chess_notation_record =  ""
     if castling:
-        if to_move[1] > move_from[1]):
+        if to_move[1] > move_from[1]:
             chess_notation_record = "O-O"
         else:
             chess_notation_record = "O-O-O"
