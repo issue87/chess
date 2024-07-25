@@ -1056,7 +1056,7 @@ def handle_move(chosen_move):
         if pos_[1] == move_from[1]:
             vertical_is_taken = True
     eats_figure = False
-    if games[session['id']].get_board_square(to_move[0], to_move[1]) != null:
+    if games[session['id']].get_board_square(to_move[0], to_move[1]) != None:
         eats_figure = True
     games[session['id']].make_move(figure_to_move, (to_move[0], to_move[1]))
     games[session['id']].count_turn()
