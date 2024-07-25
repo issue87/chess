@@ -650,7 +650,7 @@ class ChessBoard:
         """
         returns true if some figures/figure in figures_set beat position in square_pos."
         """
-        const legal_moves = self.get_possible_legal_moves(color)
+        legal_moves = self.get_possible_legal_moves(color)
         result = set()
         for figure in figures_set:
             if square_pos in legal_moves[figure]:
@@ -1046,16 +1046,16 @@ def handle_move(chosen_move):
     figure_to_move, to_move, promotion_figure_index = chosen_move
     move_from = figure_to_move.get_pos()
     en_passant_square = games[session['id']].get_en_passant()
-    const equal_figures = games[session['id']].get_figures_by_kind(figure_to_move.get_kind(), figure_to_move.get_color())
+    equal_figures = games[session['id']].get_figures_by_kind(figure_to_move.get_kind(), figure_to_move.get_color())
     #exclude figure that moves we get other figures the same color and kind
     equal_figures.discard(figure_to_move)
     #get posions of other figures that might make move to the same square
-    const pos_other_figure_might_move = games[session['id']].pos_figures_which_beat_square(equal_figures, to_move, figure_to_move.get_color())
-    let vertical_is_taken = False
+    pos_other_figure_might_move = games[session['id']].pos_figures_which_beat_square(equal_figures, to_move, figure_to_move.get_color())
+    vertical_is_taken = False
     for pos_ in pos_other_figure_might_move:
         if pos_[1] == move_from[1]:
             vertical_is_taken = True
-    let eats_figure = False
+    eats_figure = False
     if games[session['id']].get_board_square(to_move[0], to_move[1]) != null:
         eats_figure = True
     games[session['id']].make_move(figure_to_move, (to_move[0], to_move[1]))
@@ -1085,7 +1085,7 @@ def handle_move(chosen_move):
             games[session['id']].set_draw_by_75_moves()
         elif games[session['id']].get_moves_without_pawn_move_or_eaten() >= 50:
             request_for_draw_50_moves = True
-    let chess_notation_record =  ""
+    chess_notation_record =  ""
     if castling:
         if to_move[1] > move_from[1]:
             chess_notation_record = "O-O"
