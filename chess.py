@@ -650,7 +650,7 @@ class ChessBoard:
         """
         returns true if some figures/figure in figures_set beat position in square_pos."
         """
-        const legal_moves =  self.get_possible_legal_moves(color)
+        const legal_moves = self.get_possible_legal_moves(color)
         result = set()
         for figure in figures_set:
             if square_pos in legal_moves[figure]:
