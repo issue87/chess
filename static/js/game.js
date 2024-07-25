@@ -172,7 +172,7 @@ class Game{
   }
 
   writeMoveChessNotation(move){
-    this._chessNotationSeq.append(move)
+    this._chessNotationSeq.push(move)
   }
 
   getSquare(row, col){
