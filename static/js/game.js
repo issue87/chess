@@ -106,6 +106,7 @@ class Game{
     this._mate = false;
     this._gameOngoing = true;
     this._resigned = false
+    this._chessNotationSeq = []
   }
 
   get currentPlayer(){
@@ -118,6 +119,10 @@ class Game{
   
   get chessBoard(){
     return this._chessBoard;
+  }
+
+  get chessNotationSeq(){
+    return _chessNotationSeq();
   }
 
   set currentPlayer(player){
@@ -145,22 +150,29 @@ class Game{
     this._draw = true;
     this._gameOngoing = false;
     selectedSqare = null;
+    console.log(this.chessNotationSeq);
   }
 
   setMate(){
     this._mate = true;
     this._gameOngoing = false;
     selectedSqare = null;
+    console.log(this.chessNotationSeq);
   }
 
   setResign(){
     this._resigned = true;
     this._gameOngoing = false;
     selectedSqare = null;
+    console.log(this.chessNotationSeq);
   }
 
   switchPlayer(){
     [this.currentPlayer, this.otherPlayer] = [this.otherPlayer, this.currentPlayer];
+  }
+
+  writeMoveChessNotation(move){
+    this._chessNotationSeq.append(move)
   }
 
   getSquare(row, col){
@@ -440,6 +452,7 @@ function handleChooseFigureForPromotion(response){
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
+  gameObject.writeMoveChessNotation(result_obj.chessNotationRecord)
   if (result_obj.promotion){
     gameObject.promote(result_obj.promotedFigure);  
   }else if(result_obj.castling){

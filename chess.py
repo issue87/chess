@@ -54,7 +54,8 @@ figures_directions = {0: {(1, 0), (1, 1), (1, -1), (0, 1), (-1, 1), (-1, 0), (-1
 pawns_direction = {0: 1, 1: -1}
 initianal_pawn_raw = {0: 1, 1: 6}
 initianal_king_pos = {0: (0, 4), 1: (7, 4)}
-column_chess_notation = "ABCDEFGH"
+column_chess_notation = "abcdefgh"
+figure_chess_notation = "KQRBN"
 games = dict()
 
 class Player:
@@ -645,15 +646,16 @@ class ChessBoard:
                     result.add(self.board[row_index][column_index])
         return result
     
-    def beat_square(figures_set, square_pos, color):
+    def pos_figures_which_beat_square(figures_set, square_pos, color):
         """
         returns true if some figures/figure in figures_set beat position in square_pos."
         """
         const legal_moves =  self.get_possible_legal_moves(color)
+        result = set()
         for figure in figures_set:
             if square_pos in legal_moves[figure]:
-                return True
-        return False
+                result.add(figure.get_pos())
+        return result
 
     def get_remained_figures(self):
         """
@@ -1047,7 +1049,15 @@ def handle_move(chosen_move):
     const equal_figures = games[session['id']].get_figures_by_kind(figure_to_move.get_kind(), figure_to_move.get_color())
     #exclude figure that moves we get other figures the same color and kind
     equal_figures.discard(figure_to_move)
-    const other_figure_might_move = games[session['id']].beat_square(equal_figures, to_move, figure_to_move.get_color())
+    #get posions of other figures that might make move to the same square
+    const pos_other_figure_might_move = games[session['id']].pos_figures_which_beat_square(equal_figures, to_move, figure_to_move.get_color())
+    let vertical_is_taken = False
+    for pos_ in pos_other_figure_might_move:
+        if pos_[1] == move_from[1]:
+            vertical_is_taken = True
+    let eats_figure = False
+    if games[session['id']].get_board_square(to_move[0], to_move[1]) != null:
+        eats_figure = True
     games[session['id']].make_move(figure_to_move, (to_move[0], to_move[1]))
     games[session['id']].count_turn()
     promotion = False
@@ -1074,7 +1084,32 @@ def handle_move(chosen_move):
         elif games[session['id']].get_moves_without_pawn_move_or_eaten() >= 75:
             games[session['id']].set_draw_by_75_moves()
         elif games[session['id']].get_moves_without_pawn_move_or_eaten() >= 50:
-            request_for_draw_50_moves = True           
+            request_for_draw_50_moves = True
+    let chess_notation_record =  ""
+    if castling:
+        if to_move[1] > move_from[1]):
+            chess_notation_record = "O-O"
+        else:
+            chess_notation_record = "O-O-O"
+    else:
+        if figure_to_move.get_kind() == PAWN_FIGURE and eats_figure:
+            chess_notation_record += column_chess_notation[move_from[1]]
+        elif figure_to_move.get_kind() != PAWN_FIGURE:
+            chess_notation_record += figure_chess_notation[figure_to_move.get_kind()]
+            if pos_other_figure_might_move != set():
+                if vertical_is_taken:
+                    chess_notation_record += str(move_from[0] + 1)
+                else:
+                    chess_notation_record += column_chess_notation[move_from[1]]
+        if eats_figure:
+            chess_notation_record += "x"
+        chess_notation_record += column_chess_notation[to_move[1]]
+        chess_notation_record += str(to_move[0] + 1)
+        if promotion:
+            chess_notation_record += "="
+            chess_notation_record += figure_chess_notation[promotion_figure_index]
+        if en_passant:
+            chess_notation_record += "e.p."
     move_JSON = {"approved":True,
                  "choosePromotedFigure":False, 
                  "moveFrom": move_from, 
@@ -1084,7 +1119,8 @@ def handle_move(chosen_move):
                  "enPassant": en_passant,
                  "mate": games[session['id']].is_mate(),
                  "draw": games[session['id']].is_draw(),
-                 "request_for_draw_50_moves": request_for_draw_50_moves
+                 "request_for_draw_50_moves": request_for_draw_50_moves,
+                 "chessNotationRecord": chess_notation_record
                  }
     if promotion:
         move_JSON["promotedFigure"] = promoted_figure.tranlslate_to_JSON()
