@@ -468,7 +468,6 @@ function handleCPUMove(response){
   }
   currentChessNotation += result_obj.chessNotationRecord;
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
-  gameObject.addPairOfMoves();
   gameObject.writeMoveChessNotation(currentChessNotation);
   if (result_obj.promotion){
     gameObject.promote(result_obj.promotedFigure);  
