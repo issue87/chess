@@ -462,7 +462,7 @@ function handleChooseFigureForPromotion(response){
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
   let currentChessNotation = ""
-  if (gameObject.currentPlayer.color == "white"){
+  if (gameObject.currentPlayer.color == 0){
     gameObject.addPairOfMoves();
     currentChessNotation = currentChessNotation + gameObject.moveCounter + ". ";
   }
