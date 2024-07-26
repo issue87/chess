@@ -107,6 +107,7 @@ class Game{
     this._gameOngoing = true;
     this._resigned = false
     this._chessNotationSeq = []
+    this._moveCounter = 0
   }
 
   get currentPlayer(){
@@ -123,6 +124,10 @@ class Game{
 
   get chessNotationSeq(){
     return this._chessNotationSeq;
+  }
+
+  get moveCounter(){
+    return this._moveCounter;
   }
 
   set currentPlayer(player){
@@ -171,8 +176,8 @@ class Game{
     [this.currentPlayer, this.otherPlayer] = [this.otherPlayer, this.currentPlayer];
   }
 
-  writeMoveChessNotation(move){
-    this._chessNotationSeq.push(move)
+  writeMoveChessNotation(currentRecord){
+    document.getElementById("chessNotation").innerText += currentRecord;
   }
 
   getSquare(row, col){
@@ -189,6 +194,11 @@ class Game{
     };
     this._chessBoard[toRow][toCol] = this.getSquare(fromRow, fromCol);
     this._chessBoard[fromRow][fromCol] = null;
+  }
+
+  addPairOfMoves(){
+    this._moveCounter++;
+
   }
 
   eatFigureEnPassant(fromRow, toCol){
@@ -451,8 +461,15 @@ function handleChooseFigureForPromotion(response){
 
 function handleCPUMove(response){
   const result_obj = JSON.parse(response.responseText);
+  let currentChessNotation = ""
+  if (gameObject.currentPlayer.color == "white"){
+    gameObject.addPairOfMoves();
+    currentChessNotation = currentChessNotation + gameObject.moveCounter + ". ";
+  }
+  currentChessNotation += result_obj.chessNotationRecord;
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
-  gameObject.writeMoveChessNotation(result_obj.chessNotationRecord)
+  gameObject.addPairOfMoves();
+  gameObject.writeMoveChessNotation(currentChessNotation);
   if (result_obj.promotion){
     gameObject.promote(result_obj.promotedFigure);  
   }else if(result_obj.castling){
