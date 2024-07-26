@@ -464,6 +464,9 @@ function handleCPUMove(response){
   let currentChessNotation = ""
   if (gameObject.currentPlayer.color == 0){
     gameObject.addPairOfMoves();
+    if (gameObject.moveCounter > 1){
+      currentChessNotation += " "
+    };
     currentChessNotation = currentChessNotation + gameObject.moveCounter + ". ";
   }
   currentChessNotation += result_obj.chessNotationRecord;
