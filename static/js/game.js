@@ -465,11 +465,11 @@ function handleCPUMove(response){
   if (gameObject.currentPlayer.color == 0){
     gameObject.addPairOfMoves();
     if (gameObject.moveCounter > 1){
-      currentChessNotation += " "
+      currentChessNotation += " ";
     };
-    currentChessNotation = currentChessNotation + gameObject.moveCounter + ". ";
+    currentChessNotation = currentChessNotation + gameObject.moveCounter + ".";
   }
-  currentChessNotation += result_obj.chessNotationRecord;
+  currentChessNotation = currentChessNotation + " " + result_obj.chessNotationRecord;
   gameObject.moveFigure(result_obj.moveFrom[0], result_obj.moveFrom[1], result_obj.moveTo[0], result_obj.moveTo[1]);
   gameObject.writeMoveChessNotation(currentChessNotation);
   if (result_obj.promotion){
