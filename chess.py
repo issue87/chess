@@ -356,7 +356,7 @@ class ChessBoard:
         '''
         sets check, if the current player is in check
         '''
-        print(self.king_pos)
+        print(self.kings_pos)
         king_pos = self.kings_pos[self.get_current_player().get_color()]
         moves = self.get_possible_moves(self.get_opponent_player().get_color()).values()
         print (king_pos)
