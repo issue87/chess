@@ -1074,7 +1074,6 @@ def handle_move(chosen_move):
         en_passant = True
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
-    print (session['id'])
     games[session['id']].dismiss_check()
     games[session['id']].set_if_check()
     games[session['id']].set_if_mate_stalemate()
@@ -1111,6 +1110,9 @@ def handle_move(chosen_move):
             chess_notation_record += figure_chess_notation[promotion_figure_index]
         if en_passant:
             chess_notation_record += "e.p."
+    if games[session['id']].is_mate():
+        print (session['id'])
+        print (games[session['id']])
     move_JSON = {"approved":True,
                  "choosePromotedFigure":False, 
                  "moveFrom": move_from, 
