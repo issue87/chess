@@ -910,10 +910,10 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                 value = board.get_board_square(move[0], move[1]).get_value()
             else:
                 value = 0
-            start = time.time()
+            #start = time.time()
             test_board = board.copy_board()
-            end = time.time()
-            print ("copy_board", end - start)
+            #end = time.time()
+            #print ("copy_board", end - start)
             figure_pos = figure.get_pos()
             test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
             if (figure.get_kind() == PAWN_FIGURE
@@ -921,14 +921,14 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
                     test_board.promote_pawn((move[0], move[1]), 1)
                     value += 8
             opponent_color = test_board.get_current_player().get_color()
-            start = time.time()
+            #start = time.time()
             opponent_possible_moves = test_board.get_possible_moves(opponent_color)
-            end = time.time()
-            print ("possible_moves", end - start)
-            start = time.time()
+            #end = time.time()
+            #print ("possible_moves", end - start)
+            #start = time.time()
             opponent_legal_moves = test_board.get_possible_legal_moves(opponent_possible_moves, opponent_color)
-            end = time.time()
-            print ("get_possible_legal_moves", end - start)
+            #end = time.time()
+            #print ("get_possible_legal_moves", end - start)
             value += minimaxStrategyRecursive(test_board, opponent_legal_moves, depth - 1) * (-1)
             if value > max_value:
                 max_value = value
@@ -1075,8 +1075,12 @@ def handle_move(chosen_move):
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
     games[session['id']].dismiss_check()
+    print ("before set_if_check", games[session['id']].is_checked())
     games[session['id']].set_if_check()
+    print ("after set_if_check", games[session['id']].is_checked())
+    print ("before set_if_mate_stalemate", games[session['id']].is_mate())
     games[session['id']].set_if_mate_stalemate()
+    print ("after set_if_mate_stalemate", games[session['id']].is_mate())
     request_for_draw_50_moves = False
     if not games[session['id']].is_mate() and not games[session['id']].is_draw():
         if games[session['id']].is_dead_position():
