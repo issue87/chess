@@ -389,6 +389,8 @@ class ChessBoard:
         and the player is NOT in check
         '''
         color = self.get_current_player().get_color()
+        print (moves)
+        print (legal_moves)
         moves = self.get_possible_moves(color)
         legal_moves = self.get_possible_legal_moves(moves, color).values()
         exist_moves = False
@@ -952,7 +954,6 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     return (random_move[0], random_move[1], 1)
 
 def minimaxStrategyRecursive(board, legal_moves, depth):
-    print("minimaxStrategyRecursive")
     board.set_if_mate_stalemate()
     if board.is_mate():
         return -1000
