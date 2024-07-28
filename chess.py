@@ -219,7 +219,10 @@ class ChessBoard:
                     result += str(square).center(5)           
             result += "\n\n"
         return result
-    
+        
+    def get_kings_pos(self):
+        return dict(self.kings_pos)
+
     def adjust_last_pawn_move_or_eaten(self):
         """
         Sets last_pawn_move_or_eaten to the current counter value
@@ -360,7 +363,6 @@ class ChessBoard:
         king_pos = self.kings_pos[self.get_current_player().get_color()]
         moves = self.get_possible_moves(self.get_opponent_player().get_color()).values()
         print (king_pos)
-        print (moves)
         for set_of_moves in moves:
             if king_pos in set_of_moves:
                 self.checked = True
@@ -393,9 +395,7 @@ class ChessBoard:
         '''
         color = self.get_current_player().get_color()
         moves = self.get_possible_moves(color)
-        print (moves)
         legal_moves = self.get_possible_legal_moves(moves, color).values()
-        print (legal_moves)
         exist_moves = False
         for moves_set in legal_moves:
             if moves_set != set():
@@ -405,8 +405,6 @@ class ChessBoard:
             self.game_ongoing = False
             if self.checked:
                 self.mate = True
-                print (session['id'])
-                print (self)
             else:
                 self.draw = True
                 self.type_of_draw = STALEMATE
