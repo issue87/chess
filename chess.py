@@ -361,6 +361,8 @@ class ChessBoard:
         for set_of_moves in moves:
             if king_pos in set_of_moves:
                 self.checked = True
+                print (session['id'])
+                print (self)
                 return
             
             
@@ -398,6 +400,8 @@ class ChessBoard:
             self.game_ongoing = False
             if self.checked:
                 self.mate = True
+                print (session['id'])
+                print (self)
             else:
                 self.draw = True
                 self.type_of_draw = STALEMATE
