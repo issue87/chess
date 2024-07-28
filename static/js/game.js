@@ -154,14 +154,12 @@ class Game{
     this._draw = true;
     this._gameOngoing = false;
     selectedSqare = null;
-    document.getElementById("gameMessage").innerHTML += " session" + sessionStorage.getItem("id");
   }
 
   setMate(){
     this._mate = true;
     this._gameOngoing = false;
     selectedSqare = null;
-    document.getElementById("gameMessage").innerHTML += " session" + sessionStorage.getItem("id");
   }
 
   setResign(){
@@ -512,7 +510,7 @@ function handleCPUMove(response){
       message = "draw: " + result_obj.drawReason;
     }
     const gameMessage = document.getElementById("gameMessage");
-    gameMessage.innerText = message;
+    gameMessage.innerText = message + " session" + sessionStorage.getItem("id");
   }
   request_is_processing = false;
 }
