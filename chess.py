@@ -163,7 +163,7 @@ class ChessBoard:
                  white_player, black_player, en_passant = None, outer_board = None,
                  checked = False, mate = False, draw = False, type_of_draw = None, 
                  resigned = False, game_ongoing = True, eaten_figures = set()
-                 , kings_pos = {0: (0, 4), 1: (7, 4)}, counter = 0, last_pawn_move_or_eaten = 0):
+                 , kings_pos_init = None, counter = 0, last_pawn_move_or_eaten = 0):
         if not outer_board:
             self.board = [[None for dummy_square in range(8)] for dummy_row in range(8)]
             for column in range(8):
@@ -198,7 +198,10 @@ class ChessBoard:
         self.resigned = resigned
         self.game_ongoing = game_ongoing
         self.eaten_figures = eaten_figures
-        self.kings_pos = kings_pos
+        if kings_pos_init == None:
+            self.kings_pos = {0: (0, 4), 1: (7, 4)}
+        else
+            self.kings_pos = kings_pos_init
         self.counter = counter
         self.last_pawn_move_or_eaten = last_pawn_move_or_eaten
         
