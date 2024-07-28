@@ -219,7 +219,7 @@ class ChessBoard:
                     result += str(square).center(5)           
             result += "\n\n"
         return result
-        
+
     def get_kings_pos(self):
         return dict(self.kings_pos)
 
@@ -1082,6 +1082,7 @@ def handle_move(chosen_move):
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
     games[session['id']].dismiss_check()
+    print(games[session['id']].get_kings_pos())
     games[session['id']].set_if_check()
     print("handle move")
     games[session['id']].set_if_mate_stalemate()
