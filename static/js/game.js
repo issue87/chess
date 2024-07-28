@@ -106,7 +106,6 @@ class Game{
     this._mate = false;
     this._gameOngoing = true;
     this._resigned = false
-    this._chessNotationSeq = []
     this._moveCounter = 0
   }
 
@@ -155,21 +154,19 @@ class Game{
     this._draw = true;
     this._gameOngoing = false;
     selectedSqare = null;
-    console.log(this.chessNotationSeq);
   }
 
   setMate(){
     this._mate = true;
     this._gameOngoing = false;
     selectedSqare = null;
-    console.log(this.chessNotationSeq);
+    console.log("mate");
+    console.log(sessionStorage.getItem("id"));
   }
 
   setResign(){
     this._resigned = true;
     this._gameOngoing = false;
-    selectedSqare = null;
-    console.log(this.chessNotationSeq);
   }
 
   switchPlayer(){
