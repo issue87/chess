@@ -358,11 +358,13 @@ class ChessBoard:
         '''
         king_pos = self.kings_pos[self.get_current_player().get_color()]
         moves = self.get_possible_moves(self.get_opponent_player().get_color()).values()
+        print (king_pos)
+        print (moves)
         for set_of_moves in moves:
             if king_pos in set_of_moves:
                 self.checked = True
                 print (session['id'])
-                print (self)
+                print ("checked")
                 return
             
             
