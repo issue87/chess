@@ -389,10 +389,10 @@ class ChessBoard:
         and the player is NOT in check
         '''
         color = self.get_current_player().get_color()
-        print (moves)
-        print (legal_moves)
         moves = self.get_possible_moves(color)
+        print (moves)
         legal_moves = self.get_possible_legal_moves(moves, color).values()
+        print (legal_moves)
         exist_moves = False
         for moves_set in legal_moves:
             if moves_set != set():
