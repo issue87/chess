@@ -952,6 +952,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     return (random_move[0], random_move[1], 1)
 
 def minimaxStrategyRecursive(board, legal_moves, depth):
+    print("minimaxStrategyRecursive")
     board.set_if_mate_stalemate()
     if board.is_mate():
         return -1000
@@ -1080,6 +1081,7 @@ def handle_move(chosen_move):
         castling = True
     games[session['id']].dismiss_check()
     games[session['id']].set_if_check()
+    print("handle move")
     games[session['id']].set_if_mate_stalemate()
     request_for_draw_50_moves = False
     if not games[session['id']].is_mate() and not games[session['id']].is_draw():
