@@ -154,14 +154,14 @@ class Game{
     this._draw = true;
     this._gameOngoing = false;
     selectedSqare = null;
-    gameMessage.innerHTML += " session" + sessionStorage.getItem("id");
+    document.getElementById("gameMessage").innerHTML += " session" + sessionStorage.getItem("id");
   }
 
   setMate(){
     this._mate = true;
     this._gameOngoing = false;
     selectedSqare = null;
-    gameMessage.innerHTML += " session" + sessionStorage.getItem("id");
+    document.getElementById("gameMessage").innerHTML += " session" + sessionStorage.getItem("id");
   }
 
   setResign(){
