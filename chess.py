@@ -1074,13 +1074,10 @@ def handle_move(chosen_move):
         en_passant = True
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
+    print (session['id'])
     games[session['id']].dismiss_check()
-    print ("before set_if_check", games[session['id']].is_checked())
     games[session['id']].set_if_check()
-    print ("after set_if_check", games[session['id']].is_checked())
-    print ("before set_if_mate_stalemate", games[session['id']].is_mate())
     games[session['id']].set_if_mate_stalemate()
-    print ("after set_if_mate_stalemate", games[session['id']].is_mate())
     request_for_draw_50_moves = False
     if not games[session['id']].is_mate() and not games[session['id']].is_draw():
         if games[session['id']].is_dead_position():
