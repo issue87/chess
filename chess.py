@@ -200,7 +200,7 @@ class ChessBoard:
         self.eaten_figures = eaten_figures
         if kings_pos_init == None:
             self.kings_pos = {0: (0, 4), 1: (7, 4)}
-        else
+        else:
             self.kings_pos = kings_pos_init
         self.counter = counter
         self.last_pawn_move_or_eaten = last_pawn_move_or_eaten
