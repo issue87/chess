@@ -355,10 +355,10 @@ class ChessBoard:
         #if opponent eats a rook it makes the castling impossible, becauser there is no rook anymore.
         if self.get_opponent_player().is_long_castling_possible():
             if position == (initianal_king_pos[self.get_opponent_player().get_color()][0], 0):
-                self.get_opponent_player.prohibit_long_castling()
+                self.get_opponent_player().prohibit_long_castling()
         if self.get_opponent_player().is_short_castling_possible():
             if position == (initianal_king_pos[self.get_opponent_player().get_color()][0], 7):
-                self.get_opponent_player.prohibit_short_castling()
+                self.get_opponent_player().prohibit_short_castling()
         self.en_passant = None
         if figure.get_kind() == PAWN_FIGURE and abs(previous_position[0] - position[0]) == 2:
             self.set_en_passant((previous_position[0] + pawns_direction[figure.get_color()]
