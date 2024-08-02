@@ -1,16 +1,16 @@
 from flask import Flask, render_template, request, flash, jsonify, session
 import uuid
-import copy
 import random
 from collections import Counter
-import time
+#import time
 import os
 import psutil
 
 #main object of application. It is used by Gunicorn
 app = Flask(__name__)
 app.secret_key = 'fsrghdfhjdjkf456745dfghdfhd'
-
+if __name__ == "__main__":
+    app.run(debug=True)
 #figure colors' constants 
 WHITE_FIGURE_COLOR = 0
 BLACK_FIGURE_COLOR = 1
@@ -912,7 +912,9 @@ def minimaxStrategy1depth(board, legal_moves, request_for_draw):
 def minimaxStrategy2depth(board, legal_moves, request_for_draw):
     return minimaxStrategy(board, legal_moves, request_for_draw, 2)
 
-def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration = True):
+def minimaxStrategy(board, legal_moves, request_for_draw, depth, settings = None):
+    if settings is None:
+        settings = dict()
     if request_for_draw:
         if False:
             return "draw is accepted"
@@ -933,6 +935,11 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
             #print ("copy_board", end - start)
             figure_pos = figure.get_pos()
             test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
+            if test_board.is_checked():
+                if "check_opponent" in settings:
+                    value += settings["check_opponent"]
+                else:
+                    value += 0.1
             if (figure.get_kind() == PAWN_FIGURE
                     and move[0] == initianal_king_pos[test_board.get_current_player().get_color()][0]):
                     test_board.promote_pawn((move[0], move[1]), 1)
@@ -946,7 +953,7 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
             opponent_legal_moves = test_board.get_possible_legal_moves(opponent_possible_moves, opponent_color)
             #end = time.time()
             #print ("get_possible_legal_moves", end - start)
-            value += minimaxStrategyRecursive(test_board, opponent_legal_moves, depth - 1) * (-1)
+            value += minimaxStrategyRecursive(test_board, opponent_legal_moves, depth - 1, settings) * (-1)
             if value > max_value:
                 max_value = value
             valued_moves_of_figure[move] = value
@@ -964,7 +971,9 @@ def minimaxStrategy(board, legal_moves, request_for_draw, depth, first_iteration
     random_move = random_strategy(board, best_moves, request_for_draw)
     return (random_move[0], random_move[1], 1)
 
-def minimaxStrategyRecursive(board, legal_moves, depth):
+def minimaxStrategyRecursive(board, legal_moves, depth, settings = None):
+    if settings is None:
+        settings = dict()
     board.set_if_mate_stalemate()
     if board.is_mate():
         return -1000
@@ -985,6 +994,11 @@ def minimaxStrategyRecursive(board, legal_moves, depth):
                 else:
                     value = 0
                 test_board.make_move(test_board.get_board_square(figure_pos[0], figure_pos[1]), move)
+                if test_board.is_checked():
+                    if "check_opponent" in settings:
+                        value += settings["check_opponent"]
+                    else:
+                        value += 0.1
                 if (figure.get_kind() == PAWN_FIGURE
                     and move[0] == initianal_king_pos[test_board.get_current_player().get_color()][0]):
                     test_board.promote_pawn((move[0], move[1]), 1)

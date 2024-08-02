@@ -510,8 +510,7 @@ function handleCPUMove(response){
       message = "draw: " + result_obj.drawReason;
     }
     const gameMessage = document.getElementById("gameMessage");
-    console.log(sessionStorage);
-    gameMessage.innerText = message + " session" + sessionStorage.getItem("id");
+    gameMessage.innerText = message;
   }
   request_is_processing = false;
 }
