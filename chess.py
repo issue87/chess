@@ -1106,9 +1106,7 @@ def handle_move(chosen_move):
     if figure_to_move.get_kind() == KING_FIGURE and (abs(to_move[1] - move_from[1])) == 2:
         castling = True
     games[session['id']].dismiss_check()
-    print(games[session['id']].get_kings_pos())
     games[session['id']].set_if_check()
-    print("handle move")
     games[session['id']].set_if_mate_stalemate()
     request_for_draw_50_moves = False
     if not games[session['id']].is_mate() and not games[session['id']].is_draw():
@@ -1143,6 +1141,10 @@ def handle_move(chosen_move):
             chess_notation_record += figure_chess_notation[promotion_figure_index]
         if en_passant:
             chess_notation_record += "e.p."
+        if games[session['id']].is_mate():
+            chess_notation_record += "#"
+        elif games[session['id']].is_checked():
+            chess_notation_record += "+"
     if games[session['id']].is_mate():
         print (session['id'])
         print (games[session['id']])
