@@ -48,6 +48,11 @@ canvas{
 .radioImage{
     cursor:pointer;
 }
+.radioContainer{
+    line-height: 3em;
+    margin: 1vw 0;
+}
+
 [type=radio]:checked + img {
     border-color: #00ffff;
     border-width: 2px;
@@ -60,6 +65,7 @@ canvas{
 .labelTypeOfGame{
     background-color: #a5a1a1;
     border: #ffffff;
+    padding: 1em;
 }
 
 .inputTypeOfGame:checked + label{
