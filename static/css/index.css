@@ -1,6 +1,10 @@
 body{
     width:100%;
 }
+#initialPage{
+    max-width: 400px;
+    margin:0 auto;
+}
 
 .navbar{
     display: flex;
@@ -47,6 +51,9 @@ canvas{
 }
 .radioImage{
     cursor:pointer;
+    width: 30%;
+    aspect-ratio: 1/1;
+    max-width:100px;
 }
 .radioContainer{
     line-height: 3em;
@@ -63,13 +70,15 @@ canvas{
 }
 
 .labelTypeOfGame{
-    background-color: #a5a1a1;
+    background-color: black;
+    color:gold;
     border: #ffffff;
     padding: 1em;
 }
 
 .inputTypeOfGame:checked + label{
-    background-color: #00ffff;
+    background-color: #bb0da8;
+    color: gold;
 }
 
 #draw50Moves{

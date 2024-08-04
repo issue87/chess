@@ -369,15 +369,11 @@ class ChessBoard:
         '''
         sets check, if the current player is in check
         '''
-        print(self.kings_pos)
         king_pos = self.kings_pos[self.get_current_player().get_color()]
         moves = self.get_possible_moves(self.get_opponent_player().get_color()).values()
-        print (king_pos)
         for set_of_moves in moves:
             if king_pos in set_of_moves:
                 self.checked = True
-                print (session['id'])
-                print ("checked")
                 return
             
             
@@ -1141,13 +1137,10 @@ def handle_move(chosen_move):
             chess_notation_record += figure_chess_notation[promotion_figure_index]
         if en_passant:
             chess_notation_record += "e.p."
-        if games[session['id']].is_mate():
-            chess_notation_record += "#"
-        elif games[session['id']].is_checked():
-            chess_notation_record += "+"
     if games[session['id']].is_mate():
-        print (session['id'])
-        print (games[session['id']])
+        chess_notation_record += "#"
+    elif games[session['id']].is_checked():
+        chess_notation_record += "+"
     move_JSON = {"approved":True,
                  "choosePromotedFigure":False, 
                  "moveFrom": move_from, 
